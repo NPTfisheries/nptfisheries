@@ -3,14 +3,20 @@
 {% load static %}
 
 {% block content %}
-<h1>Division Detail Page</h1>
-    <article>
-        <aside class="actions">
-            {% if user.is_authenticated %}
-                <a href="{% url 'division_edit' pk=divisions.pk %}">Edit</a>
-            {% endif %}
-        </aside>
-        <h2>{{ divisions.division }}</h2>
-        <p>{{ divisions.description|linebreaksbr }}</p>
-    </article>
+<div class="edit-content">
+    {% if user.is_authenticated %}
+        <a href="{% url 'division_edit' pk=divisions.pk %}">Edit Division Content</a>
+    {% endif %}
+</div>
+<h1>{{ divisions.name }}</h1>
+<p>{{ divisions.description }}</p>
+
+<h2>Division Projects</h2>
+    {% for p in projects %}
+        <article>
+        <h3><a href="{% url 'project_detail' pk=p.pk %}">{{ p.name }}</a></h2>
+        <p>{{ p.description|linebreaksbr }}</p>
+        </article>
+    {% endfor %}
+
 {% endblock %}

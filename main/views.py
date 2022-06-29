@@ -14,8 +14,9 @@ def division(request):
 
 def division_detail(request, pk):
     divisions = get_object_or_404(Division, pk=pk)
+    projects = Project.objects.filter(division = pk)
     # need to add projects filtered for division
-    return render(request, 'division_detail.html', {'divisions':divisions})
+    return render(request, 'division_detail.html', {'divisions':divisions, 'projects':projects})
 
 def division_new(request):
     if request.method == "POST":
