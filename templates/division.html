@@ -1,0 +1,13 @@
+<!-- templates/division.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Division Page</h1>
+    {% for d in divisions %}
+        <article>
+        <h2><a href="{% url 'division_detail' pk=d.pk %}">{{ d.division }}</a></h2>
+        <p>{{ d.description|linebreaksbr }}</p>
+        </article>
+    {% endfor %}
+{% endblock %}

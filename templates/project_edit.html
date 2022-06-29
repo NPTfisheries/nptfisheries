@@ -1,0 +1,11 @@
+<!-- templates/division_edit.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Edit Project Content or Add New</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-secondary">Save</button>
+    </form>
+{% endblock %}

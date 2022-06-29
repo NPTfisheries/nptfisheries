@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">DFRM</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'division' %}">Divisions <span class="sr-only"></span></a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'news' %}">News <span class="sr-only"></span></a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'documents' %}">Documents <span class="sr-only"></span></a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'contacts' %}">Contacts<span class="sr-only"></span></a>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ms-auto">
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class= "nav-link" href="{% url 'logout' %}">{{ user.username }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Log Out </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Log In </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

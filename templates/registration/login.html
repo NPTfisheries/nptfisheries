@@ -1,0 +1,20 @@
+<!-- templates/registration/login.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+{% endblock custom_css %}
+
+{% block content %}
+      <div id="login-content">
+        <h1> Nez Perce Tribe </h1>
+        <h2> Department of Fisheries Resources Management </h2>
+        <p>A login is required to download documents and data from the site. You can register <a href="/accounts/signup">here.</a> </p>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class = "btn btn-primary">Log In</button>
+        </form>
+      </div>
+{% endblock %}

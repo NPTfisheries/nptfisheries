@@ -1,0 +1,23 @@
+<!--templates/landing.html-->
+{% extends "base.html" %}
+{% load static %}
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+{% endblock custom_css %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div id="home-content">
+                <h1>Nez Perce Tribe</h1>
+                <h3>Department of Fisheries Resources Management</h3>
+                <hr>
+                <a class="btn btn-light btn-lg" href="accounts/login/" role="button">Login to Enter</a>
+                <a class="btn btn-light btn-lg" href="accounts/signup/" role="button">Register</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

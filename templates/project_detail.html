@@ -1,0 +1,16 @@
+<!-- templates/project_detail.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Project Page</h1>
+    <article>
+        <aside class="actions">
+            {% if user.is_authenticated %}
+                <a href="{% url 'project_edit' pk=project.pk %}">Edit</a>
+            {% endif %}
+        </aside>
+        <h2>{{ project.division }}</h2>
+        <p>{{ project.project|linebreaksbr }}</p>
+    </article>
+{% endblock %}
