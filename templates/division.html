@@ -3,11 +3,17 @@
 {% load static %}
 
 {% block content %}
-<h1>Division Page</h1>
+<h1>DFRM Divisions</h1>
     {% for d in divisions %}
-        <article>
-        <h2><a href="{% url 'division_detail' pk=d.pk %}">{{ d.name }}</a></h2>
+        <h3><a href="{% url 'division_detail' pk=d.pk %}">{{ d.name }}</a></h3>
         <p>{{ d.description|linebreaksbr }}</p>
-        </article>
+        <p>Director: {{ d.director }} </p>
+        {% if d.deputy %}
+            <p>Deputy Director: {{ d.deputy }} </p>
+        {% endif %}
+        {% if d.support %}
+        <p>Support Staff: {{ d.support }} </p>
+        {% endif %}
+        <hr>
     {% endfor %}
 {% endblock %}

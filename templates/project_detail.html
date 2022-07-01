@@ -3,14 +3,12 @@
 {% load static %}
 
 {% block content %}
-<h1>Project Page</h1>
-    <article>
-        <aside class="actions">
-            {% if user.is_authenticated %}
-                <a href="{% url 'project_edit' pk=project.pk %}">Edit</a>
-            {% endif %}
-        </aside>
-        <h2>{{ project.division }}</h2>
-        <p>{{ project.name|linebreaksbr }}</p>
-    </article>
+<div class="edit-content">
+    {% if user.is_authenticated %}
+        <a href="{% url 'project_edit' pk=project.pk %}">Edit Project Content</a>
+    {% endif %}
+</div>
+<h1>{{ project.name }}</h1>
+<p>{{ project.description }}</p>
+<p>Project Leader: {{ project.projectleader }}</p>
 {% endblock %}

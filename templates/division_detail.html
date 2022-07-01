@@ -5,18 +5,25 @@
 {% block content %}
 <div class="edit-content">
     {% if user.is_authenticated %}
-        <a href="{% url 'division_edit' pk=divisions.pk %}">Edit Division Content</a>
+        <a href="{% url 'division_edit' pk=divisions.pk %}"><div class="button">Edit Division Content</div></a>
+        <a href="{% url 'project_new' %}">Add New Project</a>
     {% endif %}
 </div>
-<h1>{{ divisions.name }}</h1>
+<h1>{{ divisions.name }} Division</h1>
 <p>{{ divisions.description }}</p>
+<p>Director: {{ divisions.director }} </p>
+{% if divisions.deputy %}
+    <p>Deputy Director: {{ divisions..deputy }} </p>
+{% endif %}
+{% if divisions.support %}
+<p>Support Staff: {{ divisions.support }} </p>
+{% endif %}
 
-<h2>Division Projects</h2>
+<h2>Projects</h2>
     {% for p in projects %}
-        <article>
         <h3><a href="{% url 'project_detail' pk=p.pk %}">{{ p.name }}</a></h2>
         <p>{{ p.description|linebreaksbr }}</p>
-        </article>
+        <p>Project Leader: {{ p.projectleader }}</p>
     {% endfor %}
 
 {% endblock %}

@@ -5,10 +5,10 @@ class DivisionForm(forms.ModelForm):
 
     class Meta:
         model = Division
-        fields = ('name', 'description', 'director', 'deputy', 'support',)
+        fields = ('name', 'description', 'director', 'deputy', 'support', 'phone_number',)
 
 class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ('division', 'name', 'description', 'projectleader', 'inactive',)
+        fields = ('division', 'name', 'description', 'projectleader', 'created', 'inactive',)
