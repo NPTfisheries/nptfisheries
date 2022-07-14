@@ -5,7 +5,7 @@
 {% block content %}
 <div class="edit-content">
     {% if user.is_authenticated %}
-        <a href="{% url 'project_edit' pk=project.pk %}">Edit Project Content</a>
+        <a href="{% url 'project_edit' pk=project.pk %}" class="btn btn-secondary">Edit Project Content</a>
     {% endif %}
 </div>
 <h1>{{ project.name }}</h1>

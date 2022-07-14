@@ -1,0 +1,24 @@
+<!-- templates/news_detail.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="edit-content">
+    {% if user.is_authenticated %}
+        <a href="{% url 'news_edit' pk=post.pk %}" class="btn btn-secondary">Edit</a>
+        <a href="{% url 'news_delete' pk=post.pk %}" class="btn btn-secondary">Delete</a>
+    {% endif %}
+</div>
+	<h1> {{ post.title }}</h1>
+
+	{% if post.header_image %}
+		<img src="{{ post.header_image.url }}"> <br/>
+	{% endif %}
+
+	<p> Primary Author: {{ post.primary_author }} </p>
+	<small> Post Date: {{post.post_date}} </small> <br/>
+	<small> Other Authors: {{ post.secondary_authors }} </small><br/>
+	<hr>
+	<p> {{ post.body|safe }} </p>
+	<p> Uploaded By: {{ post.uploaded_by.first_name }} {{ post.uploaded_by.last_name }} </p>
+{% endblock %}

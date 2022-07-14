@@ -70,10 +70,6 @@ def project_edit(request, pk):
     return render(request, 'project_edit.html', {'form': form})
 
 
-# Blog Views
-def news(request):
-    return render(request, 'news.html', {})
-
 def documents(request):
     return render(request, 'documents.html', {})
 

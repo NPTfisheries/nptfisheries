@@ -1,0 +1,16 @@
+<!-- templates/news_post.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+	<h1> Add New Post</h1>
+	<br>
+	<br>
+	<div class="form-group">
+	<form method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ form.media }}
+		{{ form.as_p }}
+		<button class="btn btn-primary">Post</button>
+	</div>
+{% endblock %}
