@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'accounts',
     'main',
     'blog',
+    'doc_lib',
     'ckeditor',
 ]
 

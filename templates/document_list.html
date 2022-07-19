@@ -1,0 +1,32 @@
+<!-- templates/document_list.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="edit-content">
+    {% if user.is_authenticated %}
+        <a href="{% url 'document_upload' %}" class="btn btn-secondary"><div class="button">Add New Document</div></a>
+    {% endif %}
+</div>
+	<h1>Available Documents</h1>
+	<table>
+		<tr>
+			<th>Title</th>
+			<th>Primary Author</th>
+			<th>Secondary Authors</th>
+			<th>Publish Date</th>
+			<th>Type</th>
+			<th>Keywords</th>
+		</tr>
+		{% for doc in object_list %}
+		<tr>
+			<td><a href="{{ doc.file.url }}">{{ doc.title }}</a></td>	
+			<td>{{ doc.primary_author }}</td>
+			<td>{{ doc.secondary_authors }}</td>
+			<td>{{ doc.publish_date}}</td>
+			<td>{{ doc.document_type}}</td>
+			<td>{{ doc.keywords}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

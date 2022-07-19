@@ -70,8 +70,8 @@ def project_edit(request, pk):
     return render(request, 'project_edit.html', {'form': form})
 
 
-def documents(request):
-    return render(request, 'documents.html', {})
+#def documents(request):
+#    return render(request, 'document_list.html', {})
 
 def contacts(request):
     return render(request, 'contacts.html', {})
