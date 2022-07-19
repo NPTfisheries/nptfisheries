@@ -7,7 +7,7 @@ from .forms import DocumentForm
 class DocumentList(ListView):
 	model = Document
 	template_name = 'document_list.html'
-	ordering = ['-upload_date']
+	#ordering = ['-upload_date']
 
 class DocumentUpload(CreateView):
 	model = Document

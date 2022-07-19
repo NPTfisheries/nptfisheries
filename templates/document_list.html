@@ -1,6 +1,7 @@
 <!-- templates/document_list.html -->
 {% extends "base.html" %}
 {% load static %}
+{% load render_table from django_tables2 %}
 
 {% block content %}
 <div class="edit-content">
@@ -9,7 +10,9 @@
     {% endif %}
 </div>
 	<h1>Available Documents</h1>
-	<table>
+
+	{% render_table object_list %}
+<!--	<table>
 		<tr>
 			<th>Title</th>
 			<th>Primary Author</th>
@@ -28,5 +31,5 @@
 			<td>{{ doc.keywords}}</td>
 		</tr>
 		{% endfor %}
-	</table>
+	</table> -->
 {% endblock %}
