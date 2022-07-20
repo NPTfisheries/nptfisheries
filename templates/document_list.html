@@ -2,16 +2,26 @@
 {% extends "base.html" %}
 {% load static %}
 {% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<div class="edit-content">
-    {% if user.is_authenticated %}
-        <a href="{% url 'document_upload' %}" class="btn btn-secondary"><div class="button">Add New Document</div></a>
-    {% endif %}
-</div>
-	<h1>Available Documents</h1>
+	<div class="edit-content">
+	    {% if user.is_authenticated %}
+	        <a href="{% url 'document_upload' %}" class="btn btn-secondary"><div class="button">Add New Document</div></a>
+	    {% endif %}
+	</div>
 
+	<h2>Search Available Documents</h2>
+    <form action="" method="get" class="form-inline">
+        {{ filter.form.as_p}}
+        <input type="submit" />
+    </form>
+
+	</br>
+
+	<h2>Documents</h2>
 	{% render_table table %}
+	
 <!--	<table>
 		<tr>
 			<th>Title</th>
