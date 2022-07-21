@@ -10,4 +10,4 @@ class CustomUser(AbstractUser):
     employee = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.username
+        return self.first_name + " " + self.last_name

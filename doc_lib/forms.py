@@ -1,10 +1,13 @@
 from django import forms
 from .models import Document
+from accounts.models import CustomUser
 
 class DocumentForm(forms.ModelForm):
+    # uploaded_by = forms.ModelChoiceField(queryset=CustomUser.objects.filter(id=1))
+
     class Meta:
         model = Document
-        fields = ('title', 'primary_author', 'secondary_authors', 'publish_date', 'document_type', 'keywords', 'file', 'uploaded_by')
+        fields = ('title', 'primary_author', 'secondary_authors', 'publish_date', 'document_type', 'keywords', 'file', 'uploaded_by',)
 
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Document Title'}),
