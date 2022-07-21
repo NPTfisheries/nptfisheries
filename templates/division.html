@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-<h1>DFRM Divisions</h1>
+<h1>Divisions</h1>
     {% for d in divisions %}
         <h3><a href="{% url 'division_detail' pk=d.pk %}">{{ d.name }}</a></h3>
         <p>{{ d.description|linebreaksbr }}</p>

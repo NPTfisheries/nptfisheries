@@ -11,7 +11,7 @@
         <h1> Nez Perce Tribe </h1>
         <h2> Department of Fisheries Resources Management </h2>
         <p>A login is required to download documents and data from the site. You can register <a href="/accounts/signup">here.</a> </p>
-        <form method="post">
+        <form method="POST">
           {% csrf_token %}
           {{ form.as_p }}
           <button type="submit" class = "btn btn-primary">Log In</button>
