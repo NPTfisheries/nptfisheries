@@ -2,6 +2,9 @@ from django import forms
 from .models import Document
 from accounts.models import CustomUser
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
 class DocumentForm(forms.ModelForm):
 
     class Meta:
@@ -13,7 +16,7 @@ class DocumentForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Document Title'}),
             'primary_author': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Primary Author'}),
             'secondary_authors': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Secondary Authors'}),
-           # 'publish_date': forms.DateField(attrs={'class': 'form-control'}),
+            'publish_date': DateInput(attrs={'class': 'form-control'}),
             'document_type': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Type of Document'}),
             'keywords': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Keywords'}),
         }
