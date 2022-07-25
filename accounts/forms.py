@@ -8,19 +8,19 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ("username", "first_name", "last_name", "title", "email", "phone_number",)
+        fields = ("username", "first_name", "last_name", "email",)
 
 class CustomUserChangeForm(UserChangeForm):
     first_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     username = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    #title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
     #phone_number: forms.PhoneField(widget=forms.PhoneInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = CustomUser
-        fields = ("username", "first_name", "last_name", 'password', "title", "email", "phone_number",)
+        fields = ("username", "first_name", "last_name", 'password', "email")
         #exclude = ("employee", )
 
 class PasswordChangingFrom(PasswordChangeForm):
