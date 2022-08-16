@@ -1,11 +1,21 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from main.models import Division, Project
+from blog.models import Post
 from .forms import DivisionForm, ProjectForm
 
 # Create your views here.
 
 def home(request):
-    return render(request, 'home.html', {})
+
+    post = Post.objects.all().order_by("-post_date")[0:3]
+
+# class NewsList(ListView):
+#     model = Post
+#     template_name = 'news_list.html'
+#     #ordering = ['-id']
+#     ordering = ['-post_date']
+
+    return render(request, 'home.html', {"post":post})
 
 # All Division Views
 def division(request):

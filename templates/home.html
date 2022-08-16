@@ -10,5 +10,18 @@
 <hr>
 <!--<iframe style="border: none; width: 920px; height: 500px;" src="https://nptfisheries.shinyapps.io/PITtrackR/" width="300" height="150"></iframe> -->
 <h2>News</h2>
+	<ul>
+		{% for p in post %}
+			<li><a href="{% url 'news_detail' p.pk %}">{{ p.title }}</a> - 
+
+			{% if post.header_image %}
+				<img src="{{ p.header_image.url }}"> <br/>
+			{% endif %}
+			
+			{{ post.primary_author }} <br/>
+			<small> {{ post.snippet|safe }} </small> <br/>
+			</li>
+		{% endfor %}
+	</ul>
 <p>Multiple blocks containing the lastest news/blog articles</p>
 {% endblock %}
