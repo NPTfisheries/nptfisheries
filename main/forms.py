@@ -10,12 +10,12 @@ class DivisionForm(forms.ModelForm):
 
     class Meta:
         model = Division
-        fields = ('name', 'description', 'director', 'deputy', 'support', 'phone_number',)
+        fields = ('name', 'description', 'director', 'deputy', 'support', 'phone_number', 'division_image1')
 
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ('division', 'name', 'description', 'projectleader', 'created', 'inactive',)
+        fields = ('division', 'name', 'description', 'projectleader', 'created', 'inactive', 'project_image1')
 
         widgets = {
             'division': forms.Select(attrs={'class': 'form-control'}),

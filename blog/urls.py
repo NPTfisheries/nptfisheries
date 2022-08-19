@@ -6,6 +6,7 @@ urlpatterns = [
 	path('', NewsList.as_view(), name = 'news_list'),
 	path('<int:pk>', NewsDetail.as_view(), name='news_detail'),
 	path('post/', NewsPost.as_view(), name='news_post'),
+    #path('post/', NewsPost, name='news_post'),
     path('edit/<int:pk>', NewsEdit.as_view(), name='news_edit'),
     path('<int:pk>/news_delete', NewsDelete.as_view(), name='news_delete'),
   #  path('', views.news_list, name='news_list'),

@@ -7,7 +7,7 @@ from .forms import DivisionForm, ProjectForm
 
 def home(request):
 
-    post = Post.objects.all().order_by("-post_date")[0:3]
+    post = Post.objects.filter(header_image__isnull = False).order_by("-pk")[0:3]
 
 # class NewsList(ListView):
 #     model = Post
@@ -19,7 +19,7 @@ def home(request):
 
 # All Division Views
 def division(request):
-    divisions = Division.objects.all()
+    divisions = Division.objects.all().order_by('name')
     return render(request, 'division.html', {'divisions': divisions})
 
 def division_detail(request, pk):
@@ -30,7 +30,7 @@ def division_detail(request, pk):
 
 def division_new(request):
     if request.method == "POST":
-        form = DivisionForm(request.POST)
+        form = DivisionForm(request.POST, request.FILES)
         if form.is_valid():
             d = form.save(commit=False)
             d.save()
@@ -42,7 +42,7 @@ def division_new(request):
 def division_edit(request, pk):
     division = get_object_or_404(Division, pk=pk)
     if request.method == "POST":
-        form = DivisionForm(request.POST, instance=division)
+        form = DivisionForm(request.POST, request.FILES, instance=division)
         if form.is_valid():
             d = form.save(commit=False)
             d.save()
@@ -58,7 +58,7 @@ def project_detail(request, pk):
 
 def project_new(request):
     if request.method == "POST":
-        form = ProjectForm(request.POST)
+        form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
             d = form.save(commit=False)
             d.save()
@@ -70,7 +70,7 @@ def project_new(request):
 def project_edit(request, pk):
     project = get_object_or_404(Project, pk=pk)
     if request.method == "POST":
-        form = ProjectForm(request.POST, instance=project)
+        form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             d = form.save(commit=False)
             d.save()
