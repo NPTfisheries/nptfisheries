@@ -1,0 +1,319 @@
+
+/*Global styling*/
+
+/* Main content */
+/*.main {
+  margin-top: 30px;  Add a top margin to avoid content overlay 
+}*/
+
+
+.edit-content {
+    text-align:  right;
+}
+
+h1,
+h2,
+h3,
+h4{
+    font-family: 'Lora';
+}
+
+#login-content{
+    text-align: center;
+    padding-top: 20%;
+}
+
+h1.title{
+    color: #416983;
+}
+
+/*.carousel {
+  width:100%;
+  height:360px;
+}*/
+
+.carousel-inner{
+  width:100%;
+  max-height: 300px !important;
+}
+
+/* Home page styling */
+
+.home-title {
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-radius: 25px;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+.home-title h1{
+    color:  #ABE7FC;
+    font-size: 4em;
+}
+
+
+.home-container {
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-radius: 25px;
+    vertical-align: middle;
+    padding: 30px;
+    margin: 100px;
+}
+
+.home-container h2{
+    color: #ABE7FC;
+}
+
+/* Recent News */
+
+.related-posts {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.related-posts .blog-card {
+    max-width: 33.3%;
+    margin: 0.5rem;
+}
+
+.blog-card--one-third {
+    width: calc(31% - 0.5rem);
+}
+
+.blog-card {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.15s ease-in-out, -webkit-transform 0.15s ease-in-out;
+    transition: box-shadow 0.15s ease-in-out, transform 0.15s ease-in-out;
+    transition: box-shadow 0.15s ease-in-out, transform 0.15s ease-in-out, -webkit-transform 0.15s ease-in-out;
+    background-color: #eaf0f6; /* rgba(255, 255, 255, 0.2); /*#eaf0f6;*/
+    overflow: hidden;
+    margin: 0 1rem 1rem 0;
+    padding: 0;
+    flex-grow: 1;
+    position: relative;
+    min-height: 300px;
+    border-style: solid;
+    border-radius: 3px;
+    border-color: black;
+    border-width: 2px;
+}
+
+.related-posts h3 a {
+    font-weight: 500;
+}
+
+.blog-card__content-title {
+    margin: 0;
+    padding: 0;
+}
+
+.blog-card__content-title a {
+    font-size: 2rem;
+    line-height: 1.3125em;
+    /*padding: 1.125rem 1.125rem 3rem;*/
+    font-weight: 500;
+    min-height: 50px;
+}
+
+.blog-card__content a {
+    display: block;
+    color: black; /*#FFF;*/
+    text-decoration: none;
+}
+
+.blog-card__meta {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.blog-card--one-third figure, .blog-card--two-thirds figure {
+    padding-bottom: 56.25%;
+}
+
+.blog-card--one-third figure {
+    padding-bottom: 0.0%;
+}
+
+.blog-card--one-third img {
+    width:  100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.card-body img {
+    width:  300px;
+    height: 300px;
+    object-fit: contain;
+}
+
+.card-body a {
+    color: black;
+    text-decoration: none;
+}
+
+
+/* Page Headers */
+/*.page-header {
+    padding: 3rem 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+*/
+
+.page-header {
+  /* The image used */
+  background-image: url('../img/Clearwater_River_Home_Page.jpg');
+  /* Set a specific height */
+    height: 300px;
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.black-background {
+    background-image: url(../img/half-08-background.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 100%;
+    border-bottom-width: 10px;
+    border-bottom: solid transparent 27px;
+    border-image: url(../img/triangle-pattern-border-bottom.png) 38;
+    border-image-repeat: repeat;
+    background-repeat: no-repeat;
+    top: 295px;
+    border-top: 0;
+}
+
+
+.black-background h1 {
+    color: white;
+    font-weight: 700;
+    padding-top: 10px;
+    margin-top:0;
+    margin-bottom:0;
+    padding-bottom:0;
+}
+
+
+/* Division */
+/*.division-container {
+    padding: 3rem 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+/* Footer styling */
+
+/* Bottom bar styling */
+#top-bar, #bottom-bar {
+    background-color: #620008;
+    border-bottom: solid #000 8px;
+}
+        
+#top-bar .container,
+#bottom-bar .container {
+    background-image: url("../img/red-bar.jpg");
+    background-size: 100% 100%; 
+    height: 76px;
+}
+
+#top-bar.internal .container,
+#bottom-bar .container-fluid {
+    background-image: url("../img/red-bar.jpg");
+    background-size: 100% 100%; 
+    height: 76px;
+    border-bottom:4px solid #fff;
+}
+    
+#top-bar .row {
+    line-height: 76px;
+}
+
+
+#footer-content {
+    border-top-width: 10px;
+    padding-top: 30px;
+    background-color: #000;
+    border-top: solid transparent 27px;
+    border-image: url("../img/triangle-pattern.png") 38;
+    border-image-repeat: repeat;
+    background-color: #000;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-bottom:0;
+}
+
+#footer-content ul {
+    padding: 0;
+}
+
+#footer-content li {
+    list-style: none;
+    padding-bottom: 5px;
+    border-bottom: solid #F4CE3E 1px;
+    margin-bottom: 5px;
+}
+
+#footer-content li a {
+    color: white;
+    font-size: 14px; /*18px*/
+    padding-left: 10px;
+    padding-bottom: 5px;
+    display: block;
+    text-decoration: none;
+}
+
+#footer-content h5 {
+    text-transform: uppercase;
+    color: #F4CE3E;
+    font-size: 16px;
+}
+
+#footer-content address {
+    color: #FFF;
+    font-size: 14px;
+}
+
+#footer-content p {
+    font-weight: 100;
+    color: #FFF;
+    font-size: 14px;
+    }
+
+#footer-content p div{
+    display: inline;
+}
+#footer-content span.number-for {
+    display: block;
+    color: white;
+}
+
+.footer-logo {
+    max-width: 100%
+}
+
+#footer-content .disclaimer {
+    text-align: center;
+    margin: 30px 0 30px;
+    color:#fff;
+}
