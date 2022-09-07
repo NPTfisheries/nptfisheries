@@ -4,6 +4,16 @@
 {% load render_table from django_tables2 %}
 {% load crispy_forms_tags %}
 
+{% block header %}
+<div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>Documents</h1>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
 {% block content %}
 	<div class="edit-content">
 	    {% if user.is_authenticated %}
@@ -14,14 +24,13 @@
 	<h2>Search Available Documents</h2>
 	<div class="form-group">
     	<form action="" method="get"> <!--class="form-inline"-->
-        	{{ filter.form.as_p}}
+        	{{ filter.form.as_p}} <!--|crispy-->
         	<input type="submit" />
         </form>
     </div>
 
 	</br>
 
-	<h2>Documents</h2>
 	{% render_table table %}
 	
 <!--	<table>

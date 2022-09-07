@@ -2,6 +2,23 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block header %}
+<div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>Contacts</h1>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
 {% block content %}
-<h1>Contacts Page</h1>
+<h1>Program Manager</h1>
+<h1>Division Directors</h1>
+<h1>Field Offices</h1>
+<h1>Search Staff</h1>
+{% for u in users %}
+<p>{{ u.first_name }}</p>
+<br>
+{% endfor %}
 {% endblock %}

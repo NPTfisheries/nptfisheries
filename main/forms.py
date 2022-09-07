@@ -2,15 +2,18 @@ from django import forms
 from main.models import Division, Project
 
 class DivisionForm(forms.ModelForm):
-    name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    description = forms.CharField(max_length=100, widget=forms.Textarea(attrs={'class': 'form-control'}))
-    director = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    deputy = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    support = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-
     class Meta:
         model = Division
         fields = ('name', 'description', 'director', 'deputy', 'support', 'phone_number', 'division_image1')
+
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'director': forms.TextInput(attrs={'class': 'form-control'}),
+            'deputy': forms.TextInput(attrs={'class': 'form-control'}),
+            'support': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
 
 class ProjectForm(forms.ModelForm):
     class Meta:

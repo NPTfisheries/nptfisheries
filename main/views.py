@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from main.models import Division, Project
+from accounts.models import CustomUser
 from blog.models import Post
 from .forms import DivisionForm, ProjectForm
 
@@ -84,4 +85,5 @@ def project_edit(request, pk):
 #    return render(request, 'document_list.html', {})
 
 def contacts(request):
-    return render(request, 'contacts.html', {})
+    users = CustomUser.objects.all().order_by("last_name")
+    return render(request, 'contacts.html', {'users':users})

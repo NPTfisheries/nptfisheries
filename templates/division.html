@@ -2,83 +2,64 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block content %}
-<h1>Divisions</h1>
+{% block header %}
+<div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>Divisions</h1>
+        </div>
+    </div>
+</div>
+{% endblock header %}
 
 <hr>
+{% block content %}
     {% for d in divisions %}
     {% if forloop.counter|divisibleby:2 %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-7">   
-                <img src="{{ d.division_image1.url }}">
+<!--     <div class="row">
+        <div class="col-sm-6"> -->
+            <div class="card">
+                <h2 class="card-header">
+                    {{ d.name }}
+                </h2>
+                <div class="row card-body">
+                    <img class="col-sm-6" src="{{ d.division_image1.url }}" href="{% url 'division_detail' pk=d.pk %}">
+                    <div class="col-sm-6">
+                       <!--  <h5 class="card-title">{{ d.name }}</h5> -->
+                        <p class="card-text">{{ d.description|linebreaksbr }} <a class="stretched-link" href="{% url 'division_detail' pk=d.pk %}"></a></p>
+                    </div>
+                </div>
+<!--                 <div class="card-footer">
+                    <a href="{% url 'division_detail' pk=d.pk %}">Read more...</a>
+                </div> -->
             </div>
-            <div class="col-md-5">
-                <h3><a href="{% url 'division_detail' pk=d.pk %}">{{ d.name }}</a></h3>
-                <p>{{ d.description|linebreaksbr }}</p>
-                <p>Director: {{ d.director }} </p>
-                {% if d.deputy %}
-                    <p>Deputy Director: {{ d.deputy }} </p>
-                {% endif %}
-                {% if d.support %}
-                <p>Support Staff: {{ d.support }} </p>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    <hr>
+<!--         </div>
+    </div> -->
+    <br>
     {% else %}
-    <div class='container'>
-        <div class="row">
-            <div class="col-md-5">
-                <h3><a href="{% url 'division_detail' pk=d.pk %}">{{ d.name }}</a></h3>
-                <p>{{ d.description|linebreaksbr }}</p>
-                <p>Director: {{ d.director }} </p>
-                {% if d.deputy %}
-                    <p>Deputy Director: {{ d.deputy }} </p>
-                {% endif %}
-                {% if d.support %}
-                <p>Support Staff: {{ d.support }} </p>
-                {% endif %}
+<!--     <div class="row">
+        <div class="col-sm-6"> -->
+            <div class="card">
+                <h2 class="card-header">
+                    {{ d.name }}
+                </h2>
+                <div class="row card-body">
+                    <div class="col-sm-6">
+                       <!--  <h5 class="card-title">{{ d.name }}</h5> -->
+                        <p class="card-text">{{ d.description|linebreaksbr }} <a class="stretched-link" href="{% url 'division_detail' pk=d.pk %}"></a></p>
+                    </div>
+                    <img class="col-sm-6" src="{{ d.division_image1.url }}" href="{% url 'division_detail' pk=d.pk %}">
+                </div>
+<!--                 <div class="card-footer">
+                    <a href="{% url 'division_detail' pk=d.pk %}">Read more...</a>
+                </div> -->
             </div>
-            <div class="col-md-7">   
-                <img src="{{ d.division_image1.url }}">
-            </div>
-        </div>
-    </div>
-    <hr>
+<!--         </div>
+    </div> -->
+    <br>
     {% endif %}
-    {% endfor %}
 
-<!--     {% for d in divisions %}
-    <div class="division-container">
-    {% if forloop.counter|divisibleby:2 %}
-        <div class="division-card-left">
-            <h3><a href="{% url 'division_detail' pk=d.pk %}">{{ d.name }}</a></h3>
-            <p>{{ d.description|linebreaksbr }}</p>
-            <p>Director: {{ d.director }} </p>
-            {% if d.deputy %}
-                <p>Deputy Director: {{ d.deputy }} </p>
-            {% endif %}
-            {% if d.support %}
-            <p>Support Staff: {{ d.support }} </p>
-            <img scr="{{ d.division_image1.url }}">
-            {% endif %}
-        </div>
-    {% else %}
-        <div class="division-card-right">
-            <h3><a href="{% url 'division_detail' pk=d.pk %}">{{ d.name }}</a></h3>
-            <p>{{ d.description|linebreaksbr }}</p>
-            <p>Director: {{ d.director }} </p>
-            {% if d.deputy %}
-                <p>Deputy Director: {{ d.deputy }} </p>
-            {% endif %}
-            {% if d.support %}
-            <p>Support Staff: {{ d.support }} </p>
-            {% endif %}
-        </div>
-    {% endif %}
-    </div>
-    {% endfor %} -->
+
+    {% endfor %}
 
 {% endblock %}

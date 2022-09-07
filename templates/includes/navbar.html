@@ -1,5 +1,8 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">DFRM</a>
+  <a class="navbar-brand" href="#">
+    <img src="../../static/img/NPTlogos2.png" style="width:100px">
+    <!-- DFRM -->
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -10,7 +13,9 @@
                 <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'division' %}">Divisions <span class="sr-only"></span></a>
+                <a class="nav-link" href="{% url 'division' %}">
+                    Divisions
+                </a>
             </li>
              <li class="nav-item">
                 <a class="nav-link" href="{% url 'news_list' %}">News <span class="sr-only"></span></a>

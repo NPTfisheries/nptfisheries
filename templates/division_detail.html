@@ -2,6 +2,16 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block header %}
+<div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>{{ divisions.name }}</h1>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
 {% block content %}
 <div class="edit-content">
     {% if user.is_authenticated %}
@@ -9,7 +19,6 @@
         <a href="{% url 'project_new' %}" class="btn btn-secondary">Add New Project</a>
     {% endif %}
 </div>
-<h1>{{ divisions.name }} Division</h1>
 <img src="{{ divisions.division_image1.url }}">
 <p>{{ divisions.description }}</p>
 <p>Director: {{ divisions.director }} </p>

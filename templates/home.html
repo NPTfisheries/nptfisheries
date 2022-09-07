@@ -4,53 +4,43 @@
 
 {% block custom_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
+<!-- <div class="parallax"></div> -->
 {% endblock custom_css %}
 
 {% block content %}
-
+<br><br><br><br><br><br><br>
 <div class="container">
   <div class="row">
-    <div class="col-2 d-flex justify-content-center">
+    <div class="col-2 d-flex justify-content-center my-auto">
       <img src="../static/img/NPT.png" width="150" height="150">
     </div>
     <div class="col-8 text-center">
-      <h1 style="font-size: 4em;"><strong>Department of Fisheries Resources Managment</strong></h1>
+    	<div class="home-title">
+      <h1>Department of Fisheries Resources Management</h1>
+    	</div>
     </div>
-    <div class="col-2 d-flex justify-content-center">
+    <div class="col-2 d-flex justify-content-center my-auto">
       <img src="../static/img/DFRM.png" width="150" height="150">
     </div>
   </div>
 </div>
 
 
-<hr>
-<h5 style="text-align: center;">Mission Statement</h5>
-<p style="text-align: center;">Our mission is.....</p>
-<hr>
+<div class="home-container">
+<blockquote class="blockquote">
+<p class="mb-0">"We did not inherit this earth or its natural resources from our ancestors, we are only borrowing them from our children's children; therefore, we are duty bound and obligated to protect them and use them wisely until such time that they get here, and then they will have the same obligations."</p>
+<br>
+<footer class="blockquote-footer" style="color:#ABE7FC">Eugene Greene, Sr. <cite title="Source Title">CRITFC 1995</cite></footer>
+</blockquote>
+</div>
 <!--<iframe style="border: none; width: 920px; height: 500px;" src="https://nptfisheries.shinyapps.io/PITtrackR/" width="300" height="150"></iframe> -->
 
+<div class="home-container">
 <h2 style="text-align: center;">Fishing Seasons and Current Harvest</h2>
-<hr>
+</div>
 
-<h2 style="text-align: center;">Recent News</h2>
-
-<!-- <section class="news-posts">
-	<article class="news-card news-card--one-third">
-		        <figure> 
-                    <a href="{% url 'news_detail' post.1.pk %}">
-						<img src="{{ post.2.header_image.url }}">
-                    </a>
-                </figure>
-            <div class="news-card-content">
-            	<h3 class="news-card-content-title">
-                	<a href="{% url 'news_detail' post.1.pk %}">
-                		{{ post.1.title }}
-                	</a>
-            	</h3>
-            </div>
-	</article>
-</section> 
- -->
+<div class="home-container">
+<h2>Recent News</h2>
 
 <section class="related-posts">
 	{% for p in post %}
@@ -79,5 +69,6 @@
     </article>
 	{% endfor %}
 </section>
+</div>
 
 {% endblock %}
