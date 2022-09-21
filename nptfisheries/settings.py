@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_tables2',
     'django_filters',
     'crispy_forms',
+    'widget_tweaks',
     'phone_field',
     'accounts',
     'main',

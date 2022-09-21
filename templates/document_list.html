@@ -1,8 +1,9 @@
 <!-- templates/document_list.html -->
 {% extends "base.html" %}
 {% load static %}
+{% load widget_tweaks %}
 {% load render_table from django_tables2 %}
-{% load crispy_forms_tags %}
+<!--{% load crispy_forms_tags %}-->
 
 {% block header %}
 <div class="page-header">
@@ -17,20 +18,71 @@
 {% block content %}
 	<div class="edit-content">
 	    {% if user.is_authenticated %}
-	        <a href="{% url 'document_upload' %}" class="btn btn-secondary"><div class="button">Add New Document</div></a>
+	        <a href="{% url 'document_upload' %}" class="btn btn-primary"><div class="button">Add New Document</div></a>
 	    {% endif %}
 	</div>
 
-	<h2>Search Available Documents</h2>
-	<div class="form-group">
-    	<form action="" method="get"> <!--class="form-inline"-->
-        	{{ filter.form.as_p}} <!--|crispy-->
-        	<!--<input type="submit" />-->
-			<button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Search</button>
-        </form>
-    </div>
+	<div class="well">
+			<h2 style="margin-top: 0">Filter Available Documents</h2>
+			</br>
 
-	</br>
+{% comment %} 			{% for field in filter.form %}
+    			<div class="form-group">
+        			{{ field.label_tag }} 
+        			{% render_field field class="form-control" %} 
+        			{% if field.help_text %}
+            			<small class="form-text text-muted">
+               			{{ field.help_text }}
+            			</small>
+        			{% endif %}
+    			</div>
+			{% endfor %} {% endcomment %}
+	<form method="get">		
+			<div class="row">
+				<div class="form-group col-sm-4 col-md-4">
+					{{ filter.form.title__icontains.label_tag }}
+					{% render_field filter.form.title__icontains class="form-control" %}
+				</div>
+				<div class="form-group col-sm-4 col-md-4">
+					{{ filter.form.document_type__icontains.label_tag }}
+					{% render_field filter.form.document_type__icontains class="form-control" %}
+				</div>
+				<div class="form-group col-sm-4 col-md-4">
+					{{ filter.form.keywords__icontains.label_tag }}
+					{% render_field filter.form.keywords__icontains class="form-control" %}
+				</div>
+
+
+				<div class="form-group col-sm-6 col-md-6">
+					{{ filter.form.primary_author__icontains.label_tag }}
+					{% render_field filter.form.primary_author__icontains class="form-control" %}
+				</div>
+				<div class="form-group col-sm-6 col-md-6">
+					{{ filter.form.secondary_authors__icontains.label_tag }}
+					{% render_field filter.form.secondary_authors__icontains class="form-control" %}
+				</div>
+
+				<div class="form-group col-sm-4 col-md-4">
+					{{ filter.form.publish_date__lt.label_tag }}
+					{% render_field filter.form.publish_date__lt class="form-control" %}
+				</div>
+				<div class="form-group col-sm-4 col-md-4">
+					{{ filter.form.publish_date__gt.label_tag }}
+					{% render_field filter.form.publish_date__gt class="form-control" %}
+				</div>
+
+				<div class="col-sm-4" align="center">
+				</br>
+					<button type="submit" class="btn btn-success"><i class="bi bi-search"></i> Search</button>
+				</div>
+			</div>
+		</br>
+			<ul>
+				<li>Only documents meeting all criteria will be returned, if you can not find your information try removing some filters and clicking search.</li>
+				<li>To reset the table and return all documents clear the contents of each filter and then click the search button. </li>
+			</ul>
+		</form>
+	</div>
 
 	{% render_table table %}
 	

@@ -219,6 +219,20 @@ h1.title{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+}*/
+
+
+.well {
+    background-color:whitesmoke;
+    color: black;
+    padding: 1rem 1rem;
+    margin: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.well h2 {
+    justify-content: center;
 }
 
 
