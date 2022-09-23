@@ -235,6 +235,9 @@ h1.title{
     justify-content: center;
 }
 
+.odd {
+    background-color: whitesmoke;
+  }
 
 /* Footer styling */
 
