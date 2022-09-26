@@ -7,7 +7,7 @@ class CustomUser(AbstractUser):
     # add additional fields in here
     #title = models.CharField(max_length = 30)
     #phone_number = PhoneField(null=True, blank=True, help_text='Contact phone number')
-    is_employee = models.BooleanField(default=False)
+    #is_employee = models.BooleanField(default=False)
 
     def __str__(self):
         return self.first_name + " " + self.last_name
