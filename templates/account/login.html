@@ -10,11 +10,12 @@
       <div id="login-content">
         <h1> Nez Perce Tribe </h1>
         <h2> Department of Fisheries Resources Management </h2>
-        <p>A login is required to download documents and data from the site. You can register <a href="/accounts/signup">here.</a> </p>
+        <p>If you have not created an account yet, then please <a href="/accounts/signup/">sign up</a> first. </p>
         <form method="POST">
           {% csrf_token %}
           {{ form.as_p }}
-          <button type="submit" class = "btn btn-primary">Log In</button>
+          <button type="submit" class = "btn btn-primary">Sign In</button>
+          <p><a href="/accounts/password/reset/">Forgot Password?</a></p>
         </form>
       </div>
 {% endblock %}

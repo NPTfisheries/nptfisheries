@@ -32,20 +32,20 @@
         <ul class="navbar-nav ms-auto">
             {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                    <a class= "nav-link" href="{% url 'logout' %}">Hi {{ user.first_name }}!</a>
+                    <a class="nav-link">Hi {{ user.first_name }}!</a>
                 </li>
-                <li class="nav-item">
+                {% comment %} <li class="nav-item">
                     <a class="nav-link" href="{% url 'edit_profile' %}">Edit Profile </a>
+                </li> {% endcomment %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_signup' %}">Register New User</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out </a>
+                    <a class="nav-link" href="{% url 'account_logout' %}">Log Out </a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'signup' %}">Register </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Log In </a>
+                    <a class="nav-link" href="{% url 'account_login' %}">Sign In </a>
                 </li>
             {% endif %}
         </ul>

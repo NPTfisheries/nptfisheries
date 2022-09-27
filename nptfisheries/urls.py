@@ -22,8 +22,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     #path("", TemplateView.as_view(template_name="landing.html"), name="landing"),
     path("dfrm-admin/", admin.site.urls),
-    path("accounts/", include("accounts.urls")),
-    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/", include('allauth.urls')),
+    #path("accounts/", include("accounts.urls")),
+    #path("accounts/", include("django.contrib.auth.urls")),
     path("", include("main.urls")),
     path("news/", include("blog.urls")),
     path("docs/", include("doc_lib.urls")),
