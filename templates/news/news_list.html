@@ -1,0 +1,104 @@
+<!-- templates/news_list.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+
+<div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>News</h1>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="edit-content">
+    {% if user.is_authenticated %}
+        <a href="{% url 'news_post' %}" class="btn btn-primary"><div class="button">Add New Post</div></a>
+    {% endif %}
+</div>
+
+
+<!-- <div class = "row row-cols-1 row-cols-md-3">
+	{% for p in object_list %}
+	<div class="card">
+		<div class="col">
+		<div class="card-body">
+			{% if p.header_image %}
+				<img src="{{ p.header_image.url }}">
+			{% endif %}
+
+	        <h3 class="card-title">
+            	<a class="stretched-link" href="{% url 'news_detail' p.pk %}">
+            		{{ p.title }}
+            	</a>
+        	</h3>
+        	<p class="card-text">
+        		{{ p.snippet|safe }}
+        	</p>   
+		</div>
+		<div class="card-footer">
+			<p>{{ p.primary_author }} | {{ p.post_date }}</p>
+		</div>
+		</div>
+	</div>
+	{% endfor %}
+</div> -->
+
+
+
+<section class="related-posts">
+	{% for p in object_list %}
+		    <article class="blog-card blog-card--one-third ">
+		    	{% if p.header_image %}
+	                <figure>
+	                    <a href="{% url 'news_detail' p.pk %}">
+							<img src="{{ p.header_image.url }}">
+	                    </a>
+	                </figure>
+                {% endif %}
+          <div class="blog-card__content">
+            <h3 class="blog-card__content-title">
+                <a href="{% url 'news_detail' p.pk %}">
+                	{{ p.title }}
+                </a>
+            </h3>           
+           	<span>{{ p.snippet|safe }}</span><br>
+            <div class="blog-card__meta">
+                <a class="blog-card__blog-link">
+                    {{ p.primary_author }}&nbsp;
+                </a>
+                <a href="{% url 'news_detail' p.pk %}" class="blog-card__read-time">
+                    | {{ p.post_date }}
+                </a>
+            </div>       
+        </div>
+    </article>
+	{% endfor %}
+</section>
+
+<!-- 	<ul>
+	{% for post in object_list %}
+		<li><a href="{% url 'news_detail' post.pk %}">{{ post.title }}</a> - 
+			{% if user.is_authenticated %}
+				<small>
+				<a href="{% url 'news_edit' pk=post.pk %}">(Edit)</a> 
+				<a href="{% url 'news_delete' pk=post.pk %}">(Delete)</a>
+				</small>
+			{% endif %} <br/>
+
+		{% if post.header_image %}
+			<img src="{{ post.header_image.url }}"> <br/>
+		{% endif %}
+		
+		{{ post.primary_author }} <br/>
+		<small> Post Date: {{post.post_date}} </small> <br/>
+		{{ post.secondary_authors }} <br/>
+		{{ post.body|slice:":200"|safe }} <br/>
+		{{ post.snippet|safe }}
+		{{ post.uploaded_by.first_name }} {{ post.uploaded_by.last_name }}</li>
+	{% endfor %}
+	</ul> -->
+{% endblock %}

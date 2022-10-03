@@ -1,21 +1,20 @@
-<!-- templates/registration/login.html -->
+<!-- templates/account/login.html -->
 {% extends "base.html" %}
 {% load static %}
 
-{% block custom_css %}
+{% comment %} {% block custom_css %}
 <link rel="stylesheet" href="{% static 'css/landing.css' %}">
-{% endblock custom_css %}
+{% endblock custom_css %} {% endcomment %}
 
 {% block content %}
       <div id="login-content">
-        <h1> Nez Perce Tribe </h1>
-        <h2> Department of Fisheries Resources Management </h2>
-        <p>If you have not created an account yet, then please <a href="/accounts/signup/">sign up</a> first. </p>
+        <h1> Sign In </h1>
+        <p>If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first. </p>
         <form method="POST">
           {% csrf_token %}
           {{ form.as_p }}
           <button type="submit" class = "btn btn-primary">Sign In</button>
-          <p><a href="/accounts/password/reset/">Forgot Password?</a></p>
+          <p><a href="{% url 'account_reset_password' %}">Forgot Password?</a></p>
         </form>
       </div>
 {% endblock %}

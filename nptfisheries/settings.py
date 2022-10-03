@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-#=)^tww(0ip4e+hk28=)+s*%@y6&y%es#-(tbto#b4lg=egj)e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    #"192.168.7.199"
+    ]
 
 
 # Application definition
@@ -49,12 +51,13 @@ INSTALLED_APPS = [
     'crispy_forms',
     'widget_tweaks',
     'phone_field',
+    'ckeditor',
 
     'accounts',
-    'main',
-    'blog',
-    'doc_lib',
-    'ckeditor',
+    'dfrm_admin',
+    'news',
+    'documents',
+
 ]
 
 MIDDLEWARE = [
@@ -154,8 +157,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "accounts.CustomUser"
 
-#LOGIN_REDIRECT_URL = "home"
-#ACCOUNT_LOGOUT_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "home"
+ACCOUNT_LOGOUT_REDIRECT_URL = "home"
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

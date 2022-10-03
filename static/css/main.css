@@ -9,6 +9,7 @@
 
 .edit-content {
     text-align:  right;
+    padding: 2rem;
 }
 
 h1,
@@ -20,7 +21,8 @@ h4{
 
 #login-content{
     text-align: center;
-    padding-top: 20%;
+    padding: 5rem;
+    /* padding-top: 20%; */
 }
 
 h1.title{

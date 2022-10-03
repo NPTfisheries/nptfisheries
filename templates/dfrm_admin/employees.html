@@ -1,0 +1,45 @@
+<!-- templates/contacts.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+<div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>Employees</h1>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="edit-content">
+    {% if user.is_authenticated %}
+        <a href="{% url 'employee_new' %}" class="btn btn-primary">Add New Employee</a>
+    {% endif %}
+</div>
+    <table style="width:100%">
+        <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Position Class</th>
+            <th>Work Phone</th>
+            {% if user.is_authenticated %}
+                <th>Active</th>
+                <th>Edit</th>
+            {% endif %}
+        </tr>
+        {% for e in employees %}
+        <tr>
+            <td><a href="{% url 'profile' pk=e.name.user.pk %}">{{ e.name }}</a></td>
+            <td>{{ e.title }}</td>
+            <td>{{ e.get_position_class_display }}</td>
+            <td>{{ e.name.work_phone }}</td>
+            {% if user.is_authenticated %}
+                <td>{{ e.active }} </td>
+                <td><a href="{% url 'employee_edit' pk=e.pk %}" class="btn btn-primary">Edit</a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,46 @@
+<!-- templates/project_detail.html -->
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block header %}
+<div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>{{ project.division }}</h1>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="edit-content">
+    {% if user.is_authenticated %}
+        <a href="{% url 'project_edit' pk=project.pk %}" class="btn btn-secondary">Edit Project Content</a>
+    {% endif %}
+</div>
+<img src="{{ project.project_image1.url }}">
+<h1>{{ project.name }}</h1>
+<p>{{ project.description }}</p>
+<h2>Project Leader</h2>
+<a href="{% url 'profile' pk=project.project_leader.name.user.pk %}"><h5>{{ project.project_leader.name }}</h5><a>
+<p>{{ project.project_leader.name.user.email }}</p>
+<p>{{ project.project_leader.name.work_phone }}</p>
+{% if project.staff %}
+<h3>Staff</h3>
+    <table style="width:100%">
+        <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Email</th>
+        </tr>
+        {% for s in project.staff.all %}
+        <tr>
+            <td><a href="{% url 'profile' pk=s.name.user.pk %}">{{ s.name }}</a></td>
+            <td>{{ s.title }}</td>
+            <td>{{ s.name.user.email }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% endblock %}
