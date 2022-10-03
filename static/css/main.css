@@ -6,6 +6,22 @@
   margin-top: 30px;  Add a top margin to avoid content overlay 
 }*/
 
+.navbar {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.rounded-circle{
+    border:1px solid;
+    border-radius:50%;
+    border-color: grey;
+    }
+
+.nav-avatar {
+    width:40px;
+    height:40px;
+    object-fit:cover
+    }
 
 .edit-content {
     text-align:  right;

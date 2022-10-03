@@ -3,7 +3,7 @@
     <img src="../../static/img/NPTlogos2.png" style="width:100px">
     <!-- DFRM -->
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
@@ -11,6 +11,16 @@
         <ul class="navbar-nav me-auto">
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'division' %}">
@@ -32,9 +42,9 @@
                 <a class="nav-link" href="{% url 'employee' %}">Employees<span class="sr-only"></span></a>
             </li>
         </ul>
-    {% comment %} </div>
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2"> {% endcomment %}
-        <ul class="navbar-nav me-auto">
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ms-auto">
                 {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link">{{ user.first_name }} {{ user.last_name }}</a>
