@@ -17,7 +17,7 @@
 
 {% block content %}
 	<div class="edit-content">
-	    {% if user.is_authenticated %}
+	    {% if perms.documents.add_document %}
 	        <a href="{% url 'document_upload' %}" class="btn btn-primary"><div class="button">Add New Document</div></a>
 	    {% endif %}
 	</div>

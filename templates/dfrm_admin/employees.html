@@ -14,7 +14,7 @@
 
 {% block content %}
 <div class="edit-content">
-    {% if user.is_authenticated %}
+    {% if perms.dfrm_admin.add_employee %}
         <a href="{% url 'employee_new' %}" class="btn btn-primary">Add New Employee</a>
     {% endif %}
 </div>
@@ -24,7 +24,7 @@
             <th>Title</th>
             <th>Position Class</th>
             <th>Work Phone</th>
-            {% if user.is_authenticated %}
+            {% if perms.dfrm_admin.change_employee %}
                 <th>Active</th>
                 <th>Edit</th>
             {% endif %}
@@ -35,7 +35,7 @@
             <td>{{ e.title }}</td>
             <td>{{ e.get_position_class_display }}</td>
             <td>{{ e.name.work_phone }}</td>
-            {% if user.is_authenticated %}
+            {% if perms.dfrm_admin.change_employee %}
                 <td>{{ e.active }} </td>
                 <td><a href="{% url 'employee_edit' pk=e.pk %}" class="btn btn-primary">Edit</a></td>
             {% endif %}

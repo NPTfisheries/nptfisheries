@@ -15,7 +15,7 @@
 
 {% block content %}
 <div class="edit-content">
-    {% if user.is_authenticated %}
+    {% if perms.news.add_post %}
         <a href="{% url 'news_post' %}" class="btn btn-primary"><div class="button">Add New Post</div></a>
     {% endif %}
 </div>

@@ -25,6 +25,17 @@
   </div>
 </div>
 
+<div class="home-container">
+  <div>
+    <h1>Debug Permissions</h1>
+    <p> User is authenticated: {{ request.user.is_authenticated }} </p>
+    <p> User is: {{ request.user }} </p>
+    <p> User is member of add post: {{ perms.news.add_post }} </p>
+    <p> User is member of change post: {{ perms.news.change_post }} </p>
+    <p> User is member of delete post: {{ perms.news.delete_post }} </p>
+    <p> User is member of view post: {{ perms.news.view_post }} </p>
+  </div>
+</div>
 
 <div class="home-container">
 <blockquote class="blockquote">

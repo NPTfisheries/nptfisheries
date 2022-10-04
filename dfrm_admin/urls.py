@@ -15,6 +15,7 @@ urlpatterns = [
     path('project/<int:pk>/edit/', views.project_edit, name='project_edit'),
 
     path('office/', views.office, name = 'office'),
+    path('office/<int:pk>/', views.office_detail, name='office_detail'),
     path('office/new/', views.office_new, name = 'office_new'),
     path('office/<int:pk>/edit/', views.office_edit, name='office_edit'),
     

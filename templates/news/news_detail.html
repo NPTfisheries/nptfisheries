@@ -4,10 +4,13 @@
 
 {% block content %}
 <div class="edit-content">
-    {% if user.is_authenticated %}
-        <a href="{% url 'news_edit' pk=post.pk %}" class="btn btn-secondary">Edit</a>
-        <a href="{% url 'news_delete' pk=post.pk %}" class="btn btn-secondary">Delete</a>
-    {% endif %}
+    {% comment %} {% if perms.news.add_post %} {% endcomment %}
+	{% if post.uploaded_by.name.user == request.user %}
+        <a href="{% url 'news_edit' pk=post.pk %}" class="btn btn-primary">Edit Post</a>
+	{% endif %}
+	{% if perms.news.delete_post%}
+        <a href="{% url 'news_delete' pk=post.pk %}" class="btn btn-primary">Delete Post</a>
+	{% endif %}
 </div>
 	<h1> {{ post.title }}</h1>
 
@@ -20,5 +23,5 @@
 	<small> Other Authors: {{ post.secondary_authors }} </small><br/>
 	<hr>
 	<p> {{ post.body|safe }} </p>
-	<p> Uploaded By: {{ post.uploaded_by.first_name }} {{ post.uploaded_by.last_name }} </p>
+	<p> Uploaded By: {{ post.uploaded_by.name.user.first_name }} {{ post.uploaded_by.name.user.last_name }} </p>
 {% endblock %}

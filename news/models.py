@@ -28,7 +28,7 @@ class Post(models.Model):
 			img.save(self.header_image.path)
 
 	def __str__(self):
-		return self.title + ' | ' + self.primary_author
+		return self.title
 
 	def get_absolute_url(self):
 		return reverse('news_list')

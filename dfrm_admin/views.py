@@ -88,6 +88,11 @@ def office(request):
     office = Office.objects.all().order_by("name")
     return render(request, 'dfrm_admin/office.html', {'office':office})
 
+def office_detail(request, pk):
+    office = get_object_or_404(Office, pk=pk)
+    projects = Project.objects.filter(office = pk)
+    return render(request, 'dfrm_admin/office_detail.html', {'office':office, 'projects':projects})
+
 def office_new(request):
     if request.method == "POST":
         form = OfficeForm(request.POST, request.FILES)

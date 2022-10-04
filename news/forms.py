@@ -9,8 +9,8 @@ class PostForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'This is the title'}),
             'uploaded_by': forms.Select(attrs={'class': 'form-control'}),
-            'primary_author': forms.TextInput(attrs={'class': 'form-control'}),
-            'secondary_authors': forms.TextInput(attrs={'class': 'form-control'}),
+            #'primary_author': forms.TextInput(attrs={'class': 'form-control'}),
+            #'secondary_authors': forms.TextInput(attrs={'class': 'form-control'}),
             'snippet': forms.Textarea(attrs={'class': 'form-control'}),
             'body': forms.Textarea(attrs={'class': 'form-control'}),
         }

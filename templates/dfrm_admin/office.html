@@ -14,12 +14,12 @@
 
 {% block content %}
 <div class="edit-content">
-    {% if user.is_authenticated %}
+    {% if perms.dfrm_admin.add_office %}
         <a href="{% url 'office_new' %}" class="btn btn-primary">Add New Office</a>
     {% endif %}
 </div>
 {% for o in office %}
-    <h2>{{ o.name }}</h2>
+    <a href="{% url 'office_detail' pk=o.pk %}"><h2>{{ o.name }}</h2></a>
     <p>Phone: {{ o.phone_number }}</p>
     {% if o.fax_number %}
         <p>Fax: {{ o.fax_number }}</p>

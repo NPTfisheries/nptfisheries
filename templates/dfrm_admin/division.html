@@ -15,7 +15,7 @@
 <hr>
 {% block content %}
 <div class="edit-content">
-    {% if user.is_authenticated %}
+    {% if perms.dfrm_admin.add_division %}
         <a href="{% url 'division_new' %}" class="btn btn-primary">Add New Division</a>
     {% endif %}
 </div>
