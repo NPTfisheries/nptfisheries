@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import permission_required
 from accounts.models import UserProfile
 from dfrm_admin.models import Employee, Office, Division, Project
 #from accounts.models import CustomUser
@@ -11,13 +12,6 @@ from .forms import EmployeeForm, OfficeForm, DivisionForm, ProjectForm
 def home(request):
 
     post = Post.objects.filter(header_image__isnull = False).order_by("-pk")[0:3]
-
-# class NewsList(ListView):
-#     model = Post
-#     template_name = 'news_list.html'
-#     #ordering = ['-id']
-#     ordering = ['-post_date']
-
     return render(request, 'home.html', {"post":post})
 
 # All Division Views
@@ -31,6 +25,7 @@ def division_detail(request, pk):
     # need to add projects filtered for division
     return render(request, 'dfrm_admin/division_detail.html', {'divisions':divisions, 'projects':projects})
 
+@permission_required('dfrm_admin.add_division', raise_exception=True)
 def division_new(request):
     if request.method == "POST":
         form = DivisionForm(request.POST, request.FILES)
@@ -42,6 +37,7 @@ def division_new(request):
         form = DivisionForm()
     return render(request, 'dfrm_admin/division_edit.html', {'form':form})
 
+@permission_required('dfrm_admin.change_division', raise_exception=True)
 def division_edit(request, pk):
     division = get_object_or_404(Division, pk=pk)
     if request.method == "POST":
@@ -59,6 +55,7 @@ def project_detail(request, pk):
     project = get_object_or_404(Project, pk=pk)
     return render(request, 'dfrm_admin/project_detail.html', {'project':project})
 
+@permission_required('dfrm_admin.add_project', raise_exception=True)
 def project_new(request):
     if request.method == "POST":
         form = ProjectForm(request.POST, request.FILES)
@@ -70,6 +67,7 @@ def project_new(request):
         form = ProjectForm()
     return render(request, 'dfrm_admin/project_edit.html', {'form':form})
 
+@permission_required('dfrm_admin.change_project', raise_exception=True)
 def project_edit(request, pk):
     project = get_object_or_404(Project, pk=pk)
     if request.method == "POST":
@@ -93,6 +91,7 @@ def office_detail(request, pk):
     projects = Project.objects.filter(office = pk)
     return render(request, 'dfrm_admin/office_detail.html', {'office':office, 'projects':projects})
 
+@permission_required('dfrm_admin.add_office', raise_exception=True)
 def office_new(request):
     if request.method == "POST":
         form = OfficeForm(request.POST, request.FILES)
@@ -104,6 +103,7 @@ def office_new(request):
         form = OfficeForm()
     return render(request, 'dfrm_admin/office_edit.html', {'form':form})
 
+@permission_required('dfrm_admin.change_office', raise_exception=True)
 def office_edit(request, pk):
     office = get_object_or_404(Office, pk=pk)
     if request.method == "POST":
@@ -122,6 +122,7 @@ def employee(request):
     employees = Employee.objects.all().order_by("-position_class","name__user__first_name")
     return render(request, 'dfrm_admin/employees.html', {'employees':employees})
 
+@permission_required('dfrm_admin.add_employee', raise_exception=True)
 def employee_new(request):
     if request.method == "POST":
         form = EmployeeForm(request.POST)
@@ -133,6 +134,7 @@ def employee_new(request):
         form = EmployeeForm()
     return render(request, 'dfrm_admin/employee_edit.html', {'form':form})
 
+@permission_required('dfrm_admin.change_employee', raise_exception=True)
 def employee_edit(request, pk):
     employee = get_object_or_404(Employee, pk=pk)
     if request.method == "POST":

@@ -9,7 +9,7 @@
             <div>
                 <h1 class="border-bottom mb-4">{{ form.instance.user.first_name }} {{ form.instance.user.last_name }} </h1>
                 <img src="{{ form.instance.profile_picture.url }}">
-                <p>Bio: {{ form.instance.bio }}</p>
+                <p>Bio: {{ form.instance.bio|safe }}</p>
                 <p>Employer: {{ form.instance.employer }}</p>
                 <p>Work Phone: {{ form.instance.work_phone }}</p>
                 <p>Mobile Phone: {{ form.instance.mobile_phone }}</p>

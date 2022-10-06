@@ -3,6 +3,7 @@ from django.views.generic import ListView, CreateView
 #from django_tables2 import SingleTableView
 from django_filters.views import FilterView
 from django_tables2.views import SingleTableMixin
+from django.contrib.auth.decorators import permission_required
 from .models import Document
 from dfrm_admin.models import Employee
 from .forms import DocumentForm
@@ -31,6 +32,7 @@ class DocumentList(SingleTableMixin, FilterView):
 # 	form_class = DocumentForm
 # 	template_name = 'document_upload.html'
 
+@permission_required('documents.add_document', raise_exception=True)
 def DocumentUpload(request):
 	if request.method == 'POST':
 		form = DocumentForm(request.POST, request.FILES)

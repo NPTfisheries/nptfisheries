@@ -29,11 +29,27 @@
   <div>
     <h1>Debug Permissions</h1>
     <p> User is authenticated: {{ request.user.is_authenticated }} </p>
-    <p> User is: {{ request.user }} </p>
+
+    <p> User is member of view documents: {{ perms.documents.view_document }} </p>  
+    <p> User is member of add documents: {{ perms.documents.add_document }} </p>
+    <p> User is member of change documents: {{ perms.documents.change_document }} </p>
+    <p> User is member of delete documents: {{ perms.documents.delete_document }} </p>
+
+    <p> User is member of view post: {{ perms.news.view_post }} </p>    
     <p> User is member of add post: {{ perms.news.add_post }} </p>
     <p> User is member of change post: {{ perms.news.change_post }} </p>
     <p> User is member of delete post: {{ perms.news.delete_post }} </p>
-    <p> User is member of view post: {{ perms.news.view_post }} </p>
+
+    <p> User is member of view division: {{ perms.dfrm_admin.view_division }} </p>  
+    <p> User is member of add division: {{ perms.dfrm_admin.add_division }} </p>
+    <p> User is member of change division: {{ perms.dfrm_admin.change_division }} </p>
+    <p> User is member of delete division: {{ perms.dfrm_admin.delete_division }} </p>
+  
+    <p> User is member of view office: {{ perms.dfrm_admin.view_office }} </p>    
+    <p> User is member of add office: {{ perms.dfrm_admin.add_office }} </p>
+    <p> User is member of change office: {{ perms.dfrm_admin.change_office }} </p>
+    <p> User is member of delete office: {{ perms.dfrm_admin.delete_office }} </p>
+
   </div>
 </div>
 
