@@ -1,6 +1,7 @@
 from django.db import models
 from accounts.models import UserProfile
 from phone_field import PhoneField
+from ckeditor.fields import RichTextField
 from PIL import Image
 
 class Employee(models.Model):
@@ -65,7 +66,7 @@ class Office(models.Model):
 
 class Division(models.Model):
     name = models.CharField(max_length=300, help_text = "Division name")
-    description = models.TextField(help_text = "Division description")
+    description = RichTextField(help_text = "Division description")
     director = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='division_directors')
     deputy_director = models.ForeignKey(Employee, null = True, blank = True, on_delete=models.CASCADE, related_name="division_deputies")
     administrative_assistant = models.ForeignKey(Employee, null=True, blank=True, on_delete=models.CASCADE, related_name='division_support')
@@ -88,7 +89,7 @@ class Project(models.Model):
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
     office = models.ForeignKey(Office, on_delete=models.CASCADE, default = "1")
     name = models.CharField(max_length=300, help_text = "Project name")
-    description = models.TextField(help_text = "Project description")
+    description = RichTextField(help_text = "Project description")
     project_leader = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="project_leads")
     staff = models.ManyToManyField(Employee, blank = True)
     created = models.DateTimeField(help_text = "When was the project created?")

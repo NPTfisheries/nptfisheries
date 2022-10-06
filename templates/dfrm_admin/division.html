@@ -28,10 +28,11 @@
                     {{ d.name }}
                 </h2>
                 <div class="row card-body">
-                    <img class="col-sm-6" src="{{ d.division_image1.url }}" href="{% url 'division_detail' pk=d.pk %}">
-                    <div class="col-sm-6">
+                    <img class="col-lg-6" src="{{ d.division_image1.url }}" href="{% url 'division_detail' pk=d.pk %}">
+                    <div class="col-lg-6">
                        <!--  <h5 class="card-title">{{ d.name }}</h5> -->
-                        <p class="card-text">{{ d.description|linebreaksbr }} <a class="stretched-link" href="{% url 'division_detail' pk=d.pk %}"></a></p>
+                       <p> <strong>Division Director:</strong> {{ d.director }} <a class="stretched-link" href="{% url 'division_detail' pk=d.pk %}"></a></p>
+                       {% comment %} <p class="card-text">{{ d.description|safe }} <a class="stretched-link" href="{% url 'division_detail' pk=d.pk %}"></a></p> {% endcomment %}
                     </div>
                 </div>
 <!--                 <div class="card-footer">
@@ -49,11 +50,12 @@
                     {{ d.name }}
                 </h2>
                 <div class="row card-body">
-                    <div class="col-sm-6">
+                    <div class="col-lg-6">
                        <!--  <h5 class="card-title">{{ d.name }}</h5> -->
-                        <p class="card-text">{{ d.description|linebreaksbr }} <a class="stretched-link" href="{% url 'division_detail' pk=d.pk %}"></a></p>
+                        <p> <strong>Division Director:</strong> {{ d.director }} <a class="stretched-link" href="{% url 'division_detail' pk=d.pk %}"></a></p>
+                        {% comment %} <p class="card-text">{{ d.description|safe }} <a class="stretched-link" href="{% url 'division_detail' pk=d.pk %}"></a></p> {% endcomment %}
                     </div>
-                    <img class="col-sm-6" src="{{ d.division_image1.url }}" href="{% url 'division_detail' pk=d.pk %}">
+                    <img class="col-lg-6" src="{{ d.division_image1.url }}" href="{% url 'division_detail' pk=d.pk %}">
                 </div>
 <!--                 <div class="card-footer">
                     <a href="{% url 'division_detail' pk=d.pk %}">Read more...</a>

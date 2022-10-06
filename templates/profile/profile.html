@@ -6,20 +6,28 @@
     <div class="content-section col-lg-12 col-md-12 col-sm-12 tutorial-style" style="min-height:65vh;">
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <div>
+            <div class="container">
                 <h1 class="border-bottom mb-4">{{ form.instance.user.first_name }} {{ form.instance.user.last_name }} </h1>
-                <img src="{{ form.instance.profile_picture.url }}">
-                <p>Bio: {{ form.instance.bio|safe }}</p>
-                <p>Employer: {{ form.instance.employer }}</p>
-                <p>Work Phone: {{ form.instance.work_phone }}</p>
-                <p>Mobile Phone: {{ form.instance.mobile_phone }}</p>
-                <p>Email Updates: {{ form.instance.email_updates }} </p>
+                <div class = "row">
+                    <div class="col">
+                        <img class="rounded-circle avatar" src="{{ form.instance.profile_picture.url }}">
+                    </div>
+                    <div class="col align-middle">
+                        <p><strong>Employer:</strong> {{ form.instance.employer }}</p>
+                        <p><strong>Work Phone:</strong> {{ form.instance.work_phone }}</p>
+                        <p><strong>Mobile Phone:</strong> {{ form.instance.mobile_phone }}</p>
+                    </div>
+                </div>
+                <p>{{ form.instance.bio|safe }}</p>
             </div>
         
             {% if user.username == form.instance.user.username %}
+            <div class="form-group">
             <legend class="border-bottom mb-4"> Edit Profile</legend>
+                {{ form.media }}
                 {{ form.as_p }}
                 <button type="submit" class="save btn btn-secondary">Save</button>
+            </div>
             {% endif %}
         </form>
     </div>

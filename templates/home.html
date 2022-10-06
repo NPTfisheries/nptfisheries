@@ -25,7 +25,7 @@
   </div>
 </div>
 
-<div class="home-container">
+{% comment %} <div class="home-container">
   <div>
     <h1>Debug Permissions</h1>
     <p> User is authenticated: {{ request.user.is_authenticated }} </p>
@@ -51,7 +51,7 @@
     <p> User is member of delete office: {{ perms.dfrm_admin.delete_office }} </p>
 
   </div>
-</div>
+</div> {% endcomment %}
 
 <div class="home-container">
 <blockquote class="blockquote">
@@ -62,9 +62,9 @@
 </div>
 <!--<iframe style="border: none; width: 920px; height: 500px;" src="https://nptfisheries.shinyapps.io/PITtrackR/" width="300" height="150"></iframe> -->
 
-<div class="home-container">
+{% comment %} <div class="home-container">
 <h2 style="text-align: center;">Fishing Seasons and Current Harvest</h2>
-</div>
+</div> {% endcomment %}
 
 <div class="home-container">
 <h2>Recent News</h2>

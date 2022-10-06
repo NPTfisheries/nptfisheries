@@ -22,7 +22,7 @@
     {% endif %}
 </div>
 <img src="{{ divisions.division_image1.url }}">
-<p>{{ divisions.description }}</p>
+<p>{{ divisions.description | safe }}</p>
 <p>Director: {{ divisions.director }} </p>
 {% if divisions.deputy %}
     <p>Deputy Director: {{ divisions.deputy }} </p>
@@ -34,7 +34,7 @@
 <h2>Projects</h2>
     {% for p in projects %}
         <h3><a href="{% url 'project_detail' pk=p.pk %}">{{ p.name }}</a></h2>
-        <p>{{ p.description|linebreaksbr }}</p>
+        {% comment %} <p>{{ p.description|safe }}</p> {% endcomment %}
         {% comment %} <p>Project Leader: {{ p.project_leader }}</p> {% endcomment %}
     {% endfor %}
 

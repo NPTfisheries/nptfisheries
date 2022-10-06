@@ -30,3 +30,7 @@ class Document(models.Model):
 
 	def get_absolute_url(self):
 		return reverse('document_list')
+
+	@property
+	def all_employee_authors(self):
+		return ', '.join([x.name.user.last_name for x in self.employee_authors.all()])

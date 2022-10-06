@@ -18,6 +18,12 @@
     border-color: grey;
     }
 
+.avatar {
+    width: 300px;
+    height: 300px;
+    object-fit:cover;
+}
+
 .nav-avatar {
     width:40px;
     height:40px;

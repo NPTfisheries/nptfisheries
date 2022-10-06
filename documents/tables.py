@@ -18,8 +18,9 @@ class DocumentTable(tables.Table):
 		return format_html('<a href="/media/{}" class="btn btn-primary"><i class="bi bi-download"></i></a>', value)	
 
 	title1 = TruncatedTextColumn(accessor=A('title'))
+	#employee_authors = tables.Column(verbose_name = "Employee Authors")
 	#primary_author = tables.Column(verbose_name= 'Author')
-	secondary_authors = tables.Column(verbose_name= 'Employee Authors')
+	#secondary_authors = tables.Column(verbose_name= 'Employee Authors')
 	document_type = tables.Column(verbose_name= 'Type')
 	publish_date = tables.Column(verbose_name= 'Published')
 
@@ -28,5 +29,5 @@ class DocumentTable(tables.Table):
 		#attrs = {"class": "paleblue"}
 		per_page = 5
 		template_name = 'django_tables2/bootstrap.html'
-		fields = ('title1', 'employee_authors', 'document_type', 'publish_date','file')
+		fields = ('title1', 'all_employee_authors', 'document_type', 'publish_date','file')
 		#exclude = ('id', 'uploaded_by', 'upload_date', 'title')

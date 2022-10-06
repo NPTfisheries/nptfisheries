@@ -17,3 +17,7 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('employer', 'work_phone', 'mobile_phone', 'email_updates', 'bio', 'profile_picture')
+
+        widgets = {
+            'bio': forms.Textarea(attrs={'class': 'form-control'})
+        }

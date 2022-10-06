@@ -21,7 +21,7 @@
 </div>
 <img src="{{ project.project_image1.url }}">
 <h1>{{ project.name }}</h1>
-<p>{{ project.description }}</p>
+<p>{{ project.description|safe }}</p>
 <h2>Project Leader</h2>
 <a href="{% url 'profile' pk=project.project_leader.name.user.pk %}"><h5>{{ project.project_leader.name }}</h5><a>
 <p>{{ project.project_leader.name.user.email }}</p>

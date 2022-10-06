@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from phone_field import PhoneField
+from ckeditor.fields import RichTextField
 from PIL import Image
 
 class CustomUser(AbstractUser):
@@ -31,7 +32,7 @@ class UserProfile(models.Model):
     work_phone = PhoneField(null=True, blank=True, help_text='Work phone number')
     mobile_phone = PhoneField(null=True, blank=True, help_text='Mobile phone number')
     email_updates = models.BooleanField(default=False, help_text="Would you like to recieve email updates?")
-    bio = models.TextField(null = True, help_text = "Biography")   
+    bio = RichTextField(null = True, help_text = "Biography")   
     profile_picture = models.ImageField(upload_to='images/profile/', default='images/profile/P7160105_fix.JPG') 
 
     def save(self, *args, **kwargs):

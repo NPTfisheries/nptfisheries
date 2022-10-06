@@ -9,14 +9,14 @@ class DocumentForm(forms.ModelForm):
 
     class Meta:
         model = Document
-        #fields = ('title', 'employee_authors', 'publish_date', 'document_type', 'keywords', 'citation', 'file',)
-        exclude = ('uploaded_by',)
+        fields = ('title', 'employee_authors', 'publish_date', 'document_type', 'keywords', 'citation', 'file', 'uploaded_by')
+        #exclude = ('uploaded_by',)
 
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Document Title'}),
             #'employee_authors': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Secondary Authors'}),
             'publish_date': DateInput(attrs={'class': 'form-control'}),
-            'document_type': forms.ChoiceField(),
+           # 'document_type': forms.ChoiceField(),
             'keywords': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Keywords'}),
             'citation': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Citation'}),
         }
