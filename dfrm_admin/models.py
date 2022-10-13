@@ -1,36 +1,42 @@
 from django.db import models
-from accounts.models import UserProfile
+from accounts.models import CustomUser
 from phone_field import PhoneField
 from ckeditor.fields import RichTextField
 from PIL import Image
 
+class PositionClass(models.Model):
+    name = models.CharField(max_length = 50)
+    grade = models.SmallAutoField()
+
 class Employee(models.Model):
 
-    POSITION_CLASS = (
-        (9,"Administrative Specialist I"),
-        (11,"Administrative Specialist II"),
-        (13,"Administrative Specialist III"),
-        (15,"Executive Assistant I"),
-        (9,"Technician I"),
-        (11,"Technician II" ),
-        (13,"Technician III"),
-        (15,"Technician IV"),
-        (17,"Professional I" ),
-        (19,"Professional II"),
-        (20,"Professional III"),
-        (21,"Professional IV"),
-        (22,"Project Leader V"),
-        (23,"Manager I"),
-        (24,"Manager II"),
-        (26,"Manager III"),
-        (28,"Manager IV"),
-        (30,"Manager V")
-    )
+    # POSITION_CLASS = (
+    #     (9,"Administrative Specialist I"),
+    #     (11,"Administrative Specialist II"),
+    #     (13,"Administrative Specialist III"),
+    #     (15,"Executive Assistant I"),
+    #     (9,"Technician I"),
+    #     (11,"Technician II" ),
+    #     (13,"Technician III"),
+    #     (15,"Technician IV"),
+    #     (17,"Professional I" ),
+    #     (19,"Professional II"),
+    #     (20,"Professional III"),
+    #     (21,"Professional IV"),
+    #     (22,"Professional V"),
+    #     (23,"Manager I"),
+    #     (24,"Manager II"),
+    #     (26,"Manager III"),
+    #     (28,"Manager IV"),
+    #     (30,"Manager V")
+    # )
 
-    name = models.OneToOneField(UserProfile, on_delete=models.CASCADE, help_text = "Employee name", related_name = 'employees')
-    position_class = models.SmallIntegerField(choices=POSITION_CLASS, help_text = "Position class")
+    name = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name = 'employees')
+    position_class = models.ForeignKey(PositionClass, on_delete=models.CASCADE)
     title = models.CharField(max_length = 50, help_text="Position title")
-    active = models.BooleanField(default=False, help_text="Is the employee actively employed?")
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField(null = True, blank =True)
+    active = models.BooleanField(default=False, help_text="Is the individual still employed?")
 
     def __str__(self):
         return self.name.user.first_name + ' ' + self.name.user.last_name
@@ -43,8 +49,8 @@ class Office(models.Model):
     city = models.CharField(max_length=50, help_text = 'City')
     state = models.CharField(max_length=50, help_text = 'State')
     zipcode = models.CharField(max_length=5, help_text = 'Zip Code')
-    office_manager = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name = 'offices')
-    administrative_assistant = models.ForeignKey(Employee, null = True, blank = True, on_delete=models.CASCADE, related_name = 'office_assistants')
+    office_manager = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name = 'manager')
+    administrative_assistant = models.ForeignKey(Employee, null = True, blank = True, on_delete=models.CASCADE, related_name = 'assistant')
     office_image = models.ImageField(blank=True, upload_to='images/office/')
 
     def save(self, *args, **kwargs):
