@@ -41,11 +41,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.gis',
 
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
 
+    'djgeojson',
+    'leaflet',
     'django_tables2',
     'django_filters',
     'crispy_forms',
@@ -57,6 +60,7 @@ INSTALLED_APPS = [
     'dfrm_admin',
     'news',
     'documents',
+    'locations',
 
 ]
 
@@ -188,4 +192,15 @@ ACCOUNT_UNIQUE_EMAIL = True
 
 ACCOUNT_FORMS = {
     'signup': 'accounts.forms.CustomSignupForm'
+}
+
+GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal305'
+GEOS_LIBRARY_PATH = r'C:\OSGeo4W\bin\geos_c'
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (46.5, -116.5),
+    'DEFAULT_ZOOM': 9,
+    'MIN_ZOOM': 6,
+    'MAX_ZOOM': 18,
+    'DEFAULT_PRECISION': 6
 }

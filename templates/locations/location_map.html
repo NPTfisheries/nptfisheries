@@ -1,0 +1,53 @@
+<!-- templates/locations/map.html -->
+{% extends "base.html" %}
+{% load leaflet_tags %}
+
+{% block head %}
+    {% leaflet_css %}
+    {% leaflet_js %}
+{% endblock head %}
+
+{% block header %}
+<div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>Locations</h1>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
+            
+{% block content %}
+
+    <div class="edit-content">
+        {% if perms.locations.add_location %}
+            <a href="{% url 'location_new' %}" class="btn btn-primary"><div class="button">Add New Location</div></a>
+        {% endif %}
+    </div>
+
+    <style>
+        .leaflet-container {
+            width: 100%;
+            height: 500px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    {% leaflet_map "main" callback="map_init_basic" %}
+
+    <script type="text/javascript">
+        function map_init_basic(map, options) {
+        map.setView([46.5, -116.5], 7);
+
+        var dataurl = '{% url "data" %}';
+            // Download GeoJSON via Ajax
+        $.getJSON(dataurl, function(data){
+                // Add GeoJSON layer
+        L.geoJson(data).bindPopup(function(layer){return layer.feature.properties.id}).addTo(map);
+            });
+        }
+    </script>
+
+{% endblock content %}

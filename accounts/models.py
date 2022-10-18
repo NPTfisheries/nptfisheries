@@ -1,3 +1,4 @@
+from types import CoroutineType
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from phone_field import PhoneField
@@ -28,10 +29,12 @@ class UserProfile(models.Model):
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, help_text = "User name", related_name='user_profiles')
     #location = models.CharField(max_length = 50, null = True, blank = True, help_text="City, State")
-    employer = models.CharField(max_length = 50, help_text="Employer")
+    organization = models.CharField(max_length = 50, help_text="Employer")
     work_phone = PhoneField(null=True, blank=True, help_text='Work phone number')
     mobile_phone = PhoneField(null=True, blank=True, help_text='Mobile phone number')
     email_updates = models.BooleanField(default=False, help_text="Would you like to recieve email updates?")
+    city = models.CharField("City", null = True, blank = True, max_length=50)
+    state = models.CharField("State", null = True, blank = True, max_length=50)
     bio = RichTextField(null = True, help_text = "Biography")   
     profile_picture = models.ImageField(upload_to='images/profile/', default='images/profile/P7160105_fix.JPG') 
 

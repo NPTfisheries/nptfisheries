@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import permission_required
 from accounts.models import UserProfile
-from dfrm_admin.models import Employee, Office, Division, Project
+from dfrm_admin.models import Employee, Facility, Division, Project
 #from accounts.models import CustomUser
 from news.models import Post
 #from accounts.models import UserProfile
-from .forms import EmployeeForm, OfficeForm, DivisionForm, ProjectForm
+from .forms import EmployeeForm, FacilityForm, DivisionForm, ProjectForm
 
 # Create your views here.
 
@@ -82,39 +82,39 @@ def project_edit(request, pk):
 
 # Office Views
 
-def office(request):
-    office = Office.objects.all().order_by("name")
-    return render(request, 'dfrm_admin/office.html', {'office':office})
+def facility(request):
+    facility = Facility.objects.all().order_by("name")
+    return render(request, 'dfrm_admin/facility.html', {'facility':facility})
 
-def office_detail(request, pk):
-    office = get_object_or_404(Office, pk=pk)
-    projects = Project.objects.filter(office = pk)
-    return render(request, 'dfrm_admin/office_detail.html', {'office':office, 'projects':projects})
+def facility_detail(request, pk):
+    facility = get_object_or_404(Facility, pk=pk)
+    projects = Project.objects.filter(facility = pk)
+    return render(request, 'dfrm_admin/facility_detail.html', {'facility':facility, 'projects':projects})
 
-@permission_required('dfrm_admin.add_office', raise_exception=True)
-def office_new(request):
+@permission_required('dfrm_admin.add_facility', raise_exception=True)
+def facility_new(request):
     if request.method == "POST":
-        form = OfficeForm(request.POST, request.FILES)
+        form = FacilityForm(request.POST, request.FILES)
         if form.is_valid():
             o = form.save(commit=False)
             o.save()
-            return redirect('office')
+            return redirect('facility')
     else:
-        form = OfficeForm()
-    return render(request, 'dfrm_admin/office_edit.html', {'form':form})
+        form = FacilityForm()
+    return render(request, 'dfrm_admin/facility_edit.html', {'form':form})
 
-@permission_required('dfrm_admin.change_office', raise_exception=True)
-def office_edit(request, pk):
-    office = get_object_or_404(Office, pk=pk)
+@permission_required('dfrm_admin.change_facility', raise_exception=True)
+def facility_edit(request, pk):
+    facility = get_object_or_404(Facility, pk=pk)
     if request.method == "POST":
-        form = OfficeForm(request.POST, request.FILES, instance=office)
+        form = FacilityForm(request.POST, request.FILES, instance=facility)
         if form.is_valid():
             d = form.save(commit=False)
             d.save()
-            return redirect('office')
+            return redirect('facility')
     else:
-        form = OfficeForm(instance=office)
-    return render(request, 'dfrm_admin/office_edit.html', {'form': form})
+        form = FacilityForm(instance=facility)
+    return render(request, 'dfrm_admin/facility_edit.html', {'form': form})
 
 # Employee Views
 

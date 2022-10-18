@@ -6,6 +6,15 @@
   margin-top: 30px;  Add a top margin to avoid content overlay 
 }*/
 
+/* .container {
+    padding-bottom: 2rem;
+} */
+
+.post-form{
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
 .navbar {
 
     padding-left: 2rem;

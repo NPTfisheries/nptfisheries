@@ -28,4 +28,5 @@ urlpatterns = [
     path("", include("dfrm_admin.urls")),
     path("news/", include("news.urls")),
     path("docs/", include("documents.urls")),
+    path("locs/", include('locations.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

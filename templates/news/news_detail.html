@@ -24,4 +24,36 @@
 	<hr>
 	<p> {{ post.body|safe }} </p>
 	<p> Uploaded By: {{ post.uploaded_by.name.user.first_name }} {{ post.uploaded_by.name.user.last_name }} </p>
+
+	<h2> Comments </h2>
+
+	<div class="container">
+		{% if user.is_authenticated %}
+		<form action="" method="POST" id="main_form" class="comment_form">
+			<div>
+				<label for="comment">Type Comment here</label>
+			{{ comment_form.content }} {% csrf_token %} <input type="submit" value="Post"></div>
+			</div>
+		</form>
+		{% else %} <h2>You need to Login to comment</h2> 
+		{% endif %}
+
+		{% for comment in comments %}
+			{% if comment.is_parent %}
+			<p> <b>{{ comment.author }} : </b> {{ comment.content }}</p> 
+			&nbsp; &nbsp; &nbsp;
+			<form action="" method="POST" id="main_form" class="comment_form">
+				<div class="container">
+					&nbsp; &nbsp; &nbsp;<label for = "comment">Reply here</label>
+					&nbsp; &nbsp; &nbsp;<input type="text" name="content"> <input type="hidden" value="{{ comment.pk }}" name="parent"> {% csrf_token %} <input type="submit" value="Post"></div>
+				</div>
+			</form>
+			{% endif %} 
+			{% for replies in comment.children %}
+			<p>&nbsp; &nbsp; &nbsp; <b>{{ comment.author }} : </b> {{ replies.content }}</p>
+			{% endfor %}
+		{% endfor %}
+	</div>
+
 {% endblock %}
+

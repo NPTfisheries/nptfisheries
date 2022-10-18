@@ -1,4 +1,4 @@
-<!-- templates/admin/office.html -->
+<!-- templates/admin/facility.html -->
 {% extends "base.html" %}
 {% load static %}
 
@@ -6,7 +6,7 @@
 <div class="page-header">
     <div class="black-background">
         <div class="container">
-            <h1>Offices</h1>
+            <h1>Facilities</h1>
         </div>
     </div>
 </div>
@@ -14,25 +14,25 @@
 
 {% block content %}
 <div class="edit-content">
-    {% if perms.dfrm_admin.add_office %}
-        <a href="{% url 'office_new' %}" class="btn btn-primary">Add New Office</a>
+    {% if perms.dfrm_admin.add_facility %}
+        <a href="{% url 'facility_new' %}" class="btn btn-primary">Add New Facility</a>
     {% endif %}
 </div>
-{% for o in office %}
-    <a href="{% url 'office_detail' pk=o.pk %}"><h2>{{ o.name }}</h2></a>
+{% for o in facility %}
+    <a href="{% url 'facility_detail' pk=o.pk %}"><h2>{{ o.name }}</h2></a>
     <p>Phone: {{ o.phone_number }}</p>
     {% if o.fax_number %}
         <p>Fax: {{ o.fax_number }}</p>
     {% endif %}
     <p>{{ o.address }}, {{ o.city }}, {{ o.state }}</p>
-    <p>Office Manager: {{ o.office_manager }}</p>
-    <p>Work Phone: {{ o.office_manager.name.work_phone }}</p>
-    <p>Email: {{ o.office_manager.name.user.email }}</p>
+    <p>Manager: {{ o.manager }}</p>
+    <p>Work Phone: {{ o.manager.name.work_phone }}</p>
+    <p>Email: {{ o.manager.name.user.email }}</p>
     {% if o.administrative_assistant %}
         <p>Administrative Assistant: {{ o.administrative_assistant }}</p>
     {% endif %}
-    {% if o.office_image %}
-        <img src={{ o.office_image.url }}>
+    {% if o.facility_image %}
+        <img src={{ o.facility_image.url }}>
     {% endif %}
     <hr>
 {% endfor %}

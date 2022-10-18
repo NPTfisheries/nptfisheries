@@ -1,0 +1,27 @@
+<!-- templates/locations/location_new.html -->
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block header %}
+<div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>Add/Edit Locations</h1>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
+<hr>
+{% block content %}
+
+
+<div class="container">
+    <form method="POST" class="post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="save btn btn-primary">Save</button>
+    </form>
+</div>
+{% endblock %}

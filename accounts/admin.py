@@ -32,4 +32,4 @@ admin.site.register(CustomUser, CustomUserAdmin)
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'employer', 'work_phone', 'email_updates')
+    list_display = ('id', 'user', 'organization', 'work_phone', 'email_updates')

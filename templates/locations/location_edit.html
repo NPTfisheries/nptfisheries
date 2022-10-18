@@ -1,0 +1,43 @@
+<!-- templates/locations/location_edit.html -->
+{% extends "base.html" %}
+{% load static %}
+{% load leaflet_tags %}
+
+{% block head %}
+    {% leaflet_js plugins="forms" %}
+    {% leaflet_css plugins="forms" %}
+{% endblock head %}
+
+{% block header %}
+<div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>Add/Edit Locations</h1>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
+<hr>
+{% block content %}
+
+<style>
+    .leaflet-container {
+        width: 100%;
+        height: 500px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+
+<div class="container">
+{% comment %} <h1>Edit Location Content or Add New</h1> {% endcomment %}
+    <form method="POST" class="post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ f }}
+        {{ fs }}
+        <button type="submit" class="save btn btn-primary">Save</button>
+    </form>
+</div>
+{% endblock %}

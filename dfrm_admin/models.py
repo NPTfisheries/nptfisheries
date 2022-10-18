@@ -1,12 +1,18 @@
+from tkinter import CASCADE
+from unicodedata import name
 from django.db import models
-from accounts.models import CustomUser
+from accounts.models import UserProfile
+from locations.models import Location
 from phone_field import PhoneField
 from ckeditor.fields import RichTextField
 from PIL import Image
 
 class PositionClass(models.Model):
-    name = models.CharField(max_length = 50)
-    grade = models.SmallAutoField()
+    position_class = models.CharField(max_length = 50)
+    grade = models.SmallIntegerField()
+
+    def __str__(self):
+        return self.position_class
 
 class Employee(models.Model):
 
@@ -31,27 +37,29 @@ class Employee(models.Model):
     #     (30,"Manager V")
     # )
 
-    name = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name = 'employees')
+    name = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name = 'employees')
     position_class = models.ForeignKey(PositionClass, on_delete=models.CASCADE)
-    title = models.CharField(max_length = 50, help_text="Position title")
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField(null = True, blank =True)
-    active = models.BooleanField(default=False, help_text="Is the individual still employed?")
+    title = models.CharField("Position title", max_length = 50)
+    start_date = models.DateTimeField("Start date")
+    end_date = models.DateTimeField("End date", null = True, blank =True)
+    active = models.BooleanField("Active", default=False)
 
     def __str__(self):
         return self.name.user.first_name + ' ' + self.name.user.last_name
 
-class Office(models.Model):
-    name = models.CharField(max_length=100, help_text = "Office name")
-    phone_number = PhoneField(help_text='Phone number')
-    fax_number = PhoneField(null=True, blank=True, help_text= 'Fax number')
-    address = models.CharField(max_length=100, help_text = 'Street address')
-    city = models.CharField(max_length=50, help_text = 'City')
-    state = models.CharField(max_length=50, help_text = 'State')
-    zipcode = models.CharField(max_length=5, help_text = 'Zip Code')
-    office_manager = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name = 'manager')
-    administrative_assistant = models.ForeignKey(Employee, null = True, blank = True, on_delete=models.CASCADE, related_name = 'assistant')
-    office_image = models.ImageField(blank=True, upload_to='images/office/')
+class Facility(models.Model):
+    manager = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name = 'fac_manager')
+    administrative_assistant = models.ForeignKey(Employee, null = True, blank = True, on_delete=models.CASCADE, related_name = 'fac_assist')
+    name = models.ForeignKey(Location, on_delete=models.CASCADE)
+    #name = models.CharField("Facility name", max_length=100)
+    phone_number = PhoneField("Phone number")
+    fax_number = PhoneField("Fax number", null=True, blank=True)
+    street_address = models.CharField("Street address", max_length=100)
+    mailing_address = models.CharField("Mailing address", null = True, blank = True, max_length=100)
+    city = models.CharField("City", max_length=50)
+    state = models.CharField("State", max_length=50)
+    zipcode = models.CharField("Zip Code", max_length=5)
+    facility_image = models.ImageField("Facility image", blank=True, upload_to='images/facility/')
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -66,18 +74,40 @@ class Office(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Office'
-        verbose_name_plural = 'Offices'
+        verbose_name = 'Facility'
+        verbose_name_plural = 'Facilities'
 
+
+class Department(models.Model):
+    manager = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name = 'dept_manager')
+    deputy_manager = models.ForeignKey(Employee, null = True, blank = True, on_delete=models.CASCADE, related_name = 'dept_deputy')
+    administrative_assistant = models.ForeignKey(Employee, null=True, blank=True, on_delete=models.CASCADE, related_name = 'dept_assist')
+    facility = models.ForeignKey(Facility, on_delete=models.CASCADE)
+    name = models.CharField("Department name", max_length=300)
+    description = RichTextField("Department desecription")
+    department_image1 = models.ImageField("Department Image", null=True, blank=True, upload_to='images/department/')
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.department_image1.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.department_image1.path)
+
+    def __str__(self):
+        return self.name
 
 class Division(models.Model):
-    name = models.CharField(max_length=300, help_text = "Division name")
-    description = RichTextField(help_text = "Division description")
-    director = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='division_directors')
-    deputy_director = models.ForeignKey(Employee, null = True, blank = True, on_delete=models.CASCADE, related_name="division_deputies")
-    administrative_assistant = models.ForeignKey(Employee, null=True, blank=True, on_delete=models.CASCADE, related_name='division_support')
-    office = models.ForeignKey(Office, on_delete=models.CASCADE, related_name='division_offices')
-    division_image1 = models.ImageField(null=True, blank=True, upload_to='images/division/')
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    director = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name = 'div_director')
+    deputy_director = models.ForeignKey(Employee, null = True, blank = True, on_delete=models.CASCADE, related_name = 'div_deputy')
+    administrative_assistant = models.ForeignKey(Employee, null=True, blank=True, on_delete=models.CASCADE, related_name = 'div_assist')
+    facility = models.ForeignKey(Facility, on_delete=models.CASCADE)
+    name = models.CharField("Division name", max_length=300)
+    description = RichTextField("Division desecription")
+    division_image1 = models.ImageField("Division Image", null=True, blank=True, upload_to='images/division/')
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -92,15 +122,12 @@ class Division(models.Model):
         return self.name
 
 class Project(models.Model):
-    division = models.ForeignKey(Division, on_delete=models.CASCADE)
-    office = models.ForeignKey(Office, on_delete=models.CASCADE, default = "1")
-    name = models.CharField(max_length=300, help_text = "Project name")
-    description = RichTextField(help_text = "Project description")
-    project_leader = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="project_leads")
-    staff = models.ManyToManyField(Employee, blank = True)
-    created = models.DateTimeField(help_text = "When was the project created?")
-    active = models.BooleanField(help_text = "Is the project currently active?")
-    project_image1 = models.ImageField(null=True, blank=True, upload_to='images/project/')
+    project_leader = models.ManyToManyField(Employee)
+    name = models.CharField("Project name", max_length=300)
+    description = RichTextField("Project description")
+    created = models.DateTimeField("Created")
+    active = models.BooleanField("Active")
+    project_image1 = models.ImageField("Project image", null=True, blank=True, upload_to='images/project/')
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -113,4 +140,18 @@ class Project(models.Model):
     
     def __str__(self):
         return self.name
-    
+
+class Subproject(models.Model):
+    division = models.ForeignKey(Division, on_delete=models.CASCADE, related_name = "sub_div")
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    supervisor = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name = "sub_sup")
+    name = models.CharField("Subproject name", max_length=300)
+    description = RichTextField("Subproject description")
+
+class Task(models.Model):
+    subproject = models.ForeignKey(Subproject, on_delete=models.CASCADE)
+    supervisor = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name = "task_sup")
+    staff = models.ManyToManyField(Employee, blank = True, related_name = "staff")
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    name = models.CharField("Task name", max_length=300)
+    description = RichTextField("Task description")

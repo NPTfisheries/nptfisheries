@@ -1,9 +1,9 @@
-<!-- templates/dfrm_admin/office_edit.html -->
+<!-- templates/dfrm_admin/facility_edit.html -->
 {% extends "base.html" %}
 {% load static %}
 
 {% block content %}
-<h1>Add New or Edit Office Content</h1>
+<h1>Add New or Edit Facility Content</h1>
     <form method="POST" class="post-form" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
