@@ -1,5 +1,9 @@
 from django import forms
-from dfrm_admin.models import Employee, Facility, Division, Project
+from django.forms import inlineformset_factory
+from dfrm_admin.models import Department, Employee, Facility, Division, Project, Subproject, Task
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 class EmployeeForm(forms.ModelForm):
     class Meta:
@@ -16,12 +20,27 @@ class FacilityForm(forms.ModelForm):
             'name': forms.Select(attrs={'class': 'form-control'}),
         }
 
+class DepartmentForm(forms.ModelForm):
+    class Meta:
+        model = Department
+        fields = ('name', 'description', 'manager', 'deputy_manager', 'administrative_assistant', 'facility', 'department_image1')
+
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'manager': forms.Select(attrs={'class': 'form-control'}),
+            'deputy_manager': forms.Select(attrs={'class': 'form-control'}),
+            'administrative_assistant': forms.Select(attrs={'class': 'form-control'}),
+            'facility': forms.Select(attrs={'class': 'form-control'}),
+        }
+
 class DivisionForm(forms.ModelForm):
     class Meta:
         model = Division
-        fields = ('name', 'description', 'director', 'deputy_director', 'administrative_assistant', 'facility', 'division_image1')
+        fields = ('department','name', 'description', 'director', 'deputy_director', 'administrative_assistant', 'facility', 'division_image1')
 
         widgets = {
+            'department': forms.Select(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
             'director': forms.Select(attrs={'class': 'form-control'}),
@@ -41,6 +60,40 @@ class ProjectForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
-            'created': forms.DateInput(attrs={'class': 'form-control'}),
-            'active': forms.RadioSelect(attrs={'class': 'form-control', 'type':'checkbox'}),
+            'created': DateInput(attrs={'class': 'form-control'}),
+            #'active': forms.RadioSelect(attrs={'class': 'form-control'}),
         }
+
+class SubprojectForm(forms.ModelForm):
+    class Meta:
+        model = Subproject
+        #fields = ('name', 'description', 'division', 'supervisor')
+        fields = '__all__'
+
+        # widgets = {
+        #     'division':forms.Select(attrs={'class': 'form-control'}),
+        #     'name': forms.TextInput(attrs={'class': 'form-control'}),
+        #     'description': forms.Textarea(attrs={'class': 'form-control'}),
+        #     'supervisor':forms.Select(attrs={'class': 'form-control'}),
+        # }
+
+SubprojectFormSet = inlineformset_factory(
+    Project,
+    Subproject,
+    extra=2,
+    can_delete=False,
+    #fields = ('name', 'description', 'division', 'supervisor'),
+    fields = '__all__',
+    form = SubprojectForm)
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = '__all__'
+
+TaskFormSet = inlineformset_factory(
+    Subproject,
+    Task,
+    extra=1,
+    fields='__all__',
+    form = TaskForm)

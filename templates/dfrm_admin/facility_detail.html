@@ -1,6 +1,12 @@
 <!-- templates/dfrm_admin/facility_detail.html -->
 {% extends "base.html" %}
 {% load static %}
+{% load leaflet_tags %}
+
+{% block head %}
+    {% leaflet_css %}
+    {% leaflet_js %}
+{% endblock head %}
 
 {% block header %}
 <div class="page-header">
@@ -13,6 +19,28 @@
 {% endblock header %}
 
 {% block content %}
+
+<style>
+    .leaflet-container {
+        width: 100%;
+        height: 500px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<script type="text/javascript">
+    function map_init_basic(map, options) {
+
+    var lon = "{{ facility.name.point.geometry.x }}"
+    var lat = "{{ facility.name.point.geometry.y }}"
+
+    map.setView([lat, lon], 12);
+    L.marker([lat, lon]).addTo(map);
+    }
+
+</script>
+
 <div class="edit-content">
     {% if perms.dfrm_admin.change_facility %}
         <a href="{% url 'facility_edit' pk=facility.pk %}" class="btn btn-primary"><div class="button">Edit Facility Content</div></a>
@@ -23,18 +51,13 @@
 {% if facility.fax_number %}
     <p>Fax Number: {{ facility.fax_number }} </p>
 {% endif %}
-<p> {{ facility.address }} </p>
+<p> {{ facility.street_address }} </p>
 <p> {{ facility.city }}, {{ facility.state }} {{ facility.zipcode }} </p>
-<p> Manager: {{ facility.facility_manager }} </p>
+<p> Manager: {{ facility.manager }} </p>
 {% if office.administrative_assistant %}
     <p>Administrative Assistant: {{ facility.facility.administrative_assistant }} </p>
 {% endif %}
 
-<h2>Projects</h2>
-    {% for i in projects %}
-        <h3><a href="{% url 'project_detail' pk=i.pk %}">{{ i.name }}</a></h2>
-        <p>{{ i.description|linebreaksbr }}</p>
-        {% comment %} <p>Project Leader: {{ p.project_leader }}</p> {% endcomment %}
-    {% endfor %}
+{% leaflet_map "main" callback="map_init_basic" %}
 
 {% endblock %}

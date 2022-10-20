@@ -1,6 +1,8 @@
+from http.client import HTTPResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import permission_required
 from django.core.serializers import serialize
+from django.http import HttpResponse
 from djgeojson.views import GeoJSONLayerView
 from django.views.generic import CreateView, ListView
 from locations.models import Location, Point
@@ -15,6 +17,11 @@ def map(request):
 
 class MapLayer(GeoJSONLayerView):
     geometry_field = 'geometry'
+
+# def point_data (request):
+#     points = Point.objects.all()
+#     data = serialize('geojson', points)
+#     return HttpResponse(data, content_type='json')
 
 class LocationsList(ListView):
     model=Location

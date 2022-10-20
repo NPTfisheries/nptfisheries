@@ -63,15 +63,15 @@ class Facility(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        img = Image.open(self.office_image.path)
+        img = Image.open(self.facility_image.path)
 
         if img.height > 300 or img.width > 300:
             output_size = (300, 300)
             img.thumbnail(output_size)
-            img.save(self.office_image.path)
+            img.save(self.facility_image.path)
 
     def __str__(self):
-        return self.name
+        return self.name.name
 
     class Meta:
         verbose_name = 'Facility'
@@ -142,16 +142,22 @@ class Project(models.Model):
         return self.name
 
 class Subproject(models.Model):
-    division = models.ForeignKey(Division, on_delete=models.CASCADE, related_name = "sub_div")
+    division = models.ForeignKey(Division, on_delete=models.CASCADE, verbose_name='Subproject division', related_name = "sub_div")
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    supervisor = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name = "sub_sup")
+    supervisor = models.ForeignKey(Employee, on_delete=models.CASCADE, verbose_name = 'Subproject supervisor', related_name = "sub_sup")
     name = models.CharField("Subproject name", max_length=300)
-    description = RichTextField("Subproject description")
+    description = RichTextField("Subproject description", null=True, blank=True)
+
+    def __str__(self):
+        return self.name
 
 class Task(models.Model):
     subproject = models.ForeignKey(Subproject, on_delete=models.CASCADE)
-    supervisor = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name = "task_sup")
-    staff = models.ManyToManyField(Employee, blank = True, related_name = "staff")
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    supervisor = models.ForeignKey(Employee, on_delete=models.CASCADE, verbose_name = 'Task supervisor', related_name = "task_sup")
+    staff = models.ManyToManyField(Employee, blank = True, verbose_name = 'Task staff', related_name = "staff")
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, verbose_name = 'Task location')
     name = models.CharField("Task name", max_length=300)
     description = RichTextField("Task description")
+
+    def __str__(self):
+        return self.name

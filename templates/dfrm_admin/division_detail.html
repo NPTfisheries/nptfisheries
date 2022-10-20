@@ -17,25 +17,67 @@
     {% if perms.dfrm_admin.add_division %}
         <a href="{% url 'division_edit' pk=divisions.pk %}" class="btn btn-primary"><div class="button">Edit Division Content</div></a>
     {% endif %}
-    {% if perms.dfrm_admin.add_project %}
-        <a href="{% url 'project_new' %}" class="btn btn-primary">Add New Project</a>
-    {% endif %}
 </div>
-<img src="{{ divisions.division_image1.url }}">
-<p>{{ divisions.description | safe }}</p>
-<p>Director: {{ divisions.director }} </p>
-{% if divisions.deputy %}
-    <p>Deputy Director: {{ divisions.deputy }} </p>
-{% endif %}
-{% if divisions.support %}
-<p>Support Staff: {{ divisions.support }} </p>
-{% endif %}
 
-<h2>Projects</h2>
-    {% for p in projects %}
-        <h3><a href="{% url 'project_detail' pk=p.pk %}">{{ p.name }}</a></h2>
-        {% comment %} <p>{{ p.description|safe }}</p> {% endcomment %}
-        {% comment %} <p>Project Leader: {{ p.project_leader }}</p> {% endcomment %}
+<div class="container" style="background:whitesmoke; border:solid; margin-bottom:5rem;">
+    <div class="row">
+        <div class="col-6">
+            <img src="{{ divisions.division_image1.url }}">
+        </div>
+        <div class="col-6">
+            <p><strong>Division Director: </strong>{{ divisions.director }} </p>
+            <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;Email: </strong>{{ divisions.director.name.user.email }} </p>
+            {% if divisions.deputy_director %}
+                <p><strong>Division Deputy Director: </strong>{{ divisions.deputy_director }} </p>
+                <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;Email: </strong>{{ divisions.deputy_director.name.user.email }} </p>
+            {% endif %}
+            {% if divisions.administrative_assistant %}
+                <p><strong>Support Staff: </strong>{{ divisions.administrative_assistant }} </p>
+                <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;Email: </strong>{{ divisions.administrative_assistant.name.user.email }} </p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p><strong>Divisions Description: </strong>{{ divisions.description | safe }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="container" style="background:grey; border:solid; margin-right:2rem;">
+                <h2 style="text-align: center;">Projects</h2>
+                {% for p in subproject %}
+                    <div class="card" style="margin-bottom:2rem">
+                        <div class="card-header">
+                            <h3><a href="{% url 'project_detail' pk=p.project.pk %}">{{p.project.name}}</a></h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class='col-6'>
+                                    <p>{{ p.description|safe }}</p>
+                                </div>
+                                <div class='col-6'>
+                                    <img src={{ p.project.project_image1.url }}>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <p><strong>Project Leader: </strong>{{ p.supervisor }}; <em>{{ p.supervisor.name.user.email }}</em></p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<h2>Sub-Projects</h2>
+    {% for p in subproject %}
+        <h5><a href="{% url 'project_detail' pk=p.pk %}">{{p.project.name}} - {{ p.name }}</a></h5>
     {% endfor %}
 
 {% endblock %}

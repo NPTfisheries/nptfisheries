@@ -39,13 +39,39 @@
 
     <script type="text/javascript">
         function map_init_basic(map, options) {
-        map.setView([46.5, -116.5], 7);
+            map.setView([46.5, -116.5], 7);
 
-        var dataurl = '{% url "data" %}';
+            var data_url = '{% url "point" %}';
+                // Download GeoJSON via Ajax
+            $.getJSON(data_url, function(data){
+                    // Add GeoJSON layer
+                L.geoJson(data,{
+                    onEachFeature: function(feature, layer){
+                        layer.bindPopup("Name: " + feature.properties.name.toString());
+                    }
+                }).addTo(map);
+            });
+
+            var data_url = '{% url "linestring" %}';
+                // Download GeoJSON via Ajax
+            $.getJSON(data_url, function(data){
+                    // Add GeoJSON layer
+                L.geoJson(data,{
+                    onEachFeature: function(feature, layer){
+                        layer.bindPopup("Name: " + feature.properties.name.toString());
+                    }
+                }).addTo(map);
+            });
+
+            var data_url = '{% url "polygon" %}';
             // Download GeoJSON via Ajax
-        $.getJSON(dataurl, function(data){
+            $.getJSON(data_url, function(data){
                 // Add GeoJSON layer
-        L.geoJson(data).bindPopup(function(layer){return layer.feature.properties.id}).addTo(map);
+                L.geoJson(data,{
+                    onEachFeature: function(feature, layer){
+                        layer.bindPopup("Name: " + feature.properties.name.toString());
+                    }
+                }).addTo(map);
             });
         }
     </script>

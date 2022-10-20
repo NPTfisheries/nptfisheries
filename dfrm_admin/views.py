@@ -1,18 +1,60 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
 from django.contrib.auth.decorators import permission_required
+from django.core.serializers import serialize
+from django.views.generic.edit import CreateView, UpdateView
+from djgeojson.views import GeoJSONLayerView
 from accounts.models import UserProfile
-from dfrm_admin.models import Employee, Facility, Division, Project
+from dfrm_admin.models import Department, Employee, Facility, Division, Project, Subproject, Task
 #from accounts.models import CustomUser
 from news.models import Post
 #from accounts.models import UserProfile
-from .forms import EmployeeForm, FacilityForm, DivisionForm, ProjectForm
+from .forms import DepartmentForm, EmployeeForm, FacilityForm, DivisionForm, ProjectForm, SubprojectFormSet
 
 # Create your views here.
 
 def home(request):
-
+    department = Department.objects.all().order_by('name')
     post = Post.objects.filter(header_image__isnull = False).order_by("-pk")[0:3]
-    return render(request, 'home.html', {"post":post})
+    return render(request, 'home.html', {"department":department, "post":post})
+
+# Department Views
+
+def department(request):
+    department = Department.objects.all().order_by('name')
+    return render(request, 'dfrm_admin/department.html', {'department': department})
+
+def department_detail(request, pk):
+    department = get_object_or_404(Department, pk=pk)
+    division = Division.objects.filter(department = pk)
+    project = Project.objects.filter(subproject__division__department = pk).distinct()
+    # need to add projects filtered for division
+    return render(request, 'dfrm_admin/department_detail.html', {'department':department, 'division':division, 'project':project})
+
+@permission_required('dfrm_admin.add_department', raise_exception=True)
+def department_new(request):
+    if request.method == "POST":
+        form = DepartmentForm(request.POST, request.FILES)
+        if form.is_valid():
+            d = form.save(commit=False)
+            d.save()
+            return redirect('home')
+    else:
+        form = DepartmentForm()
+    return render(request, 'dfrm_admin/department_edit.html', {'form':form})
+
+@permission_required('dfrm_admin.change_department', raise_exception=True)
+def department_edit(request, pk):
+    department = get_object_or_404(Department, pk=pk)
+    if request.method == "POST":
+        form = DepartmentForm(request.POST, request.FILES, instance=department)
+        if form.is_valid():
+            d = form.save(commit=False)
+            d.save()
+            return redirect('home')
+    else:
+        form = DepartmentForm(instance=department)
+    return render(request, 'dfrm_admin/department_edit.html', {'form': form})
 
 # All Division Views
 def division(request):
@@ -21,9 +63,8 @@ def division(request):
 
 def division_detail(request, pk):
     divisions = get_object_or_404(Division, pk=pk)
-    projects = Project.objects.filter(division = pk)
-    # need to add projects filtered for division
-    return render(request, 'dfrm_admin/division_detail.html', {'divisions':divisions, 'projects':projects})
+    subproject = Subproject.objects.filter(division = pk)
+    return render(request, 'dfrm_admin/division_detail.html', {'divisions':divisions, 'subproject':subproject})
 
 @permission_required('dfrm_admin.add_division', raise_exception=True)
 def division_new(request):
@@ -51,34 +92,66 @@ def division_edit(request, pk):
     return render(request, 'dfrm_admin/division_edit.html', {'form': form})
 
 # All Project Views
+
+def project(request):
+    projects = Project.objects.all().order_by('name')
+    return render(request, 'dfrm_admin/project.html', {'projects': projects})
+
 def project_detail(request, pk):
     project = get_object_or_404(Project, pk=pk)
-    return render(request, 'dfrm_admin/project_detail.html', {'project':project})
+    subproject = Subproject.objects.filter(project=pk)
+    task = Task.objects.filter(subproject__project=pk)
+    return render(request, 'dfrm_admin/project_detail.html', {'project':project, 'subproject':subproject, 'task':task})
 
 @permission_required('dfrm_admin.add_project', raise_exception=True)
 def project_new(request):
-    if request.method == "POST":
-        form = ProjectForm(request.POST, request.FILES)
-        if form.is_valid():
-            d = form.save(commit=False)
-            d.save()
-            return redirect('project_detail', pk=d.pk)
+    if request.method == 'POST':
+        f = ProjectForm(request.POST, request.FILES)
+        #fs = SubprojectFormSet(request.POST)
+
+        #print(f.is_valid())
+        #print(fs.is_valid())
+
+        if f.is_valid():
+            new_proj = f.save(commit=False)
+            new_proj.save()
+            f.save_m2m()
+            #new_subs = fs.save(commit=False)
+            #new_subs.project = new_proj.pk
+            #new_subs.save()
+            return redirect('project_edit', pk=new_proj.pk)
     else:
-        form = ProjectForm()
-    return render(request, 'dfrm_admin/project_edit.html', {'form':form})
+        f = ProjectForm()
+       # fs = SubprojectFormSet()
+    return render(request, 'dfrm_admin/project_new.html',
+    {'f':f}
+    )
 
 @permission_required('dfrm_admin.change_project', raise_exception=True)
-def project_edit(request, pk):
-    project = get_object_or_404(Project, pk=pk)
-    if request.method == "POST":
-        form = ProjectForm(request.POST, request.FILES, instance=project)
-        if form.is_valid():
-            d = form.save(commit=False)
-            d.save()
-            return redirect('project_detail', pk=d.pk)
+def project_edit(request, pk=False):
+    if pk:
+        project=Project.objects.get(pk=pk)
     else:
-        form = ProjectForm(instance=project)
-    return render(request, 'dfrm_admin/project_edit.html', {'form': form})
+        project=Project()
+    if request.method == 'POST':
+        f = ProjectForm(request.POST, request.FILES, instance=project)
+        fs = SubprojectFormSet(request.POST,instance=project)
+
+        if fs.is_valid() and f.is_valid():
+            new_proj = f.save(commit=False)
+            new_proj.save()
+            f.save_m2m()
+            fs.save()
+            return redirect('project_detail', pk=new_proj.pk)
+    else:
+        f = ProjectForm(instance=project)
+        fs = SubprojectFormSet(instance=project)
+    
+    return render(request, 'dfrm_admin/project_edit.html',
+    {'fs':fs, 'f':f, 'project':project}
+    )
+
+
 
 # Office Views
 
@@ -88,8 +161,7 @@ def facility(request):
 
 def facility_detail(request, pk):
     facility = get_object_or_404(Facility, pk=pk)
-    projects = Project.objects.filter(facility = pk)
-    return render(request, 'dfrm_admin/facility_detail.html', {'facility':facility, 'projects':projects})
+    return render(request, 'dfrm_admin/facility_detail.html', {'facility':facility})
 
 @permission_required('dfrm_admin.add_facility', raise_exception=True)
 def facility_new(request):

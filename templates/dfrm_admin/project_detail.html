@@ -4,13 +4,13 @@
 
 
 {% block header %}
-<div class="page-header">
+{% comment %} <div class="page-header">
     <div class="black-background">
         <div class="container">
-            <h1>{{ project.division }}</h1>
+            <h1>{{ project }}</h1>
         </div>
     </div>
-</div>
+</div> {% endcomment %}
 {% endblock header %}
 
 {% block content %}
@@ -19,11 +19,25 @@
         <a href="{% url 'project_edit' pk=project.pk %}" class="btn btn-primary">Edit Project Content</a>
     {% endif %}
 </div>
-<img src="{{ project.project_image1.url }}">
+
 <h1>{{ project.name }}</h1>
+<img src="{{ project.project_image1.url }}">
+<h5>Project Leader(s):</h5>
+{% for p in project.project_leader.all %}
+    <p>{{ p.name }}</p>
+{% endfor %}
 <p>{{ project.description|safe }}</p>
-<h2>Project Leader</h2>
-<a href="{% url 'profile' pk=project.project_leader.name.user.pk %}"><h5>{{ project.project_leader.name }}</h5><a>
+
+{% for s in subproject %}
+    <h3>{{ s.name }}</h3>
+    {% for t in task %}
+        {% if t.subproject.pk == s.pk %}
+        <p> {{ t.name }}</p>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+{% comment %} <a href="{% url 'profile' pk=project.project_leader.name.user.pk %}"><h5>{{ project.project_leader.name }}</h5><a>
 <p>{{ project.project_leader.name.user.email }}</p>
 <p>{{ project.project_leader.name.work_phone }}</p>
 {% if project.staff %}
@@ -42,5 +56,5 @@
         </tr>
         {% endfor %}
     </table>
-{% endif %}
+{% endif %} {% endcomment %}
 {% endblock %}

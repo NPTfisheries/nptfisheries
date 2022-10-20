@@ -40,6 +40,7 @@ def DocumentUpload(request):
 			doc = form.save(commit=False)
 			##doc.uploaded_by = request.name
 			doc.save()
+			form.save_m2m()
 			return redirect('document_list')
 	else:
 		form = DocumentForm()

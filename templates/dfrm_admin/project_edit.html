@@ -4,9 +4,58 @@
 
 {% block content %}
 <h1>Edit Project Content or Add New</h1>
-    <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
-        {{ form.media }}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-secondary">Save</button>
+    <form method="POST" class="post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ f.media }}
+        {{ f.as_p }}
+        {% comment %} {{ fs }} {% endcomment %}
+        <hr>
+        <div class="container" style="width: 100%">
+            <h2>Sub-Projects</h2>
+            <table style="width:100%">
+                {{ fs.management_form }}
+                {% for s in fs.forms %}
+                    {% if forloop.first %}
+                        <tr>
+                            <th> {{ s.name.label_tag }}</th>
+                            <th> {{ s.division.label_tag }}</th>
+                            <th> {{ s.supervisor.label_tag }}</th>
+                            <th> {{ s.DELETE.label_tag }}</th>
+                        </tr>
+                    {% endif %}
+                        <tr>
+                            <td>{{ s.name }}</td>
+                            <td>{{ s.division }}</td>
+                            <td>{{ s.supervisor }}</td>
+                            <td>{{ s.DELETE }}</td>
+                        </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <hr>
+
+
+
+        {% comment %} {% for i in fs %}
+            <h3>Sub-project {{ forloop.counter }}</h3>
+
+            <p><strong>{{ i.DELETE.label_tag }}</strong></p>
+            <p>{{ i.DELETE }}</p>
+            
+            <p><strong>{{ i.name.label_tag }}</strong></p>
+            <p>{{ i.name }}</p>
+            
+            <p><strong>{{ i.description.label_tag }}</strong></p>
+            <p>{{ i.description }}</p>
+
+            <p><strong>{{ i.division.label_tag }}</strong></p>
+            <p>{{ i.division }}</p>
+
+            <p><strong>{{ i.supervisor.label_tag }}</strong></p>
+            <p>{{ i.supervisor }}</p>
+        {% endfor %}         {% endcomment %}
+        {% comment %} {{ form.media }}
+        {{ form.as_p }} {% endcomment %}
+        <button type="submit" class="save btn btn-primary">Save</button>
     </form>
 {% endblock %}

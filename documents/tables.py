@@ -19,15 +19,13 @@ class DocumentTable(tables.Table):
 
 	title1 = TruncatedTextColumn(accessor=A('title'))
 	#employee_authors = tables.Column(verbose_name = "Employee Authors")
-	#primary_author = tables.Column(verbose_name= 'Author')
-	#secondary_authors = tables.Column(verbose_name= 'Employee Authors')
 	document_type = tables.Column(verbose_name= 'Type')
 	publish_date = tables.Column(verbose_name= 'Published')
 
 	class Meta:
 		model = Document
 		#attrs = {"class": "paleblue"}
-		per_page = 5
+		per_page = 10
 		template_name = 'django_tables2/bootstrap.html'
 		fields = ('title1', 'all_employee_authors', 'document_type', 'publish_date','file')
 		#exclude = ('id', 'uploaded_by', 'upload_date', 'title')

@@ -1,0 +1,89 @@
+<!-- templates/dfrm_admin/department_detail.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+<div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>{{ department.name }}</h1>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="edit-content">
+    {% if perms.dfrm_admin.add_department %}
+        <a href="{% url 'department_edit' pk=department.pk %}" class="btn btn-primary"><div class="button">Edit Department Content</div></a>
+    {% endif %}
+    {% if perms.dfrm_admin.add_project %}
+        <a href="{% url 'project_new' %}" class="btn btn-primary">Add New Project</a>
+    {% endif %}
+</div>
+
+    <div class="container" style="background:whitesmoke; border:solid; margin-bottom:5rem;">
+        <div class="row">
+            <div class="col-6">
+                <img src="{{ department.department_image1.url }}">
+            </div>
+            <div class="col-6">
+                <p><strong>Manager: </strong>{{ department.manager }} </p>
+                <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;Email: </strong>{{ department.manager.name.user.email }} </p>
+                {% if department.deputy_manager %}
+                    <p><strong>Deputy Manager: </strong>{{ department.deputy_manager }} </p>
+                    <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;Email: </strong>{{ department.deputy_manager.name.user.email }} </p>
+                {% endif %}
+                {% if department.administrative_assistant %}
+                    <p><strong>Support Staff: </strong>{{ department.administrative_assistant }} </p>
+                    <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;Email: </strong>{{ department.administrative_assistant.name.user.email }} </p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p><strong>Department Description: </strong>{{ department.description | safe }}</p>
+            </div>
+        </div>
+    </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-7">
+            <div class="container" style="background:grey; border:solid; margin-right:2rem;">
+                <h2 style="text-align: center;">Divisions</h2>
+                {% for d in division %}
+                    <div class="card" style="margin-bottom:2rem">
+                        <div class="card-header">
+                            <h3><a href="{% url 'division_detail' pk=d.pk %}">{{ d.name }}</a></h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class='col-6'>
+                                    <p>{{ d.description|safe }}</p>
+                                </div>
+                                <div class='col-6'>
+                                    <img src={{ d.division_image1.url }}>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <p><strong>Division Director: </strong>{{ d.director }}; <em>{{ d.director.name.user.email }}</em></p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="container" style="background:whitesmoke; border:solid; margin-left:2rem;">
+                <h2 style="text-align: center;">Projects</h2>
+                {% for p in project %}
+                <h5><a href="{% url 'project_detail' pk=p.pk %}">{{ p.name }}</a></h5>
+                {% comment %} <p>{{ p.description|safe }}</p> {% endcomment %}
+                {% comment %} <p>Project Leader: {{ p.project_leader }}</p> {% endcomment %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

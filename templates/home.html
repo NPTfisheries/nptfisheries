@@ -67,6 +67,24 @@
 </div> {% endcomment %}
 
 <div class="home-container">
+  {% for d in department %}
+  <div class="card" style="color: black;">
+    <div class="row card-body">
+        <div class="col-8">
+            <p> <strong>Department Manager:</strong> {{ d.manager }} <a class="stretched-link" href="{% url 'department_detail' pk=d.pk %}"></a></p>
+            <p><strong>Deputy Manager:</strong> {{ d.deputy_manager }}</p>
+            <p>{{ d.description|safe }} <strong><em>Click for more details.</em></strong></p>
+        </div>
+        <div class="col-4">
+            <a href="{% url 'department_detail' pk=d.pk %}"><img src="{{ d.department_image1.url }}"></a>
+        </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+<div class="home-container">
 <h2>Recent News</h2>
 
 <section class="related-posts">
@@ -86,7 +104,7 @@
             <span style="color: black;">{{ p.snippet|safe }}</span>
             <div class="blog-card__meta">
                 <a class="blog-card__blog-link">
-                    {{ p.primary_author }}&nbsp;
+                    <strong>{{ p.author }}</strong>&nbsp;
                 </a>
                 <a href="{% url 'news_detail' p.pk %}" class="blog-card__read-time">
                     | {{ p.post_date }}

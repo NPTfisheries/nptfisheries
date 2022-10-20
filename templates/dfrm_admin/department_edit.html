@@ -1,9 +1,9 @@
-<!-- templates/division_edit.html -->
+<!-- templates/dfrm_admin/department_edit.html -->
 {% extends "base.html" %}
 {% load static %}
 
 {% block content %}
-<h1>Edit Division Content or Add New</h1>
+<h1>Edit Department Content or Add New</h1>
     <form method="POST" class="post-form" enctype="multipart/form-data">
         {% csrf_token %}
 		{{ form.media }}

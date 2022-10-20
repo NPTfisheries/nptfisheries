@@ -1,0 +1,55 @@
+<!-- templates/dfrm_admin/project.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+<div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>Projects</h1>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
+<hr>
+{% block content %}
+<div class="edit-content">
+    {% if perms.dfrm_admin.add_project %}
+        <a href="{% url 'project_new' %}" class="btn btn-primary">Add New Project</a>
+    {% endif %}
+</div>
+    {% for d in projects %}
+    {% if forloop.counter|divisibleby:2 %}
+            <div class="card">
+                <h2 class="card-header">
+                    {{ d.name }}
+                </h2>
+                <div class="row card-body">
+                    <img class="col-lg-6" src="{{ d.project_image1.url }}" href="{% url 'project_detail' pk=d.pk %}">
+                    <div class="col-lg-6">
+                       <p> <strong>Project Leader(s):</strong> {{ d.project_leader }} <a class="stretched-link" href="{% url 'project_detail' pk=d.pk %}"></a></p>
+                    </div>
+                </div>
+            </div>
+    <br>
+    {% else %}
+            <div class="card">
+                <h2 class="card-header">
+                    {{ d.name }}
+                </h2>
+                <div class="row card-body">
+                    <div class="col-lg-6">
+                        <p> <strong>Project Leader(s):</strong> {{ d.project_leader }} <a class="stretched-link" href="{% url 'project_detail' pk=d.pk %}"></a></p>
+                    </div>
+                    <img class="col-lg-6" src="{{ d.project_image1.url }}" href="{% url 'project_detail' pk=d.pk %}">
+                </div>
+            </div>
+
+    <br>
+    {% endif %}
+
+
+    {% endfor %}
+
+{% endblock %}

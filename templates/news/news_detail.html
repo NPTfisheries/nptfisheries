@@ -4,8 +4,7 @@
 
 {% block content %}
 <div class="edit-content">
-    {% comment %} {% if perms.news.add_post %} {% endcomment %}
-	{% if post.uploaded_by.name.user == request.user %}
+	{% if post.author.name.user == request.user %}
         <a href="{% url 'news_edit' pk=post.pk %}" class="btn btn-primary">Edit Post</a>
 	{% endif %}
 	{% if perms.news.delete_post%}
@@ -18,40 +17,45 @@
 		<img src="{{ post.header_image.url }}"> <br/>
 	{% endif %}
 
-	<p> Primary Author: {{ post.primary_author }} </p>
-	<small> Post Date: {{post.post_date}} </small> <br/>
-	<small> Other Authors: {{ post.secondary_authors }} </small><br/>
+	<p> <strong>Primary Author: </strong>{{ post.author }} </p>
+	<p> <strong>Post Date: </strong> {{post.post_date}} </p>
 	<hr>
 	<p> {{ post.body|safe }} </p>
-	<p> Uploaded By: {{ post.uploaded_by.name.user.first_name }} {{ post.uploaded_by.name.user.last_name }} </p>
+	<hr>
 
-	<h2> Comments </h2>
 
 	<div class="container">
+		<h2> Comments </h2>
 		{% if user.is_authenticated %}
 		<form action="" method="POST" id="main_form" class="comment_form">
 			<div>
-				<label for="comment">Type Comment here</label>
-			{{ comment_form.content }} {% csrf_token %} <input type="submit" value="Post"></div>
+				<label for="comment">Comment here:</label>
+					{{ comment_form.content }} {% csrf_token %} 
+					<input type="submit" value="Post">
 			</div>
 		</form>
-		{% else %} <h2>You need to Login to comment</h2> 
+		{% else %} <p><em>Please register and login to comment.</em></p> 
 		{% endif %}
-
+	</br>
 		{% for comment in comments %}
 			{% if comment.is_parent %}
-			<p> <b>{{ comment.author }} : </b> {{ comment.content }}</p> 
-			&nbsp; &nbsp; &nbsp;
-			<form action="" method="POST" id="main_form" class="comment_form">
+			<div class="container">
+				<p>{{ comment.content }}<br><b><em>--{{ comment.author.username }}</em></b></p> 
 				<div class="container">
-					&nbsp; &nbsp; &nbsp;<label for = "comment">Reply here</label>
-					&nbsp; &nbsp; &nbsp;<input type="text" name="content"> <input type="hidden" value="{{ comment.pk }}" name="parent"> {% csrf_token %} <input type="submit" value="Post"></div>
+					<form action="" method="POST" id="main_form" class="comment_form">
+						<label for = "comment">Reply here:</label>
+						<input type="text" name="content"> <input type="hidden" value="{{ comment.pk }}" name="parent"> {% csrf_token %} <input type="submit" value="Post">
+					</form>
 				</div>
-			</form>
+			</br>
 			{% endif %} 
+
 			{% for replies in comment.children %}
-			<p>&nbsp; &nbsp; &nbsp; <b>{{ comment.author }} : </b> {{ replies.content }}</p>
+				<div class="container" style="padding-left: 2rem;">
+					<p>{{ replies.content }}<br><b><em>--{{ comment.author.username }}</em></b></p>
+				</div>
 			{% endfor %}
+			</div>
 		{% endfor %}
 	</div>
 

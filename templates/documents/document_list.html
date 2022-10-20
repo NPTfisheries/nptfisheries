@@ -26,17 +26,6 @@
 			<h2 style="margin-top: 0">Filter Available Documents</h2>
 			</br>
 
-{% comment %} 			{% for field in filter.form %}
-    			<div class="form-group">
-        			{{ field.label_tag }} 
-        			{% render_field field class="form-control" %} 
-        			{% if field.help_text %}
-            			<small class="form-text text-muted">
-               			{{ field.help_text }}
-            			</small>
-        			{% endif %}
-    			</div>
-			{% endfor %} {% endcomment %}
 	<form method="get">		
 			<div class="row">
 				<div class="form-group col-sm-4 col-md-4">
@@ -52,14 +41,9 @@
 					{% render_field filter.form.keywords__icontains class="form-control" %}
 				</div>
 
-
-				<div class="form-group col-sm-6 col-md-6">
-					{{ filter.form.primary_author__icontains.label_tag }}
-					{% render_field filter.form.primary_author__icontains class="form-control" %}
-				</div>
-				<div class="form-group col-sm-6 col-md-6">
-					{{ filter.form.secondary_authors__icontains.label_tag }}
-					{% render_field filter.form.secondary_authors__icontains class="form-control" %}
+				<div class="form-group col-sm-4 col-md-4">
+					{{ filter.form.citation__icontains.label_tag }}
+					{% render_field filter.form.citation__icontains class="form-control" %}
 				</div>
 
 				<div class="form-group col-sm-4 col-md-4">
@@ -70,14 +54,13 @@
 					{{ filter.form.publish_date__gt.label_tag }}
 					{% render_field filter.form.publish_date__gt class="form-control" %}
 				</div>
-
-				<div class="col-sm-4" align="center">
-				</br>
-					<button type="submit" class="btn btn-success"><i class="bi bi-search"></i> Search</button>
-				</div>
 			</div>
 		</br>
+			<button type="submit" class="btn btn-success"><i class="bi bi-search"></i> Search</button>
+		</br>
 			<ul>
+				<li>Use citation to search for authors</li>
+				<li>Date format is: mm/dd/yyyy</li>
 				<li>Only documents meeting all criteria will be returned, if you can not find your information try removing some filters and clicking search.</li>
 				<li>To reset the table and return all documents clear the contents of each filter and then click the search button. </li>
 			</ul>
@@ -85,25 +68,5 @@
 	</div>
 
 	{% render_table table %}
-	
-<!--	<table>
-		<tr>
-			<th>Title</th>
-			<th>Primary Author</th>
-			<th>Secondary Authors</th>
-			<th>Publish Date</th>
-			<th>Type</th>
-			<th>Keywords</th>
-		</tr>
-		{% for doc in object_list %}
-		<tr>
-			<td><a href="{{ doc.file.url }}">{{ doc.title }}</a></td>	
-			<td>{{ doc.primary_author }}</td>
-			<td>{{ doc.secondary_authors }}</td>
-			<td>{{ doc.publish_date}}</td>
-			<td>{{ doc.document_type}}</td>
-			<td>{{ doc.keywords}}</td>
-		</tr>
-		{% endfor %}
-	</table> -->
+
 {% endblock %}
