@@ -1,16 +1,22 @@
 <!-- templates/project_detail.html -->
 {% extends "base.html" %}
 {% load static %}
+{% load leaflet_tags %}
+
+{% block head %}
+    {% leaflet_css %}
+    {% leaflet_js %}
+{% endblock head %}
 
 
 {% block header %}
-{% comment %} <div class="page-header">
+<div class="page-header">
     <div class="black-background">
         <div class="container">
-            <h1>{{ project }}</h1>
+          <h1></h1>
         </div>
     </div>
-</div> {% endcomment %}
+</div>
 {% endblock header %}
 
 {% block content %}
@@ -20,41 +26,68 @@
     {% endif %}
 </div>
 
-<h1>{{ project.name }}</h1>
-<img src="{{ project.project_image1.url }}">
-<h5>Project Leader(s):</h5>
-{% for p in project.project_leader.all %}
-    <p>{{ p.name }}</p>
-{% endfor %}
-<p>{{ project.description|safe }}</p>
-
-{% for s in subproject %}
-    <h3>{{ s.name }}</h3>
-    {% for t in task %}
-        {% if t.subproject.pk == s.pk %}
-        <p> {{ t.name }}</p>
-        {% endif %}
-    {% endfor %}
-{% endfor %}
-
-{% comment %} <a href="{% url 'profile' pk=project.project_leader.name.user.pk %}"><h5>{{ project.project_leader.name }}</h5><a>
-<p>{{ project.project_leader.name.user.email }}</p>
-<p>{{ project.project_leader.name.work_phone }}</p>
-{% if project.staff %}
-<h3>Staff</h3>
-    <table style="width:100%">
-        <tr>
-            <th>Name</th>
-            <th>Title</th>
-            <th>Email</th>
-        </tr>
-        {% for s in project.staff.all %}
-        <tr>
-            <td><a href="{% url 'profile' pk=s.name.user.pk %}">{{ s.name }}</a></td>
-            <td>{{ s.title }}</td>
-            <td>{{ s.name.user.email }}</td>
-        </tr>
+<h1 class="border-bottom mb-4">{{ project.name }}</h1>
+<div class="d-flex flex-row justify-content-around align-items-center">
+    <div class="p-2">
+        <img src="{{ project.project_image1.url }}">
+        <h5>Project Leader(s):</h5>
+        {% for p in project.project_leader.all %}
+            <a href="{% url 'profile' pk=p.name.user.pk %}">{{ p.name }}</a>
         {% endfor %}
-    </table>
-{% endif %} {% endcomment %}
+        <p>{{ project.description|safe }}</p>
+
+        {% for s in subproject %}
+            <p><font size="+2"><b>{{ s.name }}</b></font>{% if perms.dfrm_admin.change_project %} <a href="{% url 'task_edit' pk=s.pk %}">(Edit or Add Tasks)</a>{% endif %}
+            <ul>
+                {% for t in task %}
+                    {% if t.subproject.pk == s.pk %}
+                    <li>{{ t.name }}--<a href="{% url 'profile' pk=t.supervisor.name.user.pk %}"><em>{{ t.supervisor }}</em></a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
+
+    {% comment %} <div class="p-2">
+        <h2>Test place:</h2>
+        {% for s in project.subprojects_set.all() %}
+            <p>{{ s.name }}</p>
+        {% endfor %}
+    </div> {% endcomment %}
+
+    <div class="p-2">
+
+        <p>Point Data: {{ project.subproject.task.location.point.geometry.x }}</p>
+
+        <style>
+            .leaflet-container {
+                width: 500px;
+                height: 400px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+        </style>
+
+        {% leaflet_map "main" callback="map_init_basic" %}
+
+        <script type="text/javascript">
+            function map_init_basic(map, options) {
+
+                var point = "{{ project.subproject.task.location.point }}"
+                
+                map.setView([46.5, -116.5], 7);
+
+                $.getJSON(point, function(data){
+                        // Add GeoJSON layer
+                    L.geoJson(data,{
+                        onEachFeature: function(feature, layer){
+                            layer.bindPopup("Name: " + feature.properties.name.toString());
+                        }
+                    }).addTo(map);
+                });
+            }
+        </script>
+    </div>
+</div>
+
 {% endblock %}

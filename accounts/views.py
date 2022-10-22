@@ -9,8 +9,13 @@ from .forms import UserProfileForm
 # def self_check(user):
 #     return user
 
-#@user_passes_test(self_check, raise_exception=True)
+
 def profile(request, pk):
+    profile = get_object_or_404(UserProfile, pk=pk)
+    return render(request, 'profile/profile.html', {'profile': profile})
+
+#@user_passes_test(self_check, raise_exception=True)
+def profile_edit(request, pk):
     profile = get_object_or_404(UserProfile, pk=pk)
 
     if request.method == "POST":
@@ -22,4 +27,5 @@ def profile(request, pk):
             return redirect('profile', pk=p.pk)
     else:
         form = UserProfileForm(instance=profile)
-    return render(request, 'profile/profile.html', {'form': form})
+    return render(request, 'profile/profile_edit.html', {'form': form})
+

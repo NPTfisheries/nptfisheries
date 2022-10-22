@@ -1,0 +1,52 @@
+<!-- templates/dfrm_admin/task_edit.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <h2 class="border-bottom mb-4">{{ subproject.project }} - {{ subproject.name }}</h2>
+        <h3>Edit or Add New Tasks</h3>
+        <form method="POST" class="post-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            {% for s in formset.forms %}
+                <div class="contrainer">
+                    {% for hidden in s.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+                    <h4 class="border-bottom mb-4">Task: {{ forloop.counter }}</h4>
+                    <div class="container" style="margin-bottom: 2rem; background:whitesmoke; border:solid;">
+                        <div class="row">
+                            <div class="col-12">
+                            <p> {{ s.name.label_tag }}{{ s.name }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <p>{{ s.supervisor.label_tag }}{{ s.supervisor }}</p>
+                            </div>
+
+                            <div class="col-6">
+                                <p>{{ s.location.label_tag }}{{ s.location }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                {{ s.staff.label_tag }}
+                                {{ s.staff }}
+                            </div>
+                            <div class="col-6">
+                                {{ s.description.label_tag }}
+                                {{ s.description }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p><em>Check the following box and click save to delete this task from the sub-project.</em> {{ s.DELETE }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            <button type="submit" class="save btn btn-primary">Save</button>
+        </form>
+{% endblock %}

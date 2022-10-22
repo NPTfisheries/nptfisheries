@@ -9,7 +9,7 @@ from dfrm_admin.models import Department, Employee, Facility, Division, Project,
 #from accounts.models import CustomUser
 from news.models import Post
 #from accounts.models import UserProfile
-from .forms import DepartmentForm, EmployeeForm, FacilityForm, DivisionForm, ProjectForm, SubprojectFormSet
+from .forms import DepartmentForm, EmployeeForm, FacilityForm, DivisionForm, ProjectForm, SubprojectFormSet, TaskFormSet
 
 # Create your views here.
 
@@ -138,11 +138,26 @@ def project_edit(request, pk=False):
         fs = SubprojectFormSet(request.POST,instance=project)
 
         if fs.is_valid() and f.is_valid():
+            #pass
             new_proj = f.save(commit=False)
             new_proj.save()
             f.save_m2m()
             fs.save()
             return redirect('project_detail', pk=new_proj.pk)
+        
+        else:
+            if f.errors:
+                print('Project form errors:')
+                print(f.errors)
+            else:
+                print('Project form valid.')
+            
+            if fs.errors:
+                print('Subproject form errors:')
+                print(fs.errors)
+            else:
+                print('Subproject form valid.')
+
     else:
         f = ProjectForm(instance=project)
         fs = SubprojectFormSet(instance=project)
@@ -151,7 +166,26 @@ def project_edit(request, pk=False):
     {'fs':fs, 'f':f, 'project':project}
     )
 
+# Task
 
+@permission_required('dfrm_admin.change_project', raise_exception=True)
+def task_edit(request, pk):
+    subproject=Subproject.objects.get(pk=pk)
+    
+    if request.method == 'POST':
+        formset = TaskFormSet(request.POST, request.FILES, instance=subproject)
+
+        if formset.is_valid():
+            fs = formset.save(commit=False)
+            formset.save()
+            formset.save_m2m()
+            return redirect('project_detail', pk=subproject.project.id)
+    else:
+        formset = TaskFormSet(instance=subproject)
+    
+    return render(request, 'dfrm_admin/task_edit.html',
+    {'formset':formset, 'subproject':subproject}
+    )
 
 # Office Views
 

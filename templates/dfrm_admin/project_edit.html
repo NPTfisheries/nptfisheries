@@ -15,6 +15,18 @@
             <table style="width:100%">
                 {{ fs.management_form }}
                 {% for s in fs.forms %}
+
+                    {% comment %} {{ s.non_field_errors }}
+
+                    {% for hidden_field in s.hidden_fields %}
+                        {{ hidden_field.errors }}
+                        {{ hidden_field }}
+                    {% endfor %} {% endcomment %}
+
+                    {% for hidden in s.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+
                     {% if forloop.first %}
                         <tr>
                             <th> {{ s.name.label_tag }}</th>

@@ -17,7 +17,7 @@ class DocumentTable(tables.Table):
 	def render_file(self, value):
 		return format_html('<a href="/media/{}" class="btn btn-primary"><i class="bi bi-download"></i></a>', value)	
 
-	title1 = TruncatedTextColumn(accessor=A('title'))
+	title1 = TruncatedTextColumn(accessor=A('citation'))
 	#employee_authors = tables.Column(verbose_name = "Employee Authors")
 	document_type = tables.Column(verbose_name= 'Type')
 	publish_date = tables.Column(verbose_name= 'Published')

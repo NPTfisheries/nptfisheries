@@ -1,5 +1,5 @@
-from tkinter import CASCADE
-from unicodedata import name
+#from tkinter import CASCADE
+#from unicodedata import name
 from django.db import models
 from accounts.models import UserProfile
 from locations.models import Location
@@ -143,7 +143,7 @@ class Project(models.Model):
 
 class Subproject(models.Model):
     division = models.ForeignKey(Division, on_delete=models.CASCADE, verbose_name='Subproject division', related_name = "sub_div")
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="subprojects")
     supervisor = models.ForeignKey(Employee, on_delete=models.CASCADE, verbose_name = 'Subproject supervisor', related_name = "sub_sup")
     name = models.CharField("Subproject name", max_length=300)
     description = RichTextField("Subproject description", null=True, blank=True)

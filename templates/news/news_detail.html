@@ -41,12 +41,14 @@
 			{% if comment.is_parent %}
 			<div class="container">
 				<p>{{ comment.content }}<br><b><em>--{{ comment.author.username }}</em></b></p> 
+				{% if user.is_authenticated %}
 				<div class="container">
 					<form action="" method="POST" id="main_form" class="comment_form">
 						<label for = "comment">Reply here:</label>
 						<input type="text" name="content"> <input type="hidden" value="{{ comment.pk }}" name="parent"> {% csrf_token %} <input type="submit" value="Post">
 					</form>
 				</div>
+				{% endif %}
 			</br>
 			{% endif %} 
 

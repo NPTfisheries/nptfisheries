@@ -10,6 +10,14 @@ class EmployeeForm(forms.ModelForm):
         model = Employee
         fields = ('name', 'position_class', 'title', 'start_date', 'end_date', 'active')
 
+        widgets = {
+            'name': forms.Select(attrs={'class': 'form-control'}),
+            'position_class': forms.Select(attrs={'class': 'form-control'}),
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'start_date': DateInput(attrs={'class': 'form-control'}),
+            'end_date': DateInput(attrs={'class': 'form-control'}),
+        }
+
 class FacilityForm(forms.ModelForm):
     class Meta:
         model = Facility
@@ -55,7 +63,9 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = ('name', 'description', 'project_leader', 'created', 'active', 'project_image1')
 
-        project_leader = forms.ModelMultipleChoiceField(queryset=Employee.objects.all(), help_text="Remove highlighted rows to null field.")
+        project_leader = forms.ModelMultipleChoiceField(
+            queryset=Employee.objects.all(),
+            help_text="Remove highlighted rows to null field.")
 
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -91,9 +101,23 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = '__all__'
 
+        # staff = forms.ModelMultipleChoiceField(
+        #     queryset=Employee.objects.all(),
+        #     widget=forms.SelectMultiple)
+
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows':10, 'cols':100}),
+            'supervisor': forms.Select(attrs={'class': 'form-control'}),
+            'location': forms.Select(attrs={'class': 'form-control'}),
+            'staff': forms.SelectMultiple(attrs={'class': 'form-control', 'size':'10'}),
+        }
+
+
 TaskFormSet = inlineformset_factory(
     Subproject,
     Task,
-    extra=1,
+    extra= 3,
+    can_delete=True,
     fields='__all__',
     form = TaskForm)

@@ -1,4 +1,4 @@
-<!-- templates/division.html -->
+<!-- templates/dfrm_admin/department.html -->
 {% extends "base.html" %}
 {% load static %}
 
@@ -14,59 +14,40 @@
 
 <hr>
 {% block content %}
+
 <div class="edit-content">
     {% if perms.dfrm_admin.add_division %}
         <a href="{% url 'division_new' %}" class="btn btn-primary">Add New Division</a>
     {% endif %}
 </div>
-    {% for d in divisions %}
-    {% if forloop.counter|divisibleby:2 %}
-<!--     <div class="row">
-        <div class="col-sm-6"> -->
-            <div class="card">
-                <h2 class="card-header">
-                    {{ d.name }}
-                </h2>
-                <div class="row card-body">
-                    <img class="col-lg-6" src="{{ d.division_image1.url }}" href="{% url 'division_detail' pk=d.pk %}">
-                    <div class="col-lg-6">
-                       <!--  <h5 class="card-title">{{ d.name }}</h5> -->
-                       <p> <strong>Division Director:</strong> {{ d.director }} <a class="stretched-link" href="{% url 'division_detail' pk=d.pk %}"></a></p>
-                       {% comment %} <p class="card-text">{{ d.description|safe }} <a class="stretched-link" href="{% url 'division_detail' pk=d.pk %}"></a></p> {% endcomment %}
-                    </div>
-                </div>
-<!--                 <div class="card-footer">
-                    <a href="{% url 'division_detail' pk=d.pk %}">Read more...</a>
-                </div> -->
-            </div>
-<!--         </div>
-    </div> -->
-    <br>
-    {% else %}
-<!--     <div class="row">
-        <div class="col-sm-6"> -->
-            <div class="card">
-                <h2 class="card-header">
-                    {{ d.name }}
-                </h2>
-                <div class="row card-body">
-                    <div class="col-lg-6">
-                       <!--  <h5 class="card-title">{{ d.name }}</h5> -->
-                        <p> <strong>Division Director:</strong> {{ d.director }} <a class="stretched-link" href="{% url 'division_detail' pk=d.pk %}"></a></p>
-                        {% comment %} <p class="card-text">{{ d.description|safe }} <a class="stretched-link" href="{% url 'division_detail' pk=d.pk %}"></a></p> {% endcomment %}
-                    </div>
-                    <img class="col-lg-6" src="{{ d.division_image1.url }}" href="{% url 'division_detail' pk=d.pk %}">
-                </div>
-<!--                 <div class="card-footer">
-                    <a href="{% url 'division_detail' pk=d.pk %}">Read more...</a>
-                </div> -->
-            </div>
-<!--         </div>
-    </div> -->
-    <br>
-    {% endif %}
 
-
-    {% endfor %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Director</th>
+            <th>Deputy Director</th>
+            <th>Facility</th>
+            <th>View</th>
+            {% if perms.dfrm_admin.change_division %}
+            <th>Edit</th>
+            {% endif %}
+        </tr>
+    </thead >
+    <tbody>
+        {% for d in divisions %}
+        <tr>
+            <td>{{ d.name }}</td>
+            <td>{{ d.director }}</td>
+            <td>{{ d.deputy_director }} </td>
+            <td>{{ d.facility }} </td>
+            <td><a href="{% url 'division_detail' pk=d.pk %}" class="btn btn-secondary"><i class="bi bi-eye"></i></a></td>
+            {% if perms.dfrm_admin.change_division %}
+            <td><a href="{% url 'division_edit' pk=d.pk %}" class="btn btn-secondary"><i class="bi bi-pencil"></i></a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}

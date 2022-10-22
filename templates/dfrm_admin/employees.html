@@ -18,28 +18,35 @@
         <a href="{% url 'employee_new' %}" class="btn btn-primary">Add New Employee</a>
     {% endif %}
 </div>
-    <table style="width:100%">
-        <tr>
-            <th>Name</th>
-            <th>Title</th>
-            <th>Position Class</th>
-            <th>Work Phone</th>
-            {% if perms.dfrm_admin.change_employee %}
-                <th>Active</th>
-                <th>Edit</th>
-            {% endif %}
-        </tr>
-        {% for e in employees %}
-        <tr>
-            <td><a href="{% url 'profile' pk=e.name.user.pk %}">{{ e.name }}</a></td>
-            <td>{{ e.title }}</td>
-            <td>{{ e.get_position_class_display }}</td>
-            <td>{{ e.name.work_phone }}</td>
-            {% if perms.dfrm_admin.change_employee %}
-                <td>{{ e.active }} </td>
-                <td><a href="{% url 'employee_edit' pk=e.pk %}" class="btn btn-primary">Edit</a></td>
-            {% endif %}
-        </tr>
-        {% endfor %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Work Phone</th>
+                <th>Mobile Phone</th>
+                <th>Email</th>
+                {% if perms.dfrm_admin.change_employee %}
+                    <th>Active</th>
+                    <th>Edit</th>
+                {% endif %}
+                </th>
+            </tr>
+        </thead >
+        <tbody>
+            {% for e in employees %}
+            <tr>
+                <td><a href="{% url 'profile' pk=e.name.user.pk %}">{{ e.name }}</a></td>
+                <td>{{ e.title }}</td>
+                <td>{{ e.name.work_phone }}</td>
+                <td>{{ e.name.mobile_phone }}</td>
+                <td><a href="mailto:{{ e.name.user.email }}" class="btn btn-secondary"><i class="bi bi-envelope"></i></a></td>
+                {% if perms.dfrm_admin.change_employee %}
+                    <td>{{ e.active }} </td>
+                    <td><a href="{% url 'employee_edit' pk=e.pk %}" class="btn btn-secondary"><i class="bi bi-pencil"></a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 {% endblock %}

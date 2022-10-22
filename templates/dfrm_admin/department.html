@@ -21,81 +21,33 @@
     {% endif %}
 </div>
 
-{% comment %} <style>
-    .plaque {
-        border-style: solid;
-        border-color: lightgrey;
-        border-radius: 1rem;
-        margin: auto;
-        margin-bottom: 2rem;
-
-    }
-
-    .plaque-title {
-        background: whitesmoke;
-        background-clip: border-box;
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
-        border-bottom: 1px solid lightgrey;
-        padding: .25rem 1rem;
-    }
-</style>
-
-{% for d in department %}
-<div class="plaque" style="align: center; width:60rem;">
-    <div class="plaque-title">
-        <h2>{{ d.name }}</h2>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-8">
-                <p><strong>Program Manager: </strong>{{ d.manager }}</p>
-                <p><strong>Deputy Manager: </strong>{{ d.deputy_manager }}</p>
-            </div>
-            <div class="col-4">
-                <img src="{{ d.department_image1.url }}" style="width=600px;">
-            </div>
-        </div>
-    </div>
-</div>
-{% endfor %} {% endcomment %}
-
-    {% for d in department %}
-    {% if forloop.counter|divisibleby:2 %}
-            <div class="card">
-                <h2 class="card-header">
-                    {{ d.name }}
-                </h2>
-                <div class="row card-body">
-                    <img class="col-8" src="{{ d.department_image1.url }}" href="{% url 'department_detail' pk=d.pk %}">
-                    <div class="col-4">
-                        <p> <strong>Department Manager:</strong> {{ d.manager }} <a class="stretched-link" href="{% url 'department_detail' pk=d.pk %}"></a></p>
-                        <p><strong>Deputy Manager:</stong> {{ d.deputy_manager }}</p>
-                        <p>{{ d.description|safe }}</p>
-                        </div>
-                </div>
-            </div>
-    <br>
-    {% else %}
-            <div class="card">
-                <h2 class="card-header">
-                    {{ d.name }}
-                </h2>
-                <div class="row card-body">
-                    <div class="col-8">
-                        <p> <strong>Department Manager:</strong> {{ d.manager }} <a class="stretched-link" href="{% url 'department_detail' pk=d.pk %}"></a></p>
-                        <p><strong>Deputy Manager:</strong> {{ d.deputy_manager }}</p>
-                        <p>{{ d.description|safe }}</p>
-                    </div>
-                    <div class="col-4">
-                        <a href="{% url 'department_detail' pk=d.pk %}"><img src="{{ d.department_image1.url }}"></a>
-                    </div>
-                </div>
-            </div>
-    <br>
-    {% endif %}
-
-
-    {% endfor %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Manager</th>
+            <th>Deputy Manager</th>
+            <th>Facility</th>
+            <th>View</th>
+            {% if perms.dfrm_admin.change_department %}
+            <th>Edit</th>
+            {% endif %}
+        </tr>
+    </thead >
+    <tbody>
+        {% for d in department %}
+        <tr>
+            <td>{{ d.name }}</td>
+            <td>{{ d.manager }}</td>
+            <td>{{ d.deputy_manager }} </td>
+            <td>{{ d.facility }} </td>
+            <td><a href="{% url 'department_detail' pk=d.pk %}" class="btn btn-secondary"><i class="bi bi-eye"></i></a></td>
+            {% if perms.dfrm_admin.change_department %}
+            <td><a href="{% url 'department_edit' pk=d.pk %}" class="btn btn-secondary"><i class="bi bi-pencil"></i></a></td>
+            {% endif %}        
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}
