@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
 
+    'rest_framework',
+    'rest_framework_gis',
     'djgeojson',
     'leaflet',
     'django_tables2',

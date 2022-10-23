@@ -1,9 +1,7 @@
 from http.client import HTTPResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import permission_required
-from django.core.serializers import serialize
 from django.http import HttpResponse
-from djgeojson.views import GeoJSONLayerView
 from django.views.generic import CreateView, ListView
 from locations.models import Location, Point
 from django import forms
@@ -15,13 +13,8 @@ from locations.forms import LocationForm, PointFormSet, LinestringFormSet, Polyg
 def map(request):
         return render(request, 'locations/location_map.html', {})
 
-class MapLayer(GeoJSONLayerView):
-    geometry_field = 'geometry'
-
-# def point_data (request):
-#     points = Point.objects.all()
-#     data = serialize('geojson', points)
-#     return HttpResponse(data, content_type='json')
+# class MapLayer(GeoJSONLayerView):
+#     geometry_field = 'geometry'
 
 class LocationsList(ListView):
     model=Location
@@ -71,49 +64,3 @@ def location_edit(request, pk=False):
     return render(request, 'locations/location_edit.html',
     {'fs':fs, 'f':f, 'location':location}
     )
-
-# def location_edit(request, pk=False):
-#     if pk:
-#         location=Location.objects.get(pk=pk)
-#     else:
-#         location=Location()
-#     if request.method == 'POST':
-#         f=LocationForm(request.POST, request.FILES, instance=location)
-#         fs = PointFormSet(request.POST,instance=location)
-#         if fs.is_valid() and f.is_valid():
-#             f.save()
-#             fs.save()
-#             return redirect('location_map')
-#     else:
-#         f  = LocationForm(instance=location)
-#         fs = PointFormSet(instance=location)
-#     return render(request,
-#         'locations/location_edit.html', 
-#         {'fs': fs, 'f': f, 'location': location}
-#     )
-
-
-
-# @permission_required('locations.add_location', raise_exception=True)
-# def location_new(request):
-#     if request.method == "POST":
-#         form = LocationForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             o = form.save(commit=False)
-#             o.save()
-#             return redirect('locations')
-#     else:
-#         form = LocationForm()
-#     return render(request, 'locations/location_edit.html', {'form':form})
-
-# @permission_required('locations.add_point', raise_exception=True)
-# def point_new(request):
-#     if request.method == "POST":
-#         form = PointForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             o = form.save(commit=False)
-#             o.save()
-#             return redirect('locations')
-#     else:
-#         form = PointForm()
-#     return render(request, 'locations/location_edit.html', {'form':form})

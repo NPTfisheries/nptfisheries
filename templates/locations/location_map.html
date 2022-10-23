@@ -41,7 +41,7 @@
         function map_init_basic(map, options) {
             map.setView([46.5, -116.5], 7);
 
-            var data_url = '{% url "point" %}';
+            var data_url = '{% url "api_point-list" %}'
                 // Download GeoJSON via Ajax
             $.getJSON(data_url, function(data){
                     // Add GeoJSON layer
@@ -52,7 +52,7 @@
                 }).addTo(map);
             });
 
-            var data_url = '{% url "linestring" %}';
+            var data_url = '{% url "api_linestring-list" %}';
                 // Download GeoJSON via Ajax
             $.getJSON(data_url, function(data){
                     // Add GeoJSON layer
@@ -63,7 +63,7 @@
                 }).addTo(map);
             });
 
-            var data_url = '{% url "polygon" %}';
+            var data_url = '{% url "api_polygon-list" %}';
             // Download GeoJSON via Ajax
             $.getJSON(data_url, function(data){
                 // Add GeoJSON layer

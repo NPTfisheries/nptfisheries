@@ -27,7 +27,7 @@ def department(request):
 def department_detail(request, pk):
     department = get_object_or_404(Department, pk=pk)
     division = Division.objects.filter(department = pk)
-    project = Project.objects.filter(subproject__division__department = pk).distinct()
+    project = Project.objects.filter(subprojects__division__department = pk).distinct()
     # need to add projects filtered for division
     return render(request, 'dfrm_admin/department_detail.html', {'department':department, 'division':division, 'project':project})
 
@@ -187,6 +187,7 @@ def task_edit(request, pk):
     {'formset':formset, 'subproject':subproject}
     )
 
+
 # Office Views
 
 def facility(request):
@@ -252,3 +253,43 @@ def employee_edit(request, pk):
     else:
         form = EmployeeForm(instance=employee)
     return render(request, 'dfrm_admin/employee_edit.html', {'form': form})
+
+# API Data
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import permissions
+from .serializers import ProjectSerializer, PointSerializer, LinestringSerializer, PolygonSerializer
+from locations.models import Point, Linestring, Polygon
+
+# Project
+class ProjectViewSet(viewsets.ModelViewSet):
+    # define queryset
+    queryset = Project.objects.all()
+    # specify serializer to be used
+    serializer_class = ProjectSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+# Point
+class PointViewSet(viewsets.ModelViewSet):
+    # define queryset
+    queryset = Point.objects.all()
+    # specify serializer to be used
+    serializer_class = PointSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+# Linestring
+class LinestringViewSet(viewsets.ModelViewSet):
+    # define queryset
+    queryset = Linestring.objects.all()
+    # specify serializer to be used
+    serializer_class = LinestringSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+# Polygon
+class PolygonViewSet(viewsets.ModelViewSet):
+    # define queryset
+    queryset = Polygon.objects.all()
+    # specify serializer to be used
+    serializer_class = PolygonSerializer
+    permission_classes = [permissions.IsAdminUser]

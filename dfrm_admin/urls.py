@@ -1,6 +1,16 @@
 # main/urls.py
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 from . import views
+
+# define the router
+router = routers.DefaultRouter()
+# define the router path and viewset to be used
+router.register(r'project', views.ProjectViewSet)
+router.register(r'point', views.PointViewSet, basename='api_point')
+router.register(r'linestring', views.LinestringViewSet, basename='api_linestring')
+router.register(r'polygon', views.PolygonViewSet, basename='api_polygon')
+
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -30,4 +40,8 @@ urlpatterns = [
     path('employee/', views.employee, name='employee'),
     path('employee/new/', views.employee_new, name='employee_new'),
     path('employee/<int:pk>/edit/', views.employee_edit, name='employee_edit'),
+
+    #APIs
+    path('api/', include(router.urls)),
+    #path('api-auth/', include('rest_framework.urls')),
 ]
