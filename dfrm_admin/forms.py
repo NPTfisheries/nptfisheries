@@ -91,7 +91,7 @@ SubprojectFormSet = inlineformset_factory(
     Project,
     Subproject,
     extra=2,
-    can_delete=False,
+    can_delete=True,
     #fields = ('name', 'description', 'division', 'supervisor'),
     fields = '__all__',
     form = SubprojectForm)
