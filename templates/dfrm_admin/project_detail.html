@@ -36,16 +36,20 @@
         {% endfor %}
         <p>{{ project.description|safe }}</p>
 
-        {% for s in subproject %}
-            <p><font size="+2"><b>{{ s.name }}</b></font>{% if perms.dfrm_admin.change_project %} <a href="{% url 'task_edit' pk=s.pk %}">(Edit or Add Tasks)</a>{% endif %}
-            <ul>
-                {% for t in task %}
-                    {% if t.subproject.pk == s.pk %}
-                    <li>{{ t.name }}--<a href="{% url 'profile' pk=t.supervisor.name.user.pk %}"><em>{{ t.supervisor }}</em></a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        {% endfor %}
+
+            {% for s in subproject %}
+                <h2> {{ s.division }} Division</h2>
+                <p> &nbsp; &nbsp; &nbsp; <font size="+1"><b>{{ s.name }}</b></font>{% if perms.dfrm_admin.change_project %} <a href="{% url 'task_edit' pk=s.pk %}">(Edit or Add Tasks)</a>{% endif %}
+                <div class = "container" style="margin-left: 2rem;">
+                    <ul>
+                        {% for t in task %}
+                            {% if t.subproject.pk == s.pk %}
+                            <li> {{ t.name }}--<a href="{% url 'profile' pk=t.supervisor.name.user.pk %}"><em>{{ t.supervisor }}</em></a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
     </div>
 
     {% comment %} <div class="p-2">
@@ -56,8 +60,6 @@
     </div> {% endcomment %}
 
     <div class="p-2">
-
-        <p>Point Data: {{ project.subproject.task.location.point.geometry.x }}</p>
 
         <style>
             .leaflet-container {
@@ -73,18 +75,40 @@
         <script type="text/javascript">
             function map_init_basic(map, options) {
 
-                var point = "{{ project.subproject.task.location.point }}"
-                
-                map.setView([46.5, -116.5], 7);
+                map.setView([46.5, -116.5], 6);
 
+                var point = '{% url "api_project_points" pk=project.pk %}';
                 $.getJSON(point, function(data){
                         // Add GeoJSON layer
                     L.geoJson(data,{
                         onEachFeature: function(feature, layer){
-                            layer.bindPopup("Name: " + feature.properties.name.toString());
+                            layer.bindPopup(feature.properties.name.name.toString());
                         }
                     }).addTo(map);
                 });
+
+                var data_url = '{% url "api_project_linestrings" pk=project.pk %}';
+                    // Download GeoJSON via Ajax
+                $.getJSON(data_url, function(data){
+                        // Add GeoJSON layer
+                    L.geoJson(data,{
+                        onEachFeature: function(feature, layer){
+                            layer.bindPopup(feature.properties.name.name.toString());
+                        }
+                    }).addTo(map);
+                });
+
+                var data_url = '{% url "api_project_polygons" pk=project.pk %}';
+                // Download GeoJSON via Ajax
+                $.getJSON(data_url, function(data){
+                    // Add GeoJSON layer
+                    L.geoJson(data,{
+                        onEachFeature: function(feature, layer){
+                            layer.bindPopup(feature.properties.name.name.toString());
+                        }
+                    }).addTo(map);
+                });
+
             }
         </script>
     </div>

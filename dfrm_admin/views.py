@@ -259,10 +259,38 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import permissions
-from .serializers import ProjectSerializer, PointSerializer, LinestringSerializer, PolygonSerializer
-from locations.models import Point, Linestring, Polygon
+from .serializers import EmployeeSerializer, FacilitySerializer, DepartmentSerializer, DivisionSerializer, ProjectSerializer, SubprojectSerializer, TaskSerializer
+from locations.models import Location, Point, Linestring, Polygon
+from locations.serializers import PointSerializer, LinestringSerializer, PolygonSerializer
 
-# Project
+class EmployeeViewSet(viewsets.ModelViewSet):
+    # define queryset
+    queryset = Employee.objects.all()
+    # specify serializer to be used
+    serializer_class = EmployeeSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+class FacilityViewSet(viewsets.ModelViewSet):
+    # define queryset
+    queryset = Facility.objects.all()
+    # specify serializer to be used
+    serializer_class = FacilitySerializer
+    permission_classes = [permissions.IsAdminUser]
+
+class DepartmentViewSet(viewsets.ModelViewSet):
+    # define queryset
+    queryset = Department.objects.all()
+    # specify serializer to be used
+    serializer_class = DepartmentSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+class DivisionViewSet(viewsets.ModelViewSet):
+    # define queryset
+    queryset = Division.objects.all()
+    # specify serializer to be used
+    serializer_class = DivisionSerializer
+    permission_classes = [permissions.IsAdminUser]
+
 class ProjectViewSet(viewsets.ModelViewSet):
     # define queryset
     queryset = Project.objects.all()
@@ -270,26 +298,64 @@ class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
     permission_classes = [permissions.IsAdminUser]
 
-# Point
-class PointViewSet(viewsets.ModelViewSet):
-    # define queryset
-    queryset = Point.objects.all()
-    # specify serializer to be used
-    serializer_class = PointSerializer
-    permission_classes = [permissions.IsAdminUser]
+    @action(detail=True)
+    def subprojects(self, request, pk=None):
+        project = self.get_object() # retrieve an object by pk provided
+        s = Subproject.objects.filter(project=project).distinct()
+        s_json = SubprojectSerializer(s, many=True)
+        return Response(s_json.data)
 
-# Linestring
-class LinestringViewSet(viewsets.ModelViewSet):
-    # define queryset
-    queryset = Linestring.objects.all()
-    # specify serializer to be used
-    serializer_class = LinestringSerializer
-    permission_classes = [permissions.IsAdminUser]
+    @action(detail=True)
+    def tasks(self, request, pk=None):
+        project = self.get_object() # retrieve an object by pk provided
+        t = Task.objects.filter(subproject__project=project).distinct()
+        t_json = TaskSerializer(t, many=True)
+        return Response(t_json.data)
 
-# Polygon
-class PolygonViewSet(viewsets.ModelViewSet):
+    @action(detail=True)
+    def points(self, request, pk=None):
+        project = self.get_object() # retrieve an object by pk provided
+        t = Task.objects.filter(subproject__project=project).distinct()
+        l = t.values_list('location', flat = True)
+        #print(l)
+        p = Point.objects.filter(name__in = l)
+        #print(p)
+        p_json = PointSerializer(p, many=True)
+        return Response(p_json.data)
+
+    @action(detail=True)
+    def linestrings(self, request, pk=None):
+        project = self.get_object() # retrieve an object by pk provided
+        t = Task.objects.filter(subproject__project=project).distinct()
+        l = t.values_list('location', flat = True)
+        #print(l)
+        p = Linestring.objects.filter(name__in = l)
+        #print(p)
+        p_json = LinestringSerializer(p, many=True)
+        return Response(p_json.data)
+
+    @action(detail=True)
+    def polygons(self, request, pk=None):
+        project = self.get_object() # retrieve an object by pk provided
+        t = Task.objects.filter(subproject__project=project).distinct()
+        l = t.values_list('location', flat = True)
+        #print(l)
+        p = Polygon.objects.filter(name__in = l)
+        #print(p)
+        p_json = PolygonSerializer(p, many=True)
+        return Response(p_json.data)
+    
+
+class SubprojectViewSet(viewsets.ModelViewSet):
     # define queryset
-    queryset = Polygon.objects.all()
+    queryset = Subproject.objects.all()
     # specify serializer to be used
-    serializer_class = PolygonSerializer
+    serializer_class = SubprojectSerializer
+    permission_classes = [permissions.IsAdminUser]
+    
+class TaskViewSet(viewsets.ModelViewSet):
+    # define queryset
+    queryset = Task.objects.all()
+    # specify serializer to be used
+    serializer_class = TaskSerializer
     permission_classes = [permissions.IsAdminUser]

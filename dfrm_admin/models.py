@@ -152,10 +152,10 @@ class Subproject(models.Model):
         return self.name
 
 class Task(models.Model):
-    subproject = models.ForeignKey(Subproject, on_delete=models.CASCADE)
+    subproject = models.ForeignKey(Subproject, on_delete=models.CASCADE, related_name = 'tasks')
     supervisor = models.ForeignKey(Employee, on_delete=models.CASCADE, verbose_name = 'Task supervisor', related_name = "task_sup")
     staff = models.ManyToManyField(Employee, blank = True, verbose_name = 'Task staff', related_name = "staff")
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, verbose_name = 'Task location')
+    location = models.ManyToManyField(Location, blank = True, verbose_name = 'Task location', related_name = 'locations')
     name = models.CharField("Task name", max_length=300)
     description = RichTextField("Task description")
 

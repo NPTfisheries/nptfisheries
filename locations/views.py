@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponse
 from django.views.generic import CreateView, ListView
-from locations.models import Location, Point
+from locations.models import Location, Point, Linestring, Polygon
 from django import forms
 from locations.forms import LocationForm, PointFormSet, LinestringFormSet, PolygonFormSet
 
@@ -64,3 +64,34 @@ def location_edit(request, pk=False):
     return render(request, 'locations/location_edit.html',
     {'fs':fs, 'f':f, 'location':location}
     )
+
+# APIs
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import permissions
+from .serializers import PointSerializer, LinestringSerializer, PolygonSerializer
+
+# Point
+class PointViewSet(viewsets.ModelViewSet):
+    # define queryset
+    queryset = Point.objects.all()
+    # specify serializer to be used
+    serializer_class = PointSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+# Linestring
+class LinestringViewSet(viewsets.ModelViewSet):
+    # define queryset
+    queryset = Linestring.objects.all()
+    # specify serializer to be used
+    serializer_class = LinestringSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+# Polygon
+class PolygonViewSet(viewsets.ModelViewSet):
+    # define queryset
+    queryset = Polygon.objects.all()
+    # specify serializer to be used
+    serializer_class = PolygonSerializer
+    permission_classes = [permissions.IsAdminUser]

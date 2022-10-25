@@ -1,33 +1,48 @@
 #dfrm_admin/serializers.py
 from rest_framework import serializers
-from .models import Project
-from locations.models import Point
 
-from rest_framework_gis.serializers import GeoFeatureModelSerializer
-from locations.models import Point, Linestring, Polygon
+from locations.serializers import PointSerializer
+from .models import Employee, Facility, Department, Division, Project, Subproject, Task
+from locations.models import Location
+
+class EmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Employee
+        fields = '__all__'
+
+class FacilitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Facility
+        fields = '__all__'
+
+class DepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Department
+        fields = '__all__'
+
+class DivisionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Division
+        fields = '__all__'
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = '__all__'
+        depth = 0
 
-class PointSerializer(GeoFeatureModelSerializer):
-    location_name = serializers.CharField(read_only=True, source="name.name")
+class SubprojectSerializer(serializers.ModelSerializer):
+    #tasks = serializers.StringRelatedField(many=True)
     class Meta:
-        model = Point
-        fields = ('id', 'name', 'location_name',)
-        geo_field = 'geometry'
+        model = Subproject
+        fields = '__all__'
+        #fields = ('id', 'name', 'tasks')
+        depth = 0
 
-class LinestringSerializer(GeoFeatureModelSerializer):
-    location_name = serializers.CharField(read_only=True, source="name.name")
+class TaskSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Linestring
-        fields = ('id', 'name', 'location_name')
-        geo_field = 'geometry'
-
-class PolygonSerializer(GeoFeatureModelSerializer):
-    location_name = serializers.CharField(read_only=True, source="name.name")
-    class Meta:
-        model = Polygon
-        fields = ('id', 'name', 'location_name')
-        geo_field = 'geometry'
+        model = Task
+        fields = '__all__'
+        #fields = ('id', 'name', 'location')
+        # set depth to return parent tables
+        depth = 0

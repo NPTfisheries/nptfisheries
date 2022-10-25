@@ -109,7 +109,7 @@ class TaskForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows':10, 'cols':100}),
             'supervisor': forms.Select(attrs={'class': 'form-control'}),
-            'location': forms.Select(attrs={'class': 'form-control'}),
+            'location': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'staff': forms.SelectMultiple(attrs={'class': 'form-control', 'size':'10'}),
         }
 

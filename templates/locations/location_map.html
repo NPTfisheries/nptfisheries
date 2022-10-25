@@ -47,7 +47,7 @@
                     // Add GeoJSON layer
                 L.geoJson(data,{
                     onEachFeature: function(feature, layer){
-                        layer.bindPopup("Name: " + feature.properties.name.toString());
+                        layer.bindPopup(feature.properties.name.name.toString());
                     }
                 }).addTo(map);
             });
@@ -58,7 +58,7 @@
                     // Add GeoJSON layer
                 L.geoJson(data,{
                     onEachFeature: function(feature, layer){
-                        layer.bindPopup("Name: " + feature.properties.name.toString());
+                        layer.bindPopup(feature.properties.name.name.toString());
                     }
                 }).addTo(map);
             });
@@ -69,7 +69,7 @@
                 // Add GeoJSON layer
                 L.geoJson(data,{
                     onEachFeature: function(feature, layer){
-                        layer.bindPopup("Name: " + feature.properties.name.toString());
+                        layer.bindPopup(feature.properties.name.name.toString());
                     }
                 }).addTo(map);
             });

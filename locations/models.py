@@ -35,7 +35,7 @@ class Location(models.Model):
         return self.name
 
 class Point(models.Model):
-    name = models.OneToOneField(Location, on_delete=models.CASCADE)
+    name = models.OneToOneField(Location, on_delete=models.CASCADE, related_name = "points")
     geometry = models.PointField()
     
     def __str__(self):
