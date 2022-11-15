@@ -11,6 +11,9 @@ venv/
 # Database
 db.sqlite3
 
+# Database Backups
+backup.json
+
 # Static folder at project root
 #/static/
 
