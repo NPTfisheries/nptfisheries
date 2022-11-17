@@ -36,9 +36,10 @@
         <p> {{ facility.street_address }} </p>
         <p> {{ facility.city }}, {{ facility.state }} {{ facility.zipcode }} </p>
         <p> Manager: {{ facility.manager }} </p>
-        {% if office.administrative_assistant %}
-            <p>Administrative Assistant: {{ facility.facility.administrative_assistant }} </p>
+        {% if facility.administrative_assistant %}
+            <p>Administrative Assistant: {{ facility.administrative_assistant }} </p>
         {% endif %}
+
     </div>
     <div class="p-2">
         <style>
@@ -50,19 +51,19 @@
             }
         </style>
         
+        {% leaflet_map "main" callback="map_init_basic" %}
+
         <script type="text/javascript">
             function map_init_basic(map, options) {
         
-            var lon = "{{ facility.name.point.geometry.x }}"
-            var lat = "{{ facility.name.point.geometry.y }}"
-        
+            var lon = "{{ facility.name.points.geometry.x }}"
+            var lat = "{{ facility.name.points.geometry.y }}"
+
             map.setView([lat, lon], 12);
             L.marker([lat, lon]).addTo(map);
             }
-        
         </script>
-
-        {% leaflet_map "main" callback="map_init_basic" %}
+    
     </div>
 </div>
 
