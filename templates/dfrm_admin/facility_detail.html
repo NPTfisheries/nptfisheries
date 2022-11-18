@@ -50,20 +50,26 @@
                 margin-bottom: 10px;
             }
         </style>
-        
+       
         {% leaflet_map "main" callback="map_init_basic" %}
 
         <script type="text/javascript">
             function map_init_basic(map, options) {
-        
-            var lon = "{{ facility.name.points.geometry.x }}"
-            var lat = "{{ facility.name.points.geometry.y }}"
 
-            map.setView([lat, lon], 12);
-            L.marker([lat, lon]).addTo(map);
+                map.setView([46.5, -116.5], 6);
+
+                var point = '{% url "api_facility_points" pk=facility.pk %}';
+                $.getJSON(point, function(data){
+                        // Add GeoJSON layer
+                    L.geoJson(data,{
+                        onEachFeature: function(feature, layer){
+                            layer.bindPopup(feature.properties.name.name.toString());
+                        }
+                    }).addTo(map);
+                });
             }
         </script>
-    
+        
     </div>
 </div>
 

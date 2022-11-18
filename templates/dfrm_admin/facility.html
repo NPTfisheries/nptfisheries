@@ -1,6 +1,12 @@
 <!-- templates/admin/facility.html -->
 {% extends "base.html" %}
 {% load static %}
+{% load leaflet_tags %}
+
+{% block head %}
+    {% leaflet_css %}
+    {% leaflet_js %}
+{% endblock head %}
 
 {% block header %}
 <div class="page-header">
@@ -19,6 +25,33 @@
     {% endif %}
 </div>
 
+<style>
+    .leaflet-container {
+        width: 100%;
+        height: 500px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+{% leaflet_map "main" callback="map_init_basic" %}
+
+<script type="text/javascript">
+    function map_init_basic(map, options) {
+        map.setView([46.5, -116.5], 7);
+
+        var data_url = '{% url "api_all_facility_points" %}'
+            // Download GeoJSON via Ajax
+        $.getJSON(data_url, function(data){
+                // Add GeoJSON layer
+            L.geoJson(data,{
+                onEachFeature: function(feature, layer){
+                    layer.bindPopup(feature.properties.name.name.toString());
+                }
+            }).addTo(map);
+        });
+    }
+</script>
 
 {% for f in facility %}
         <div class="card">
@@ -46,27 +79,4 @@
 <br>
 {% endfor %}
 
-
-
-
-{% for o in facility %}
-    <a href="{% url 'facility_detail' pk=o.pk %}"><h2>{{ o.name }}</h2></a>
-    <p>Phone: {{ o.phone_number }}</p>
-    {% if o.fax_number %}
-        <p>Fax: {{ o.fax_number }}</p>
-    {% endif %}
-    <p>{{ o.street_address }} {% if o.mailing_address %}<em>Mailing: {{ o.mailing_address }}</em>{% endif %}</p>
-    <p> {{ o.city }}, {{ o.state }} {{ o.zipcode }}</p>
-    
-    <p>Manager: {{ o.manager }}</p>
-    <p>Work Phone: {{ o.manager.name.work_phone }}</p>
-    <p>Email: {{ o.manager.name.user.email }}</p>
-    {% if o.administrative_assistant %}
-        <p>Administrative Assistant: {{ o.administrative_assistant }}</p>
-    {% endif %}
-    {% if o.facility_image %}
-        <img src={{ o.facility_image.url }}>
-    {% endif %}
-    <hr>
-{% endfor %}
 {% endblock %}
