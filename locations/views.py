@@ -12,7 +12,7 @@ from locations.forms import LocationForm, PointFormSet, LinestringFormSet, Polyg
 
 class LocationsList(ListView):
     model=Location
-    template = 'locations/location.html'
+    template = 'locations/location_list.html'
 
 @permission_required('locations.add_location', raise_exception=True)
 def location_new(request):
@@ -44,7 +44,7 @@ def location_edit(request, pk=False):
         if fs.is_valid() and f.is_valid():
             f.save()
             fs.save()
-            return redirect('location_map')
+            return redirect('location')
     
     else:
         f = LocationForm(instance=location)
