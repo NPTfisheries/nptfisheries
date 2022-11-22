@@ -30,9 +30,7 @@ SECRET_KEY=env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost'
-    #"192.168.7.199"
-    ]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -200,8 +198,8 @@ ACCOUNT_FORMS = {
     'signup': 'accounts.forms.CustomSignupForm'
 }
 
-GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal305'
-GEOS_LIBRARY_PATH = r'C:\OSGeo4W\bin\geos_c'
+GDAL_LIBRARY_PATH = r'C:\Program Files\QGIS 3.28.0\bin\gdal305'
+GEOS_LIBRARY_PATH = r'C:\Program Files\QGIS 3.28.0\bin\geos_c'
 
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (46.5, -116.5),
