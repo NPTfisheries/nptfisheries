@@ -7,12 +7,32 @@ from . import views
 router = routers.DefaultRouter()
 # define the router path and viewset to be used
 router.register(r'employee', views.EmployeeViewSet, basename="api_employee")
-router.register(r'facility', views.FacilityViewSet, basename="api_facility")
+#router.register(r'facility', views.FacilityViewSet, basename="api_facility")
 router.register(r'department', views.DepartmentViewSet, basename="api_department")
 router.register(r'division', views.DivisionViewSet, basename="api_division")
 #router.register(r'project', views.ProjectViewSet, basename="api_project")
 router.register(r'subproject', views.SubprojectViewSet, basename="api_subproject")
 router.register(r'task', views.TaskViewSet, basename="api_task")
+
+facility_list = views.FacilityViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
+
+facility_detail = views.FacilityViewSet.as_view({
+    'get': 'retrieve',
+    'put': 'update',
+    'patch': 'partial_update',
+    'delete': 'destroy'
+})
+
+all_facility_points = views.FacilityViewSet.as_view({
+    'get': 'all_points'
+})
+
+facility_points = views.FacilityViewSet.as_view({
+    'get': 'points'
+})
 
 project_list = views.ProjectViewSet.as_view({
     'get': 'list',
@@ -78,10 +98,17 @@ urlpatterns = [
     #APIs
     path('api/', include(router.urls)),
     #path('api-auth/', include('rest_framework.urls')),
+    
+    path('api/facility/', facility_list, name='api_facility'),
+    path('api/facility/<int:pk>/', facility_detail, name='api_facility_detail'),
+    path('api/facility/points/', all_facility_points, name='api_all_facility_points'),
+    path('api/facility/<int:pk>/points/', facility_points, name='api_facility_points'),
+
+
     path('api/project/', project_list, name='api_project'),
     path('api/project/<int:pk>/', project_detail, name='api_project_detail'),
-    path('api/project/<int:pk>/subprojects/', project_points, name='api_project_subprojects'),
-    path('api/project/<int:pk>/tasks/', project_points, name='api_project_tasks'),
+    path('api/project/<int:pk>/subprojects/', project_subprojects, name='api_project_subprojects'),
+    path('api/project/<int:pk>/tasks/', project_tasks, name='api_project_tasks'),
     path('api/project/<int:pk>/points/', project_points, name='api_project_points'),
     path('api/project/<int:pk>/linestrings/', project_linestrings, name='api_project_linestrings'),
     path('api/project/<int:pk>/polygons/', project_polygons, name='api_project_polygons'),

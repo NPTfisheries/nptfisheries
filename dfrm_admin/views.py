@@ -188,7 +188,7 @@ def task_edit(request, pk):
     )
 
 
-# Office Views
+# Facility Views
 
 def facility(request):
     facility = Facility.objects.all().order_by("name")
@@ -276,6 +276,30 @@ class FacilityViewSet(viewsets.ModelViewSet):
     # specify serializer to be used
     serializer_class = FacilitySerializer
     permission_classes = [permissions.IsAdminUser]
+
+    @action(detail=False)
+    def all_points(self, request, pk=None):
+        #f_pk = self.get_object()
+        f = Facility.objects.all()
+        #print(f)
+        l = f.values_list('name', flat = True)
+        #print(l)
+        p = Point.objects.filter(name__in = l)
+        #print(p)
+        p_json = PointSerializer(p, many=True)
+        return Response(p_json.data)
+
+    @action(detail=True)
+    def points(self, request, pk=None):
+        #f_pk = self.get_object()
+        f = Facility.objects.filter(pk = pk)
+        #print(f)
+        l = f.values_list('name', flat = True)
+        #print(l)
+        p = Point.objects.filter(name__in = l)
+        #print(p)
+        p_json = PointSerializer(p, many=True)
+        return Response(p_json.data)
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     # define queryset

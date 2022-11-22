@@ -10,12 +10,6 @@ from locations.forms import LocationForm, PointFormSet, LinestringFormSet, Polyg
 
 # Create your views here.
 
-def map(request):
-        return render(request, 'locations/location_map.html', {})
-
-# class MapLayer(GeoJSONLayerView):
-#     geometry_field = 'geometry'
-
 class LocationsList(ListView):
     model=Location
     template = 'locations/location_list.html'
@@ -50,7 +44,7 @@ def location_edit(request, pk=False):
         if fs.is_valid() and f.is_valid():
             f.save()
             fs.save()
-            return redirect('location_map')
+            return redirect('location')
     
     else:
         f = LocationForm(instance=location)
