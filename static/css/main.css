@@ -16,9 +16,11 @@
 }
 
 .navbar {
-
     padding-left: 2rem;
     padding-right: 2rem;
+    position: fixed;
+    width: 100%;
+    z-index: 20;
 }
 
 .rounded-circle{
