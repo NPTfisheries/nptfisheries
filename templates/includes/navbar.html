@@ -16,13 +16,7 @@
             <a class="nav-link" href="{% url 'department_detail' pk=1 %}">Department</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'project' %}">Projects</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="{% url 'facility' %}">Facilities</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'location_map' %}">Locations</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'news_list' %}">News</a>
@@ -38,17 +32,17 @@
                     {{ request.user.get_full_name }}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="{% url 'profile' pk=user.pk %}">Profile</a></li>
+                  <li><a class="dropdown-item" href="{% url 'profile' pk=user.pk %}">User Profile</a></li>
                   <li><a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a></li>
 
                   {% if request.user.is_staff %}
-                  <li><hr class="dropdown-divider"></li>
+                  <li><hr class="dropdown-divider"><b>&nbsp Add/Edit Content</b></li>
                   <li><a class="dropdown-item" href="{% url 'department' %}">Departments</a></li>
                   <li><a class="dropdown-item" href="{% url 'division' %}">Divisions</a></li>
                   <li><a class="dropdown-item" href="{% url 'project' %}">Projects</a></li>
                   <li><a class="dropdown-item" href="{% url 'facility' %}">Facilities</a></li>
                   <li><a class="dropdown-item" href="{% url 'employee' %}">Employees</a></li>
-                  <li><a class="dropdown-item" href="{% url 'location_list' %}">Locations</a></li>
+                  <li><a class="dropdown-item" href="{% url 'location' %}">Locations</a></li>
                   {% endif %}
 
                 </ul>

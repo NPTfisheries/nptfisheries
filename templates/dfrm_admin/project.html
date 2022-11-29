@@ -38,9 +38,9 @@
             <td>{{ p.name }}</td>
             <td>{{ p.created }}</td>
             <td>{{ p.active }} </td>
-            <td><a href="{% url 'project_detail' pk=p.pk %}" class="btn btn-secondary"><i class="bi bi-eye"></i></a></td>
+            <td><a href="{% url 'project_detail' pk=p.pk %}" class="btn btn-success"><i class="bi bi-eye"></i></a></td>
             {% if perms.dfrm_admin.change_project %}
-            <td><a href="{% url 'project_edit' pk=p.pk %}" class="btn btn-secondary"><i class="bi bi-pencil"></i></a></td>
+            <td><a href="{% url 'project_edit' pk=p.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
             {% endif %}    
         </tr>
         {% endfor %}

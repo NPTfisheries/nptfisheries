@@ -27,6 +27,7 @@
             <th>Name</th>
             <th>Director</th>
             <th>Deputy Director</th>
+            <th>Administrative Assistant</th>
             <th>Facility</th>
             <th>View</th>
             {% if perms.dfrm_admin.change_division %}
@@ -39,11 +40,12 @@
         <tr>
             <td>{{ d.name }}</td>
             <td>{{ d.director }}</td>
-            <td>{{ d.deputy_director }} </td>
+            <td>{{ d.deputy_director }}</td>
+            <td>{{ d.administrative_assistant }} </td>
             <td>{{ d.facility }} </td>
-            <td><a href="{% url 'division_detail' pk=d.pk %}" class="btn btn-secondary"><i class="bi bi-eye"></i></a></td>
+            <td><a href="{% url 'division_detail' pk=d.pk %}" class="btn btn-success"><i class="bi bi-eye"></i></a></td>
             {% if perms.dfrm_admin.change_division %}
-            <td><a href="{% url 'division_edit' pk=d.pk %}" class="btn btn-secondary"><i class="bi bi-pencil"></i></a></td>
+            <td><a href="{% url 'division_edit' pk=d.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
             {% endif %}
         </tr>
         {% endfor %}
