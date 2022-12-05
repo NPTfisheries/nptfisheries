@@ -46,7 +46,12 @@
 h1,
 h2,
 h3,
-h4{
+h4,
+h5{
+    font-family: 'Quando';
+}
+
+p{
     font-family: 'Lora';
 }
 
@@ -68,39 +73,6 @@ h1.title{
 .carousel-inner{
   width:100%;
   max-height: 300px !important;
-}
-
-/* Home page styling */
-
-.home-title {
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    border-radius: 25px;
-    vertical-align: middle;
-    padding: 10px;
-}
-
-.home-title h1{
-    color:  #ABE7FC;
-    font-size: 4em;
-}
-
-
-.home-container {
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    border-radius: 25px;
-    vertical-align: middle;
-    padding: 30px;
-    margin: 100px;
-}
-
-.home-container h2{
-    color: #ABE7FC;
 }
 
 /* Recent News */
