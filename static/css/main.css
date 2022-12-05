@@ -16,7 +16,6 @@
 }
 
 .navbar {
-
     padding-left: 2rem;
     padding-right: 2rem;
 }
@@ -210,6 +209,7 @@ h1.title{
 */
 
 .page-header {
+    margin-top: 76px;
   /* The image used */
   background-image: url('../img/Clearwater_River_Home_Page.jpg');
   /* Set a specific height */
