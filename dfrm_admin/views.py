@@ -10,13 +10,16 @@ from dfrm_admin.models import Department, Employee, Facility, Division, Project,
 from news.models import Post
 #from accounts.models import UserProfile
 from .forms import DepartmentForm, EmployeeForm, FacilityForm, DivisionForm, ProjectForm, SubprojectFormSet, TaskFormSet
+import random
 
 # Create your views here.
 
 def home(request):
     department = Department.objects.all().order_by('name')
+    plist = list(Project.objects.all())
+    project = random.sample(plist, 3)
     post = Post.objects.filter(header_image__isnull = False).order_by("-pk")[0:3]
-    return render(request, 'home.html', {"department":department, "post":post})
+    return render(request, 'home.html', {"department":department, "post":post, "project":project})
 
 # Department Views
 
