@@ -33,20 +33,6 @@
 <div class="bg-dark bg-opacity-75 border border-light rounded mt-5 m-2 p-3" style="color: #ABE7FC;">
   <h2 class="text-center">Project Spotlight</h2>
 </div>
-{% comment %} <div class="card-group">
-  {% for p in project %}
-      <div class="card text-light bg-dark bg-opacity-75 border-light mb-3 mx-2" style="width: 18rem;">
-        <img src="{{ p.project_image1.url }}" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">{{ p.name }}</h5>
-          <p class="card-text">{{ p.description|safe|slice:500 }}</p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">{{ p.project_leader}}</small>
-        </div>
-      </div>
-  {% endfor %}
-</div> {% endcomment %}
 
 {% for p in project %}
 <div class="card text-light bg-dark bg-opacity-75 border-light mb-3 mx-2">
@@ -56,20 +42,26 @@
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <a class="stretched-link" href="{% url 'project_detail' pk=p.pk %}"><h5 class="card-title" style="color: #ABE7FC;">{{ p.name }}</h5></a>
+        <a class="stretched-link" href="{% url 'project_detail' pk=p.pk %}"><h3 class="card-title" style="color: #ABE7FC;">{{ p.name }}</h3></a>
         <p class="card-text">{{ p.description|safe|slice:500 }}</p>
       </div>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">Project Leader(s):</small>
+      {% for i in p.project_leader.all %}
+      <small class="text-muted">{% if forloop.last %} {{ i.name }} {% else %} {{ i.name }}, {% endif %}</small>
+      {% endfor %}
     </div>
   </div>
 </div>
 {% endfor %}
 
-<div class="bg-dark border border-light rounded mt-5 m-2 p-3" style="color: #ABE7FC;">
+<div class="bg-dark bg-opacity-75  border border-light rounded mt-5 m-2 p-3" style="color: #ABE7FC;">
   <h2 class="text-center">Recent News</h2>
 </div>
   <div class="card-group">
     {% for p in post %}
-        <div class="card text-light bg-dark border-light mb-3 mx-2" style="width: 18rem;">
+        <div class="card text-light bg-dark bg-opacity-75 border-light mb-3 mx-2" style="width: 18rem;">
           <img src="{{ p.header_image.url }}" class="card-img-top" alt="...">
           <div class="card-body">
             <a class="stretched-link" href="{% url 'news_detail' pk=p.pk %}"><h5 class="card-title" style="color: #ABE7FC;">{{ p.title }}</h5></a>

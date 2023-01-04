@@ -6,7 +6,7 @@
 <div class="page-header">
     <div class="black-background">
         <div class="container">
-            <h1>Department List</h1>
+            <h1>Division List</h1>
         </div>
     </div>
 </div>
@@ -16,8 +16,8 @@
 {% block content %}
 
 <div class="edit-content">
-    {% if perms.dfrm_admin.add_department %}
-        <a href="{% url 'department_new' %}" class="btn btn-primary">Add New Department</a>
+    {% if perms.dfrm_admin.add_division %}
+        <a href="{% url 'division_new' %}" class="btn btn-primary">Add New Division</a>
     {% endif %}
 </div>
 
@@ -25,28 +25,28 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Manager</th>
-            <th>Deputy Manager</th>
+            <th>Director</th>
+            <th>Deputy Director</th>
             <th>Administrative Assistant</th>
             <th>Facility</th>
             <th>View</th>
-            {% if perms.dfrm_admin.change_department %}
+            {% if perms.dfrm_admin.change_division %}
             <th>Edit</th>
             {% endif %}
         </tr>
     </thead >
     <tbody>
-        {% for d in department %}
+        {% for d in divisions %}
         <tr>
             <td>{{ d.name }}</td>
-            <td>{{ d.manager }}</td>
-            <td>{{ d.deputy_manager }} </td>
+            <td>{{ d.director }}</td>
+            <td>{{ d.deputy_director }}</td>
             <td>{{ d.administrative_assistant }} </td>
             <td>{{ d.facility }} </td>
-            <td><a href="{% url 'department_detail' pk=d.pk %}" class="btn btn-success"><i class="bi bi-eye"></i></a></td>
-            {% if perms.dfrm_admin.change_department %}
-            <td><a href="{% url 'department_edit' pk=d.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
-            {% endif %}        
+            <td><a href="{% url 'division_detail' pk=d.pk %}" class="btn btn-success"><i class="bi bi-eye"></i></a></td>
+            {% if perms.dfrm_admin.change_division %}
+            <td><a href="{% url 'division_edit' pk=d.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
+            {% endif %}
         </tr>
         {% endfor %}
     </tbody>

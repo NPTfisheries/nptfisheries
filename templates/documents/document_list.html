@@ -16,14 +16,9 @@
 {% endblock header %}
 
 {% block content %}
-	<div class="edit-content">
-	    {% if perms.documents.add_document %}
-	        <a href="{% url 'document_upload' %}" class="btn btn-primary"><div class="button">Add New Document</div></a>
-	    {% endif %}
-	</div>
 
 	<div class="well">
-			<h2 style="margin-top: 0">Filter Available Documents</h2>
+			<h2 style="margin-top: 0">Search Documents</h2>
 			</br>
 
 	<form method="get">		
@@ -56,7 +51,7 @@
 				</div>
 			</div>
 		</br>
-			<button type="submit" class="btn btn-success"><i class="bi bi-search"></i> Search</button>
+			<button type="submit" class="btn btn-success"><i class="bi bi-search"></i> Filter</button>
 		</br>
 			<ul>
 				<li>Use citation to search for authors</li>
