@@ -1,0 +1,49 @@
+<!-- templates/dfrm_admin/project.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+<div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>Project List</h1>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
+<hr>
+{% block content %}
+<div class="edit-content">
+    {% if perms.dfrm_admin.add_project %}
+        <a href="{% url 'project_new' %}" class="btn btn-primary">Add New Project</a>
+    {% endif %}
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Created</th>
+            <th>Active</th>
+            <th>View</th>
+            {% if perms.dfrm_admin.change_project %}
+            <th>Edit</th>
+            {% endif %}
+        </tr>
+    </thead >
+    <tbody>
+        {% for p in projects %}
+        <tr>
+            <td>{{ p.name }}</td>
+            <td>{{ p.created }}</td>
+            <td>{{ p.active }} </td>
+            <td><a href="{% url 'project_detail' pk=p.pk %}" class="btn btn-success"><i class="bi bi-eye"></i></a></td>
+            {% if perms.dfrm_admin.change_project %}
+            <td><a href="{% url 'project_edit' pk=p.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
+            {% endif %}    
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
