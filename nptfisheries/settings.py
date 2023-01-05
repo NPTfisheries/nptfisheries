@@ -198,8 +198,7 @@ ACCOUNT_FORMS = {
     'signup': 'accounts.forms.CustomSignupForm'
 }
 
-GDAL_LIBRARY_PATH = r'C:\Program Files\QGIS 3.28.0\bin\gdal305'
-GEOS_LIBRARY_PATH = r'C:\Program Files\QGIS 3.28.0\bin\geos_c'
+
 
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (46.5, -116.5),
