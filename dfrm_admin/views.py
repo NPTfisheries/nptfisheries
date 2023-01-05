@@ -293,7 +293,7 @@ class FacilityViewSet(viewsets.ModelViewSet):
     queryset = Facility.objects.all()
     # specify serializer to be used
     serializer_class = FacilitySerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
 
     @action(detail=False)
     def all_points(self, request, pk=None):
@@ -324,21 +324,21 @@ class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
     # specify serializer to be used
     serializer_class = DepartmentSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
 
 class DivisionViewSet(viewsets.ModelViewSet):
     # define queryset
     queryset = Division.objects.all()
     # specify serializer to be used
     serializer_class = DivisionSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
 
 class ProjectViewSet(viewsets.ModelViewSet):
     # define queryset
     queryset = Project.objects.all()
     # specify serializer to be used
     serializer_class = ProjectSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
 
     @action(detail=True)
     def subprojects(self, request, pk=None):
@@ -393,11 +393,11 @@ class SubprojectViewSet(viewsets.ModelViewSet):
     queryset = Subproject.objects.all()
     # specify serializer to be used
     serializer_class = SubprojectSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
     
 class TaskViewSet(viewsets.ModelViewSet):
     # define queryset
     queryset = Task.objects.all()
     # specify serializer to be used
     serializer_class = TaskSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
