@@ -69,17 +69,19 @@ project_polygons = views.ProjectViewSet.as_view({
 urlpatterns = [
     path('', views.home, name='home'),
 
-    path('department/', views.department, name = 'department'),
+    path('department/list/', views.department_list, name = 'department_list'),
     path('department/<int:pk>/', views.department_detail, name='department_detail'),
     path('department/new/', views.department_new, name='department_new'),
     path('department/<int:pk>/edit/', views.department_edit, name='department_edit'),
 
     path('division/', views.division, name='division'),
+    path('division/list/', views.division_list, name='division_list'),
     path('division/<int:pk>/', views.division_detail, name='division_detail'),
     path('division/new/', views.division_new, name='division_new'),
     path('division/<int:pk>/edit/', views.division_edit, name='division_edit'),
 
     path('project/', views.project, name='project'),
+    path('project/list/', views.project_list, name='project_list'),
     path('project/<int:pk>/', views.project_detail, name='project_detail'),
     path('project/new/', views.project_new, name='project_new'),
     path('project/<int:pk>/edit/', views.project_edit, name='project_edit'),
@@ -87,11 +89,12 @@ urlpatterns = [
     path('task/<int:pk>/edit/', views.task_edit, name='task_edit'),
 
     path('facility/', views.facility, name = 'facility'),
+    path('facility/list/', views.facility_list, name = 'facility_list'),
     path('facility/<int:pk>/', views.facility_detail, name='facility_detail'),
     path('facility/new/', views.facility_new, name = 'facility_new'),
     path('facility/<int:pk>/edit/', views.facility_edit, name='facility_edit'),
     
-    path('employee/', views.employee, name='employee'),
+    path('employee/list/', views.employee_list, name='employee_list'),
     path('employee/new/', views.employee_new, name='employee_new'),
     path('employee/<int:pk>/edit/', views.employee_edit, name='employee_edit'),
 

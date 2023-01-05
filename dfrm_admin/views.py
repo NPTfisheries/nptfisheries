@@ -10,26 +10,29 @@ from dfrm_admin.models import Department, Employee, Facility, Division, Project,
 from news.models import Post
 #from accounts.models import UserProfile
 from .forms import DepartmentForm, EmployeeForm, FacilityForm, DivisionForm, ProjectForm, SubprojectFormSet, TaskFormSet
+import random
 
 # Create your views here.
 
 def home(request):
     department = Department.objects.all().order_by('name')
+    plist = list(Project.objects.all())
+    project = random.sample(plist, 3)
     post = Post.objects.filter(header_image__isnull = False).order_by("-pk")[0:3]
-    return render(request, 'home.html', {"department":department, "post":post})
+    return render(request, 'home.html', {"department":department, "post":post, "project":project})
 
 # Department Views
-
-def department(request):
-    department = Department.objects.all().order_by('name')
-    return render(request, 'dfrm_admin/department.html', {'department': department})
-
 def department_detail(request, pk):
     department = get_object_or_404(Department, pk=pk)
     division = Division.objects.filter(department = pk)
     project = Project.objects.filter(subprojects__division__department = pk).distinct()
     # need to add projects filtered for division
     return render(request, 'dfrm_admin/department_detail.html', {'department':department, 'division':division, 'project':project})
+
+@permission_required('dfrm_admin.view_department', raise_exception=True)
+def department_list(request):
+    department = Department.objects.all().order_by('name')
+    return render(request, 'dfrm_admin/department_list.html', {'department': department})
 
 @permission_required('dfrm_admin.add_department', raise_exception=True)
 def department_new(request):
@@ -65,6 +68,11 @@ def division_detail(request, pk):
     divisions = get_object_or_404(Division, pk=pk)
     subproject = Subproject.objects.filter(division = pk)
     return render(request, 'dfrm_admin/division_detail.html', {'divisions':divisions, 'subproject':subproject})
+
+@permission_required('dfrm_admin.view_division', raise_exception=True)
+def division_list(request):
+    divisions = Division.objects.all().order_by('name')
+    return render(request, 'dfrm_admin/division_list.html', {'divisions': divisions})
 
 @permission_required('dfrm_admin.add_division', raise_exception=True)
 def division_new(request):
@@ -103,7 +111,11 @@ def project_detail(request, pk):
     task = Task.objects.filter(subproject__project=pk)
     return render(request, 'dfrm_admin/project_detail.html', {'project':project, 'subproject':subproject, 'task':task})
 
-@permission_required('dfrm_admin.add_project', raise_exception=True)
+@permission_required('dfrm_admin.view_project', raise_exception=True)
+def project_list(request):
+    projects = Project.objects.all().order_by('name')
+    return render(request, 'dfrm_admin/project_list.html', {'projects': projects})
+
 def project_new(request):
     if request.method == 'POST':
         f = ProjectForm(request.POST, request.FILES)
@@ -198,6 +210,11 @@ def facility_detail(request, pk):
     facility = get_object_or_404(Facility, pk=pk)
     return render(request, 'dfrm_admin/facility_detail.html', {'facility':facility})
 
+@permission_required('dfrm_admin.view_facility', raise_exception=True)
+def facility_list(request):
+    facility = Facility.objects.all().order_by("name")
+    return render(request, 'dfrm_admin/facility_list.html', {'facility':facility})
+
 @permission_required('dfrm_admin.add_facility', raise_exception=True)
 def facility_new(request):
     if request.method == "POST":
@@ -225,9 +242,10 @@ def facility_edit(request, pk):
 
 # Employee Views
 
-def employee(request):
+@permission_required('dfrm_admin.view_employee', raise_exception=True)
+def employee_list(request):
     employees = Employee.objects.all().order_by("-position_class","name__user__first_name")
-    return render(request, 'dfrm_admin/employees.html', {'employees':employees})
+    return render(request, 'dfrm_admin/employee_list.html', {'employees':employees})
 
 @permission_required('dfrm_admin.add_employee', raise_exception=True)
 def employee_new(request):
@@ -275,7 +293,7 @@ class FacilityViewSet(viewsets.ModelViewSet):
     queryset = Facility.objects.all()
     # specify serializer to be used
     serializer_class = FacilitySerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
 
     @action(detail=False)
     def all_points(self, request, pk=None):
@@ -306,21 +324,21 @@ class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
     # specify serializer to be used
     serializer_class = DepartmentSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
 
 class DivisionViewSet(viewsets.ModelViewSet):
     # define queryset
     queryset = Division.objects.all()
     # specify serializer to be used
     serializer_class = DivisionSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
 
 class ProjectViewSet(viewsets.ModelViewSet):
     # define queryset
     queryset = Project.objects.all()
     # specify serializer to be used
     serializer_class = ProjectSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
 
     @action(detail=True)
     def subprojects(self, request, pk=None):
@@ -375,11 +393,11 @@ class SubprojectViewSet(viewsets.ModelViewSet):
     queryset = Subproject.objects.all()
     # specify serializer to be used
     serializer_class = SubprojectSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
     
 class TaskViewSet(viewsets.ModelViewSet):
     # define queryset
     queryset = Task.objects.all()
     # specify serializer to be used
     serializer_class = TaskSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]

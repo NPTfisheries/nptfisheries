@@ -30,7 +30,8 @@ SECRET_KEY=env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    ]
 
 
 # Application definition
@@ -198,7 +199,8 @@ ACCOUNT_FORMS = {
     'signup': 'accounts.forms.CustomSignupForm'
 }
 
-
+GDAL_LIBRARY_PATH = env('GDAL_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = env('GEOS_LIBRARY_PATH')
 
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (46.5, -116.5),

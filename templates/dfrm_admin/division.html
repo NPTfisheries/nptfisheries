@@ -1,4 +1,4 @@
-<!-- templates/dfrm_admin/department.html -->
+<!-- templates/dfrm_admin/division.html -->
 {% extends "base.html" %}
 {% load static %}
 
@@ -14,42 +14,24 @@
 
 <hr>
 {% block content %}
-
-<div class="edit-content">
-    {% if perms.dfrm_admin.add_division %}
-        <a href="{% url 'division_new' %}" class="btn btn-primary">Add New Division</a>
-    {% endif %}
-</div>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Director</th>
-            <th>Deputy Director</th>
-            <th>Administrative Assistant</th>
-            <th>Facility</th>
-            <th>View</th>
-            {% if perms.dfrm_admin.change_division %}
-            <th>Edit</th>
-            {% endif %}
-        </tr>
-    </thead >
-    <tbody>
-        {% for d in divisions %}
-        <tr>
-            <td>{{ d.name }}</td>
-            <td>{{ d.director }}</td>
-            <td>{{ d.deputy_director }}</td>
-            <td>{{ d.administrative_assistant }} </td>
-            <td>{{ d.facility }} </td>
-            <td><a href="{% url 'division_detail' pk=d.pk %}" class="btn btn-success"><i class="bi bi-eye"></i></a></td>
-            {% if perms.dfrm_admin.change_division %}
-            <td><a href="{% url 'division_edit' pk=d.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
-            {% endif %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+ 
+  {% for d in divisions %}
+  <div class="card text-light bg-dark border-dark my-3">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="{{ d.division_image1.url }}" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <a class="stretched-link" href="{% url 'division_detail' pk=d.pk %}"><h3 class="card-title" style="color: #ABE7FC;">{{ d.name }}</h3></a>
+          <p class="card-text">{{ d.description|safe|slice:500 }}</p>
+        </div>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Director: {{ d.director }}</small>
+    </div>
+    </div>
+  </div>
+  {% endfor %}
 
 {% endblock %}

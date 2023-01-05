@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <img src="/static/img/NPTlogos2.png" style="width:100px">
@@ -10,10 +10,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'department_detail' pk=1 %}">Department</a>
+            <a class="nav-link" href="{% url 'division' %}">Divisions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'project' %}">Projects</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'facility' %}">Facilities</a>
@@ -35,13 +38,25 @@
                   <li><a class="dropdown-item" href="{% url 'profile' pk=user.pk %}">User Profile</a></li>
                   <li><a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a></li>
 
+                  {% if perms.documents.add_document %}
+                  <li><hr class="dropdown-divider"><b>&nbsp Add Content</b></li>
+                  <li><a class="dropdown-item" href="{% url 'document_upload' %}">Add Document</a></li>
+                  {% endif %}
+
+                  {% if perms.news.add_post %}
+                  <li><a class="dropdown-item" href="{% url 'news_post' %}">Add Post</a></li>
+                  {% endif %}
+
+                  {% if perms.dfrm_admin.change_department %}
+                  <li><hr class="dropdown-divider"><b>&nbsp Edit Content</b></li>
+                  <li><a class="dropdown-item" href="{% url 'department_list' %}">Departments</a></li>
+                  <li><a class="dropdown-item" href="{% url 'division_list' %}">Divisions</a></li>
+                  <li><a class="dropdown-item" href="{% url 'project_list' %}">Projects</a></li>
+                  <li><a class="dropdown-item" href="{% url 'employee_list' %}">Employees</a></li>
+                  {% endif %}
+
                   {% if request.user.is_staff %}
-                  <li><hr class="dropdown-divider"><b>&nbsp Add/Edit Content</b></li>
-                  <li><a class="dropdown-item" href="{% url 'department' %}">Departments</a></li>
-                  <li><a class="dropdown-item" href="{% url 'division' %}">Divisions</a></li>
-                  <li><a class="dropdown-item" href="{% url 'project' %}">Projects</a></li>
-                  <li><a class="dropdown-item" href="{% url 'facility' %}">Facilities</a></li>
-                  <li><a class="dropdown-item" href="{% url 'employee' %}">Employees</a></li>
+                  <li><a class="dropdown-item" href="{% url 'facility_list' %}">Facilities</a></li>
                   <li><a class="dropdown-item" href="{% url 'location' %}">Locations</a></li>
                   {% endif %}
 
