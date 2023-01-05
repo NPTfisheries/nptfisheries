@@ -72,7 +72,7 @@ class PointViewSet(viewsets.ModelViewSet):
     queryset = Point.objects.all()
     # specify serializer to be used
     serializer_class = PointSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
 
 # Linestring
 class LinestringViewSet(viewsets.ModelViewSet):
@@ -80,7 +80,7 @@ class LinestringViewSet(viewsets.ModelViewSet):
     queryset = Linestring.objects.all()
     # specify serializer to be used
     serializer_class = LinestringSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
 
 # Polygon
 class PolygonViewSet(viewsets.ModelViewSet):
@@ -88,4 +88,4 @@ class PolygonViewSet(viewsets.ModelViewSet):
     queryset = Polygon.objects.all()
     # specify serializer to be used
     serializer_class = PolygonSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
