@@ -12,13 +12,19 @@
 <div class="page-header">
     <div class="black-background">
         <div class="container">
-            <h1>Facilities</h1>
+            <h1>Facility List</h1>
         </div>
     </div>
 </div>
 {% endblock header %}
 
 {% block content %}
+
+<div class="edit-content">
+    {% if perms.dfrm_admin.add_facility %}
+        <a href="{% url 'facility_new' %}" class="btn btn-primary">Add New Facility</a>
+    {% endif %}
+</div>
 
 <style>
     .leaflet-container {

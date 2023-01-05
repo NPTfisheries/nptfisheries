@@ -1,0 +1,54 @@
+<!-- templates/contacts.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+<div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>Employee List</h1>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="edit-content">
+    {% if perms.dfrm_admin.add_employee %}
+        <a href="{% url 'employee_new' %}" class="btn btn-primary">Add New Employee</a>
+    {% endif %}
+</div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Work Phone</th>
+                <th>Mobile Phone</th>
+                <th>Active</th>
+                <th>View</th>
+                <th>Email</th>
+                {% if perms.dfrm_admin.change_employee %}
+                    <th>Edit</th>
+                {% endif %}
+                </th>
+            </tr>
+        </thead >
+        <tbody>
+            {% for e in employees %}
+            <tr>
+                <td>{{ e.name }}</td>
+                <td>{{ e.title }}</td>
+                <td>{{ e.name.work_phone }}</td>
+                <td>{{ e.name.mobile_phone }}</td>
+                <td>{{ e.active }} </td>
+                <td><a href="{% url 'profile' pk=e.name.user.pk %}" class="btn btn-success"><i class="bi bi-eye"></i></a></td>
+                <td><a href="mailto:{{ e.name.user.email }}" class="btn btn-primary"><i class="bi bi-envelope"></i></a></td>
+                {% if perms.dfrm_admin.change_employee %}
+                    <td><a href="{% url 'employee_edit' pk=e.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
