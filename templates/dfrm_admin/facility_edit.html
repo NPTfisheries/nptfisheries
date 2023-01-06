@@ -2,11 +2,23 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block header %}
+<div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>Add/Edit Facility</h1>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
 {% block content %}
-<h1>Add New or Edit Facility Content</h1>
-    <form method="POST" class="post-form" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-primary">Save</button>
-    </form>
+    <div class="form-group p-5">
+        <form method="POST" class="post-form" enctype="multipart/form-data">
+            {% csrf_token %}
+		    {{ form.media }}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-primary">Save</button>
+        </form>
+    </div>
 {% endblock %}
