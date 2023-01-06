@@ -11,11 +11,12 @@ class EmployeeForm(forms.ModelForm):
         fields = ('name', 'position_class', 'title', 'start_date', 'end_date', 'active')
 
         widgets = {
-            'name': forms.Select(attrs={'class': 'form-control'}),
-            'position_class': forms.Select(attrs={'class': 'form-control'}),
+            'name': forms.Select(attrs={'class': 'form-select'}),
+            'position_class': forms.Select(attrs={'class': 'form-select'}),
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'start_date': DateInput(attrs={'class': 'form-control'}),
             'end_date': DateInput(attrs={'class': 'form-control'}),
+            'active': forms.CheckboxInput(attrs={'class': 'form-check form'}),
         }
 
 class FacilityForm(forms.ModelForm):
@@ -36,10 +37,11 @@ class DepartmentForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
-            'manager': forms.Select(attrs={'class': 'form-control'}),
-            'deputy_manager': forms.Select(attrs={'class': 'form-control'}),
-            'administrative_assistant': forms.Select(attrs={'class': 'form-control'}),
-            'facility': forms.Select(attrs={'class': 'form-control'}),
+            'manager': forms.Select(attrs={'class': 'form-select'}),
+            'deputy_manager': forms.Select(attrs={'class': 'form-select'}),
+            'administrative_assistant': forms.Select(attrs={'class': 'form-select'}),
+            'facility': forms.Select(attrs={'class': 'form-select'}),
+            'department_image1': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
 class DivisionForm(forms.ModelForm):
