@@ -26,7 +26,16 @@ class FacilityForm(forms.ModelForm):
         #fields = '__all__'
 
         widgets = {
-            'name': forms.Select(attrs={'class': 'form-control'}),
+            'name': forms.Select(attrs={'class': 'form-select'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'street_address': forms.TextInput(attrs={'class': 'form-control'}),
+            'mailing_address': forms.TextInput(attrs={'class': 'form-control'}),
+            'city': forms.TextInput(attrs={'class': 'form-control'}),
+            'state': forms.TextInput(attrs={'class': 'form-control'}),
+            'zipcode': forms.TextInput(attrs={'class': 'form-control'}),
+            'manager': forms.TextInput(attrs={'class': 'form-control'}),
+            'administrative_assistant': forms.TextInput(attrs={'class': 'form-control'}),
+            'facility_image': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
 class DepartmentForm(forms.ModelForm):
@@ -50,13 +59,14 @@ class DivisionForm(forms.ModelForm):
         fields = ('department','name', 'description', 'director', 'deputy_director', 'administrative_assistant', 'facility', 'division_image1')
 
         widgets = {
-            'department': forms.Select(attrs={'class': 'form-control'}),
+            'department': forms.Select(attrs={'class': 'form-select'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
-            'director': forms.Select(attrs={'class': 'form-control'}),
-            'deputy_director': forms.Select(attrs={'class': 'form-control'}),
-            'administrative_assistant': forms.Select(attrs={'class': 'form-control'}),
-            'facility': forms.Select(attrs={'class': 'form-control'}),
+            'director': forms.Select(attrs={'class': 'form-select'}),
+            'deputy_director': forms.Select(attrs={'class': 'form-select'}),
+            'administrative_assistant': forms.Select(attrs={'class': 'form-select'}),
+            'facility': forms.Select(attrs={'class': 'form-select'}),
+            'division_image1': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
 
@@ -72,8 +82,10 @@ class ProjectForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'project_leader': forms.SelectMultiple(attrs={'class':'form-select', 'size':10}),
             'created': DateInput(attrs={'class': 'form-control'}),
-            #'active': forms.RadioSelect(attrs={'class': 'form-control'}),
+            'active': forms.CheckboxInput(attrs={'class': 'form-check form'}),
+            'project_image1': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
 class SubprojectForm(forms.ModelForm):
@@ -110,9 +122,9 @@ class TaskForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows':10, 'cols':100}),
-            'supervisor': forms.Select(attrs={'class': 'form-control'}),
-            'location': forms.SelectMultiple(attrs={'class': 'form-control'}),
-            'staff': forms.SelectMultiple(attrs={'class': 'form-control', 'size':'10'}),
+            'supervisor': forms.Select(attrs={'class': 'form-select'}),
+            'location': forms.SelectMultiple(attrs={'class': 'form-select', 'size':10}),
+            'staff': forms.SelectMultiple(attrs={'class': 'form-select', 'size':'10'}),
         }
 
 
