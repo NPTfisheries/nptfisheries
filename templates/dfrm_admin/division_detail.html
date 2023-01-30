@@ -3,81 +3,95 @@
 {% load static %}
 
 {% block header %}
-<div class="page-header">
+{% comment %} <div class="page-header">
     <div class="black-background">
         <div class="container">
-            <h1>{{ divisions.name }}</h1>
+            <h1>{{ divisions.name }} Division</h1>
         </div>
     </div>
+</div> {% endcomment %}
+
+<img src="{{ divisions.division_image1.url }}" width="100%" height="600px">
+
+<div class="bg-dark">
+    <div class="container py-5">
+        <h1 class="text-center text-light">{{ divisions.name }}</h1>
+    </div>
 </div>
+
 {% endblock header %}
 
 {% block content %}
-<div class="edit-content">
-    {% if perms.dfrm_admin.add_division %}
-        <a href="{% url 'division_edit' pk=divisions.pk %}" class="btn btn-primary"><div class="button">Edit Division Content</div></a>
-    {% endif %}
-</div>
 
-<div class="container" style="background:whitesmoke; border:solid; margin-bottom:5rem;">
-    <div class="row">
-        <div class="col-6">
-            <img src="{{ divisions.division_image1.url }}">
-        </div>
-        <div class="col-6">
-            <p><strong>Division Director: </strong>{{ divisions.director }} </p>
-            <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;Email: </strong>{{ divisions.director.name.user.email }} </p>
-            {% if divisions.deputy_director %}
-                <p><strong>Division Deputy Director: </strong>{{ divisions.deputy_director }} </p>
-                <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;Email: </strong>{{ divisions.deputy_director.name.user.email }} </p>
-            {% endif %}
-            {% if divisions.administrative_assistant %}
-                <p><strong>Support Staff: </strong>{{ divisions.administrative_assistant }} </p>
-                <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;Email: </strong>{{ divisions.administrative_assistant.name.user.email }} </p>
-            {% endif %}
+<section class="py-5 container">
+    <div class="row py-lg-5">
+        <div class="col-lg-8 mx-auto">
+            <p class='lead text-muted'>
+                {{ divisions.description|safe }}
+            </p>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <p><strong>Divisions Description: </strong>{{ divisions.description | safe }}</p>
-        </div>
-    </div>
-</div>
+</section>
 
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <div class="container" style="background:grey; border:solid; margin-right:2rem;">
-                <h2 style="text-align: center;">Projects</h2>
-                {% for p in subproject %}
-                    <div class="card" style="margin-bottom:2rem">
-                        <div class="card-header">
-                            <h3><a href="{% url 'project_detail' pk=p.project.pk %}">{{p.project.name}}</a></h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class='col-6'>
-                                    <p>{{ p.description|safe }}</p>
-                                </div>
-                                <div class='col-6'>
-                                    <img src={{ p.project.project_image1.url }}>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <p><strong>Project Leader: </strong>{{ p.supervisor }}; <em>{{ p.supervisor.name.user.email }}</em></p>
-                        </div>
+
+<div class="bg-dark"> 
+    <div class="container">
+        <div class= "row">
+            <div class="col-4 mx-auto">
+                <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
+                    <img src="{{ divisions.director.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+                    <div class="card-body">
+                        <a class="stretched-link" href="{% url 'profile' pk=divisions.director.name.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ divisions.director }}</h4></a>
+                        <h5 class="text-muted">{{ divisions.director.title }}</h5>
                     </div>
-                {% endfor %}
+                </div>
             </div>
+
+            {% if divisions.deputy_director %}
+            <div class="col-4 mx-auto">
+                <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
+                    <img src="{{ divisions.deputy_director.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+                    <div class="card-body">
+                        <a class="stretched-link" href="{% url 'profile' pk=divisions.deputy_director.name.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ divisions.deputy_director }}</h4></a>
+                        <h5 class="text-muted">{{ divisions.deputy_director.title }}</h5>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if divisions.administrative_assistant %}    
+            <div class="col-4 mx-auto">
+                <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
+                    <img src="{{ divisions.administrative_assistant.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+                    <div class="card-body">
+                        <a class="stretched-link" href="{% url 'profile' pk=divisions.administrative_assistant.name.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ divisions.administrative_assistant }}</h4></a>
+                        <h5 class="text-muted">{{ divisions.administrative_assistant.title }}</h5>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
         </div>
     </div>
 </div>
 
-
-<h2>Sub-Projects</h2>
-    {% for p in subproject %}
-        <h5><a href="{% url 'project_detail' pk=p.pk %}">{{p.project.name}} - {{ p.name }}</a></h5>
-    {% endfor %}
+    <section class="container text-center py-5">
+        <div class="row">
+            <h2 class="text-center">Division Projects</h2>
+        </div>
+        <div class="card-group">
+            {% for p in subproject %}
+                <div class="card text-light bg-dark border-dark mb-3 mx-2 my-3" style="width: 18rem;">
+                <img src="{{ p.project.project_image1.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <a class="stretched-link" href="{% url 'project_detail' pk=p.project.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{p.project.name}} - {{ p.name }}</h4></a>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Supervisor: {{ p.supervisor }}</small>
+                </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
 
 {% endblock %}

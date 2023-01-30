@@ -9,22 +9,17 @@
 {% endblock head %}
 
 {% block header %}
-<div class="page-header">
-    <div class="black-background">
-        <div class="container">
-            <h1>Location List</h1>
-        </div>
+<img src="../../static/img/background.jpg" width="100%" height="600px">
+
+<div class="bg-dark">
+    <div class="container py-5">
+        <h1 class="text-center text-light">Location List</h1>
     </div>
 </div>
 {% endblock header %}
 
-<hr>
 {% block content %}
-    <div class="edit-content">
-        {% if perms.locations.add_location %}
-            <a href="{% url 'location_new' %}" class="btn btn-primary"><div class="button">Add New Location</div></a>
-        {% endif %}
-    </div>
+
 
     <style>
         .leaflet-container {
@@ -76,6 +71,13 @@
         }
     </script>
 
+<div class='container'>
+    <div class="edit-content">
+        {% if perms.locations.add_location %}
+            <a href="{% url 'location_new' %}" class="btn btn-primary"><div class="button">Add New Location</div></a>
+        {% endif %}
+    </div>
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -96,4 +98,5 @@
         </tr>
         {% endfor %}
     </table>
+</div>
 {% endblock %}
