@@ -31,6 +31,31 @@
 </div>
 <!--<iframe style="border: none; width: 920px; height: 500px;" src="https://nptfisheries.shinyapps.io/PITtrackR/" width="300" height="150"></iframe> -->
 
+{% comment %}  <h1>Testing Carousel</h1>
+<div class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    {% for p in project %}
+      {% if forloop.first  %}
+        <div class="carousel-item active">
+          <img src="{{ p.project_image1.url }}" class="d-block w-100" alt="...">
+        </div>
+      {% else %}
+        <div class="carousel-item">
+          <img src="{{ p.project_image1.url }}" class="d-block w-100" alt="...">
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div> {% endcomment %}
+
 <div class="bg-dark bg-opacity-75 border border-light rounded mt-5 m-2 p-3" style="color: #ABE7FC;">
   <h2 class="text-center">Project Spotlight</h2>
 </div>
