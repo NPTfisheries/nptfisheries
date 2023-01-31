@@ -6,17 +6,26 @@
 <!--{% load crispy_forms_tags %}-->
 
 {% block header %}
-<div class="page-header">
+{% comment %} <div class="page-header">
     <div class="black-background">
         <div class="container">
             <h1>Documents</h1>
         </div>
+    </div>
+</div> {% endcomment %}
+
+<img src="../static/img/hatcheryparr.jpg" width="100%" height="600px">
+
+<div class="bg-dark">
+    <div class="container py-5">
+        <h1 class="text-center text-light">News</h1>
     </div>
 </div>
 {% endblock header %}
 
 {% block content %}
 
+<div class="container">
 	<div class="well">
 			<h2 style="margin-top: 0">Search Documents</h2>
 			</br>
@@ -63,5 +72,6 @@
 	</div>
 
 	{% render_table table %}
+</div>
 
 {% endblock %}

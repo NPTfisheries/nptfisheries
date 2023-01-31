@@ -14,9 +14,11 @@ class DocumentForm(forms.ModelForm):
 
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Document Title'}),
-            #'employee_authors': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Secondary Authors'}),
+            'employee_authors': forms.SelectMultiple(attrs={'class': 'form-select', 'size':10}),
             'publish_date': DateInput(attrs={'class': 'form-control'}),
-           # 'document_type': forms.ChoiceField(),
+            'document_type': forms.Select(attrs={'class': 'form-select', 'size':5}),
             'keywords': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Keywords'}),
             'citation': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Citation'}),
+            'file': forms.FileInput(attrs={'class':'form-control'}),
+            'uploaded_by': forms.Select(attrs={'class': 'form-select', 'size':5}),
         }

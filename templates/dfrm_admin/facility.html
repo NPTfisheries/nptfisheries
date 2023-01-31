@@ -9,13 +9,22 @@
 {% endblock head %}
 
 {% block header %}
-<div class="page-header">
+{% comment %} <div class="page-header">
     <div class="black-background">
         <div class="container">
             <h1>Facilities</h1>
         </div>
     </div>
+</div> {% endcomment %}
+
+<img src="../static/img/Clearwater_River_Home_Page.jpg" width="100%" height="600px">
+
+<div class="bg-dark">
+    <div class="container py-5">
+        <h1 class="text-center text-light">Facilities</h1>
+    </div>
 </div>
+
 {% endblock header %}
 
 {% block content %}
@@ -48,35 +57,36 @@
     }
 </script>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Phone Number</th>
-            <th>Manager</th>
-            <th>Administrative Assistant</th>
-            <th>View</th>
-            {% if perms.dfrm_admin.change_facility %}
-            <th>Edit</th>
-            {% endif %}
-        </tr>
-    </thead >
-    <tbody>
-        {% for f in facility %}
-        <tr>
-            <td>{{ f.name }}</td>
-            <td>{{ f.street_address }}, {{ f.city }}, {{ f.state }} {{ f.zipcode }}</td>
-            <td>{{ f.phone_number }}</td>
-            <td>{{ f.manager }}</td>
-            <td>{{ f.administrative_assistant }}</td>
-            <td><a href="{% url 'facility_detail' pk=f.pk %}" class="btn btn-success"><i class="bi bi-eye"></i></a></td>
-            {% if perms.dfrm_admin.change_facility %}
-            <td><a href="{% url 'facility_edit' pk=f.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
-            {% endif %}    
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+<div class='container'>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Manager</th>
+                <th>Administrative Assistant</th>
+                <th>View</th>
+                {% if perms.dfrm_admin.change_facility %}
+                <th>Edit</th>
+                {% endif %}
+            </tr>
+        </thead >
+        <tbody>
+            {% for f in facility %}
+            <tr>
+                <td>{{ f.name }}</td>
+                <td>{{ f.street_address }}, {{ f.city }}, {{ f.state }} {{ f.zipcode }}</td>
+                <td>{{ f.phone_number }}</td>
+                <td>{{ f.manager }}</td>
+                <td>{{ f.administrative_assistant }}</td>
+                <td><a href="{% url 'facility_detail' pk=f.pk %}" class="btn btn-success"><i class="bi bi-eye"></i></a></td>
+                {% if perms.dfrm_admin.change_facility %}
+                <td><a href="{% url 'facility_edit' pk=f.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
+                {% endif %}    
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
