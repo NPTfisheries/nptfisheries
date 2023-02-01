@@ -7,6 +7,7 @@
 {% endblock custom_css %} {% endcomment %}
 
 {% block content %}
+<div class="container p-5">
       <div id="login-content">
         <h1> Sign In </h1>
         <p>If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first. </p>
@@ -17,4 +18,5 @@
           <p><a href="{% url 'account_reset_password' %}">Forgot Password?</a></p>
         </form>
       </div>
+    </div>
 {% endblock %}

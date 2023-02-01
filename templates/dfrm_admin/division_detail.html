@@ -75,23 +75,25 @@
     </div>
 </div>
 
-    <section class="container text-center py-5">
-        <div class="row">
-            <h2 class="text-center">Division Projects</h2>
+<div class="container text-center py-5">
+    <h2 class="text-center">Division Projects</h2>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for p in subproject %}
+      <div class="col">
+        <div class="card text-light bg-dark border-dark h-100">
+          <img src="{{ p.project.project_image1.url }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <a class="stretched-link" href="{% url 'project_detail' pk=p.project.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{p.project.name}}</h4></a>
+            <p class="card-text">{{p.name}}</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">Supervisor: {{ p.supervisor }}</small>
+          </div>
         </div>
-        <div class="card-group">
-            {% for p in subproject %}
-                <div class="card text-light bg-dark border-dark mb-3 mx-2 my-3" style="width: 18rem;">
-                <img src="{{ p.project.project_image1.url }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <a class="stretched-link" href="{% url 'project_detail' pk=p.project.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{p.project.name}} - {{ p.name }}</h4></a>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Supervisor: {{ p.supervisor }}</small>
-                </div>
-                </div>
-            {% endfor %}
-        </div>
-    </section>
+      </div>
+    {% endfor %}
+  </div>
+</div>
 
 {% endblock %}

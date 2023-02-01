@@ -29,13 +29,13 @@ class UserProfile(models.Model):
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, help_text = "User name", related_name='user_profiles')
     #location = models.CharField(max_length = 50, null = True, blank = True, help_text="City, State")
-    organization = models.CharField(max_length = 50, help_text="Employer")
-    work_phone = PhoneField(null=True, blank=True, help_text='Work phone number')
-    mobile_phone = PhoneField(null=True, blank=True, help_text='Mobile phone number')
-    email_updates = models.BooleanField(default=False, help_text="Would you like to recieve email updates?")
+    organization = models.CharField(max_length = 50)
+    work_phone = PhoneField(null=True, blank=True)
+    mobile_phone = PhoneField(null=True, blank=True)
+    email_updates = models.BooleanField(default=False)
     city = models.CharField("City", null = True, blank = True, max_length=50)
     state = models.CharField("State", null = True, blank = True, max_length=50)
-    bio = RichTextField(null = True, help_text = "Biography")   
+    bio = RichTextField(null = True)   
     profile_picture = models.ImageField(upload_to='images/profile/', default='images/profile/P7160105_fix.JPG') 
 
     def save(self, *args, **kwargs):

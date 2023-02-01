@@ -21,7 +21,7 @@
 
 <div class="bg-dark">
     <div class="container py-5">
-        <h1 class="text-center text-light">Facilities</h1>
+        <h1 class="text-center text-light">Department Facilities</h1>
     </div>
 </div>
 
@@ -57,36 +57,25 @@
     }
 </script>
 
-<div class='container'>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Phone Number</th>
-                <th>Manager</th>
-                <th>Administrative Assistant</th>
-                <th>View</th>
-                {% if perms.dfrm_admin.change_facility %}
-                <th>Edit</th>
-                {% endif %}
-            </tr>
-        </thead >
-        <tbody>
-            {% for f in facility %}
-            <tr>
-                <td>{{ f.name }}</td>
-                <td>{{ f.street_address }}, {{ f.city }}, {{ f.state }} {{ f.zipcode }}</td>
-                <td>{{ f.phone_number }}</td>
-                <td>{{ f.manager }}</td>
-                <td>{{ f.administrative_assistant }}</td>
-                <td><a href="{% url 'facility_detail' pk=f.pk %}" class="btn btn-success"><i class="bi bi-eye"></i></a></td>
-                {% if perms.dfrm_admin.change_facility %}
-                <td><a href="{% url 'facility_edit' pk=f.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
-                {% endif %}    
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="container text-center py-5">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for f in facility %}
+      <div class="col">
+        <div class="card text-light bg-dark border-dark h-100">
+          <img src="{{ f.facility_image.url }}" class="card-img-top" alt="..." height="300px">
+          <div class="card-body">
+            <a class="stretched-link" href="{% url 'facility_detail' pk=f.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ f.name }}</h4></a>
+          </div>
+            <p class="card-text">{{ f.phone_number }}</p>
+            <p class="card-text">{{ f.street_address }}</p>
+            <p class="card-text">{{ f.city }}, {{ f.state }} {{ f.zipcode }}</p>
+          <div class="card-footer">
+            <small class="text-muted">Manager: {{ f.manager }}</small>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
+
 {% endblock %}

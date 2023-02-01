@@ -66,7 +66,7 @@
     {% comment %} <div class="d-flex flex-row justify-content-around align-items-center">
         <div class="p-2"> {% endcomment %}
                 {% for s in subproject %}
-                    <h3> {{ s.division }} Division</h3>
+                    <h3> {{ s.division }}</h3>
                     <p> &nbsp; &nbsp; &nbsp; <font size="+1"><b>{{ s.name }}</b></font>{% if perms.dfrm_admin.change_project %} <a href="{% url 'task_edit' pk=s.pk %}">(Edit or Add Tasks)</a>{% endif %}
                     <div class = "container" style="margin-left: 2rem;">
                         <ul>

@@ -3,13 +3,14 @@
 {% load static %}
 
 {% block content %}
+<div class="container p-5">
+    <div class="container py-5">
     {% if user.username == profile.user.username %}
     <div class="edit-content">
-        {% if perms.dfrm_admin.change_project %}
             <a href="{% url 'profile_edit' pk=profile.pk %}" class="btn btn-primary">Edit Profile</a>
-        {% endif %}
     </div>
     {% endif %}
+    </div>
 
     <div class="container">
         <h1 class="border-bottom my-5 pt-5">{{ profile.user.first_name }} {{ profile.user.last_name }} </h1>
@@ -22,9 +23,8 @@
                 <div class="p-2">
                     {% if profile.employees %}
                         <h3>Department of Fisheries Resources Management</h3>
-                        <p><strong>Position Class:</strong> {{ profile.employees.position_class }}</p>
                         <p><strong>Title:</strong> {{ profile.employees.title }}</p>
-                        <p><strong>Email:</strong> {{ profile.user.email }}</p>
+                        <p><strong>Email:</strong> <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a></p>
                         {% if profile.work_phone %}<p><strong>Work Phone:</strong> {{ profile.work_phone }}</p>{% endif %}
                         {% if profile.mobile_phone %}<p><strong>Mobile Phone:</strong> {{ profile.mobile_phone }}</p>{% endif %}
                     {% else %}
@@ -50,5 +50,6 @@
             </div>
         </div>
     </div>
+</div>
         
 {% endblock content %}
