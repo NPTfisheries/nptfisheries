@@ -9,61 +9,99 @@
 {% endblock head %}
 
 {% block header %}
-<div class="page-header">
+{% comment %} <div class="page-header">
     <div class="black-background">
         <div class="container">
             <h1>{{ facility.name }}</h1>
         </div>
     </div>
+</div> {% endcomment %}
+
+<img src="{{ facility.facility_image.url }}" width="100%" height="600px">
+
+<div class="bg-dark">
+    <div class="container py-5">
+        <h1 class="text-center text-light">{{ facility.name }}</h1>
+    </div>
 </div>
+
 {% endblock header %}
 
 {% block content %}
 
-<div class="edit-content">
+<style>
+    .leaflet-container {
+        width: 100%;
+        height: 500px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+{% leaflet_map "main" callback="map_init_basic" %}
+
+<script type="text/javascript">
+    function map_init_basic(map, options) {
+
+        map.setView([46.5, -116.5], 6);
+
+        var point = '{% url "api_facility_points" pk=facility.pk %}';
+        $.getJSON(point, function(data){
+                // Add GeoJSON layer
+            L.geoJson(data,{
+                onEachFeature: function(feature, layer){
+                    layer.bindPopup(feature.properties.name.name.toString());
+                }
+            }).addTo(map);
+        });
+    }
+</script>
+
+{% comment %} <div class="edit-content">
     {% if perms.dfrm_admin.change_facility %}
         <a href="{% url 'facility_edit' pk=facility.pk %}" class="btn btn-primary"><div class="button">Edit Facility Content</div></a>
     {% endif %}
+</div> {% endcomment %}
+
+<div class="bg-dark">
+    <div class="container p-5 text-center text-light">
+        <h4>Phone Number: {{ facility.phone_number }} </h4>
+        {% if facility.fax_number %}
+            <h4>Fax Number: {{ facility.fax_number }} </h4>
+        {% endif %}
+        <h4> {{ facility.street_address }} </h4>
+        <h4> {{ facility.city }}, {{ facility.state }} {{ facility.zipcode }} </h4>
+    </div>
 </div>
 
-<div class="d-flex flex-row justify-content-around align-items-center">
-    <div class="p-2">
-        <img src="{{ facility.facility_image.url }}">
-        <p>Phone Number: {{ facility.phone_number }} </p>
-        {% if facility.fax_number %}
-            <p>Fax Number: {{ facility.fax_number }} </p>
-        {% endif %}
-        <p> {{ facility.street_address }} </p>
-        <p> {{ facility.city }}, {{ facility.state }} {{ facility.zipcode }} </p>
-        <p> Manager: {{ facility.manager }} </p>
-        {% if facility.administrative_assistant %}
-            <p>Administrative Assistant: {{ facility.administrative_assistant }} </p>
-        {% endif %}
+<div class="bg-light"> 
+    <div class="container p-5">
+        <div class= "row">
+            <div class="col-4 mx-auto">
+                <div class="card text-dark bg-light border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
+                    <h4>Office </br> Manager</h4>
+                    <img src="{{ facility.manager.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+                    <div class="card-body">
+                        <a class="stretched-link" href="{% url 'profile' pk=facility.name.pk %}"><h4 class="card-title">{{ facility.manager }}</h4></a>
+                        <h5 class="text-muted">{{ facility.manager.title }}</h5>
+                    </div>
+                </div>
+            </div> 
+            
+            {% if facility.administrative_assistant %}
+            <div class="col-4 mx-auto">
+                <div class="card text-dark bg-light border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
+                    <h4>Office Administration</h4>
+                    <img src="{{ facility.administrative_assistant.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+                    <div class="card-body">
+                        <a class="stretched-link" href="{% url 'profile' pk=facility.administrative_assistant.name.pk %}"><h4 class="card-title">{{ facility.administrative_assistant }}</h4></a>
+                        <h5 class="text-muted">{{ facility.administrative_assistant.title }}</h5>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
 
-    </div>
-    <div class="p-2">
-        <style>
-            .leaflet-container {
-                width: 500px;
-                height: 400px;
-                margin-top: 10px;
-                margin-bottom: 10px;
-            }
-        </style>
-        
-        {% leaflet_map "main" callback="map_init_basic" %}
-
-        <script type="text/javascript">
-            function map_init_basic(map, options) {
-        
-            var lon = "{{ facility.name.points.geometry.x }}"
-            var lat = "{{ facility.name.points.geometry.y }}"
-
-            map.setView([lat, lon], 12);
-            L.marker([lat, lon]).addTo(map);
-            }
-        </script>
-    
+        </div>
     </div>
 </div>
 

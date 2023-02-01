@@ -2,11 +2,24 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block header %}
+<img src="../../static/img/background.jpg" width="100%" height="600px">
+
+<div class="bg-dark">
+    <div class="container py-5">
+        <h1 class="text-center text-light">Add/Edit Employee</h1>
+    </div>
+</div>
+{% endblock header %}
+
 {% block content %}
-    <h1>Add Employee or Change Status</h1>
+<div class="container p-5">
+    <div class="form-group">
         <form method="POST" class="post-form" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="save btn btn-primary">Save</button>
         </form>
+    </div>
+</div>
 {% endblock %}

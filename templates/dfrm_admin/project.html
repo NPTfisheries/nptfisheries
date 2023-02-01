@@ -3,47 +3,47 @@
 {% load static %}
 
 {% block header %}
-<div class="page-header">
+{% comment %} <div class="page-header">
     <div class="black-background">
         <div class="container">
             <h1>Projects</h1>
         </div>
     </div>
+</div> {% endcomment %}
+
+
+<img src="../static/img/background.jpg" width="100%" height="600px">
+
+<div class="bg-dark">
+    <div class="container py-5">
+        <h1 class="text-center text-light">Department Projects</h1>
+    </div>
 </div>
+
 {% endblock header %}
 
-<hr>
 {% block content %}
-<div class="edit-content">
-    {% if perms.dfrm_admin.add_project %}
-        <a href="{% url 'project_new' %}" class="btn btn-primary">Add New Project</a>
-    {% endif %}
+
+<div class="container text-center py-5">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for p in projects %}
+      <div class="col">
+        <div class="card text-light bg-dark border-dark h-100">
+          <img src="{{ p.project_image1.url }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <a class="stretched-link" href="{% url 'project_detail' pk=p.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{p.name}}</h4></a>
+            <p class="card-text">{{p.description|safe|slice:200}}</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">Project Leader(s):</small>
+            {% for i in p.project_leader.all %}
+              <small class="text-muted">{% if forloop.last %} {{ i.name }} {% else %} {{ i.name }}, {% endif %}</small>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Created</th>
-            <th>Active</th>
-            <th>View</th>
-            {% if perms.dfrm_admin.change_project %}
-            <th>Edit</th>
-            {% endif %}
-        </tr>
-    </thead >
-    <tbody>
-        {% for p in projects %}
-        <tr>
-            <td>{{ p.name }}</td>
-            <td>{{ p.created }}</td>
-            <td>{{ p.active }} </td>
-            <td><a href="{% url 'project_detail' pk=p.pk %}" class="btn btn-secondary"><i class="bi bi-eye"></i></a></td>
-            {% if perms.dfrm_admin.change_project %}
-            <td><a href="{% url 'project_edit' pk=p.pk %}" class="btn btn-secondary"><i class="bi bi-pencil"></i></a></td>
-            {% endif %}    
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
 {% endblock %}

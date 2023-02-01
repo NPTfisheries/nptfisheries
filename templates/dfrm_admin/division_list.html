@@ -1,0 +1,56 @@
+<!-- templates/dfrm_admin/department.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+<img src="../../static/img/background.jpg" width="100%" height="600px">
+
+<div class="bg-dark">
+    <div class="container py-5">
+        <h1 class="text-center text-light">Division List</h1>
+    </div>
+</div>
+{% endblock header %}
+
+<hr>
+{% block content %}
+<div class='container'>
+
+<div class="edit-content">
+    {% if perms.dfrm_admin.add_division %}
+        <a href="{% url 'division_new' %}" class="btn btn-primary">Add New Division</a>
+    {% endif %}
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Director</th>
+            <th>Deputy Director</th>
+            <th>Administrative Assistant</th>
+            <th>Facility</th>
+            <th>View</th>
+            {% if perms.dfrm_admin.change_division %}
+            <th>Edit</th>
+            {% endif %}
+        </tr>
+    </thead >
+    <tbody>
+        {% for d in divisions %}
+        <tr>
+            <td>{{ d.name }}</td>
+            <td>{{ d.director }}</td>
+            <td>{{ d.deputy_director }}</td>
+            <td>{{ d.administrative_assistant }} </td>
+            <td>{{ d.facility }} </td>
+            <td><a href="{% url 'division_detail' pk=d.pk %}" class="btn btn-success"><i class="bi bi-eye"></i></a></td>
+            {% if perms.dfrm_admin.change_division %}
+            <td><a href="{% url 'division_edit' pk=d.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

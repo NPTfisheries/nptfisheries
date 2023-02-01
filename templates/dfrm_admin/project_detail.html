@@ -10,108 +10,135 @@
 
 
 {% block header %}
-<div class="page-header">
+{% comment %} <div class="page-header">
     <div class="black-background">
         <div class="container">
           <h1>{{ project.name }}</h1>
         </div>
     </div>
+</div> {% endcomment %}
+
+
+<img src="{{ project.project_image1.url }}" width="100%" height="600px">
+
+<div class="bg-dark">
+    <div class="container py-5">
+        <h1 class="text-center text-light">{{ project.name }}</h1>
+    </div>
 </div>
+
 {% endblock header %}
 
 {% block content %}
-<div class="edit-content">
-    {% if perms.dfrm_admin.change_project %}
-        <a href="{% url 'project_edit' pk=project.pk %}" class="btn btn-primary">Edit Project Content</a>
-    {% endif %}
-</div>
 
-<h1 class="border-bottom mb-4">{{ project.name }}</h1>
-<div class="d-flex flex-row justify-content-around align-items-center">
-    <div class="p-2">
-        <img src="{{ project.project_image1.url }}">
-        <h5>Project Leader(s):</h5>
-        {% for p in project.project_leader.all %}
-            <a href="{% url 'profile' pk=p.name.user.pk %}">{{ p.name }}</a>
-        {% endfor %}
-        <p>{{ project.description|safe }}</p>
+{% comment %} <h1 class="pt-5 border-bottom mt-4">{{ project.name }}</h1> {% endcomment %}
 
+<section class="py-5 container">
+    <div class="row py-lg-5">
+        <div class="col-lg-8 mx-auto">
+            <p class='lead text-muted'>
+                {{ project.description|safe }}
+            </p>
+        </div>
+    </div>
+</section>
 
-            {% for s in subproject %}
-                <h2> {{ s.division }} Division</h2>
-                <p> &nbsp; &nbsp; &nbsp; <font size="+1"><b>{{ s.name }}</b></font>{% if perms.dfrm_admin.change_project %} <a href="{% url 'task_edit' pk=s.pk %}">(Edit or Add Tasks)</a>{% endif %}
-                <div class = "container" style="margin-left: 2rem;">
-                    <ul>
-                        {% for t in task %}
-                            {% if t.subproject.pk == s.pk %}
-                            <li> {{ t.name }}--<a href="{% url 'profile' pk=t.supervisor.name.user.pk %}"><em>{{ t.supervisor }}</em></a></li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
+<div class="bg-dark"> 
+    <div class="container">
+        <div class= "row">
+            {% for p in project.project_leader.all %}
+            <div class="col-4 mx-auto">
+                <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
+                    <img src="{{ p.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+                    <div class="card-body">
+                        <a class="stretched-link" href="{% url 'profile' pk=p.name.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ p.name }}</h4></a>
+                        <h5 class="text-muted">{{ p.title }}</h5>
+                    </div>
                 </div>
+            </div>    
             {% endfor %}
-    </div>
-
-    {% comment %} <div class="p-2">
-        <h2>Test place:</h2>
-        {% for s in project.subprojects_set.all() %}
-            <p>{{ s.name }}</p>
-        {% endfor %}
-    </div> {% endcomment %}
-
-    <div class="p-2">
-
-        <style>
-            .leaflet-container {
-                width: 500px;
-                height: 400px;
-                margin-top: 10px;
-                margin-bottom: 10px;
-            }
-        </style>
-
-        {% leaflet_map "main" callback="map_init_basic" %}
-
-        <script type="text/javascript">
-            function map_init_basic(map, options) {
-
-                map.setView([46.5, -116.5], 6);
-
-                var point = '{% url "api_project_points" pk=project.pk %}';
-                $.getJSON(point, function(data){
-                        // Add GeoJSON layer
-                    L.geoJson(data,{
-                        onEachFeature: function(feature, layer){
-                            layer.bindPopup(feature.properties.name.name.toString());
-                        }
-                    }).addTo(map);
-                });
-
-                var data_url = '{% url "api_project_linestrings" pk=project.pk %}';
-                    // Download GeoJSON via Ajax
-                $.getJSON(data_url, function(data){
-                        // Add GeoJSON layer
-                    L.geoJson(data,{
-                        onEachFeature: function(feature, layer){
-                            layer.bindPopup(feature.properties.name.name.toString());
-                        }
-                    }).addTo(map);
-                });
-
-                var data_url = '{% url "api_project_polygons" pk=project.pk %}';
-                // Download GeoJSON via Ajax
-                $.getJSON(data_url, function(data){
-                    // Add GeoJSON layer
-                    L.geoJson(data,{
-                        onEachFeature: function(feature, layer){
-                            layer.bindPopup(feature.properties.name.name.toString());
-                        }
-                    }).addTo(map);
-                });
-
-            }
-        </script>
+        </div>
     </div>
 </div>
+
+<div class="container py-5">
+    <h2 class='text-center'>Project Components</h2>
+    {% comment %} <div class="d-flex flex-row justify-content-around align-items-center">
+        <div class="p-2"> {% endcomment %}
+                {% for s in subproject %}
+                    <h3> {{ s.division }}</h3>
+                    <p> &nbsp; &nbsp; &nbsp; <font size="+1"><b>{{ s.name }}</b></font>{% if perms.dfrm_admin.change_project %} <a href="{% url 'task_edit' pk=s.pk %}">(Edit or Add Tasks)</a>{% endif %}
+                    <div class = "container" style="margin-left: 2rem;">
+                        <ul>
+                            {% for t in task %}
+                                {% if t.subproject.pk == s.pk %}
+                                <li><strong> {{ t.name }}</strong>--<em>Supervisor: <a href="{% url 'profile' pk=t.supervisor.name.user.pk %}">{{ t.supervisor }}</em></a>
+                                    <p> {{ t.description|safe }} </p>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+        {% comment %} </div>
+        <div class="p-2">
+            <img src="{{ project.project_image1.url }}">
+        </div>
+    </div> {% endcomment %}
+</div>
+
+<style>
+    .leaflet-container {
+        {% comment %} width: 500px; {% endcomment %}
+        width: 100%%;
+        height: 400px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+{% leaflet_map "main" callback="map_init_basic" %}
+
+<script type="text/javascript">
+    function map_init_basic(map, options) {
+
+        map.setView([46.5, -116.5], 6);
+
+        var point = '{% url "api_project_points" pk=project.pk %}';
+        $.getJSON(point, function(data){
+                // Add GeoJSON layer
+            L.geoJson(data,{
+                onEachFeature: function(feature, layer){
+                    layer.bindPopup(feature.properties.name.name.toString());
+                }
+            }).addTo(map);
+        });
+
+        var data_url = '{% url "api_project_linestrings" pk=project.pk %}';
+            // Download GeoJSON via Ajax
+        $.getJSON(data_url, function(data){
+                // Add GeoJSON layer
+            L.geoJson(data,{
+                onEachFeature: function(feature, layer){
+                    layer.bindPopup(feature.properties.name.name.toString());
+                }
+            }).addTo(map);
+        });
+
+        var data_url = '{% url "api_project_polygons" pk=project.pk %}';
+        // Download GeoJSON via Ajax
+        $.getJSON(data_url, function(data){
+            // Add GeoJSON layer
+            L.geoJson(data,{
+                onEachFeature: function(feature, layer){
+                    layer.bindPopup(feature.properties.name.name.toString());
+                }
+            }).addTo(map);
+        });
+
+    }
+</script>
+
+
 
 {% endblock %}

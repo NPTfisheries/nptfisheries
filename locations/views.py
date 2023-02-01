@@ -10,12 +10,6 @@ from locations.forms import LocationForm, PointFormSet, LinestringFormSet, Polyg
 
 # Create your views here.
 
-def map(request):
-        return render(request, 'locations/location_map.html', {})
-
-# class MapLayer(GeoJSONLayerView):
-#     geometry_field = 'geometry'
-
 class LocationsList(ListView):
     model=Location
     template = 'locations/location_list.html'
@@ -50,7 +44,7 @@ def location_edit(request, pk=False):
         if fs.is_valid() and f.is_valid():
             f.save()
             fs.save()
-            return redirect('location_map')
+            return redirect('location')
     
     else:
         f = LocationForm(instance=location)
@@ -78,7 +72,7 @@ class PointViewSet(viewsets.ModelViewSet):
     queryset = Point.objects.all()
     # specify serializer to be used
     serializer_class = PointSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
 
 # Linestring
 class LinestringViewSet(viewsets.ModelViewSet):
@@ -86,7 +80,7 @@ class LinestringViewSet(viewsets.ModelViewSet):
     queryset = Linestring.objects.all()
     # specify serializer to be used
     serializer_class = LinestringSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]
 
 # Polygon
 class PolygonViewSet(viewsets.ModelViewSet):
@@ -94,4 +88,4 @@ class PolygonViewSet(viewsets.ModelViewSet):
     queryset = Polygon.objects.all()
     # specify serializer to be used
     serializer_class = PolygonSerializer
-    permission_classes = [permissions.IsAdminUser]
+    #permission_classes = [permissions.IsAdminUser]

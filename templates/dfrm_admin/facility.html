@@ -1,72 +1,81 @@
 <!-- templates/admin/facility.html -->
 {% extends "base.html" %}
 {% load static %}
+{% load leaflet_tags %}
+
+{% block head %}
+    {% leaflet_css %}
+    {% leaflet_js %}
+{% endblock head %}
 
 {% block header %}
-<div class="page-header">
+{% comment %} <div class="page-header">
     <div class="black-background">
         <div class="container">
             <h1>Facilities</h1>
         </div>
     </div>
+</div> {% endcomment %}
+
+<img src="../static/img/Clearwater_River_Home_Page.jpg" width="100%" height="600px">
+
+<div class="bg-dark">
+    <div class="container py-5">
+        <h1 class="text-center text-light">Department Facilities</h1>
+    </div>
 </div>
+
 {% endblock header %}
 
 {% block content %}
-<div class="edit-content">
-    {% if perms.dfrm_admin.add_facility %}
-        <a href="{% url 'facility_new' %}" class="btn btn-primary">Add New Facility</a>
-    {% endif %}
+
+<style>
+    .leaflet-container {
+        width: 100%;
+        height: 500px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+{% leaflet_map "main" callback="map_init_basic" %}
+
+<script type="text/javascript">
+    function map_init_basic(map, options) {
+        map.setView([46.5, -116.5], 7);
+
+        var data_url = '{% url "api_all_facility_points" %}'
+            // Download GeoJSON via Ajax
+        $.getJSON(data_url, function(data){
+                // Add GeoJSON layer
+            L.geoJson(data,{
+                onEachFeature: function(feature, layer){
+                    layer.bindPopup(feature.properties.name.name.toString());
+                }
+            }).addTo(map);
+        });
+    }
+</script>
+
+<div class="container text-center py-5">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for f in facility %}
+      <div class="col">
+        <div class="card text-light bg-dark border-dark h-100">
+          <img src="{{ f.facility_image.url }}" class="card-img-top" alt="..." height="300px">
+          <div class="card-body">
+            <a class="stretched-link" href="{% url 'facility_detail' pk=f.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ f.name }}</h4></a>
+          </div>
+            <p class="card-text">{{ f.phone_number }}</p>
+            <p class="card-text">{{ f.street_address }}</p>
+            <p class="card-text">{{ f.city }}, {{ f.state }} {{ f.zipcode }}</p>
+          <div class="card-footer">
+            <small class="text-muted">Manager: {{ f.manager }}</small>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
 
-
-{% for f in facility %}
-        <div class="card">
-            <h2 class="card-header">
-                {{ f.name }}
-            </h2>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-8">
-                        <img src="{{ f.facility_image.url }}" href="{% url 'facility_detail' pk=f.pk %}">
-                    </div>
-                    <div class="col-4">
-                        <p><strong>Address: </strong>{{ f.street_address }}, {{ f.city }}, {{ f.state }} {{ f.zipcode }}</p>
-                        <p><strong>Phone number: </strong>{{ f.phone_number }}</p>
-                        {% if f.fax_number %}
-                        <p><strong>Fax number: </strong>{{ f.fax_number }}</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer">
-                <p> <strong>Manager: </strong> {{ f.manager }}; <em>{{ f.manager.name.user.email }}</em> <a class="stretched-link" href="{% url 'facility_detail' pk=f.pk %}"></a></p>
-            </div>
-        </div>
-<br>
-{% endfor %}
-
-
-
-
-{% for o in facility %}
-    <a href="{% url 'facility_detail' pk=o.pk %}"><h2>{{ o.name }}</h2></a>
-    <p>Phone: {{ o.phone_number }}</p>
-    {% if o.fax_number %}
-        <p>Fax: {{ o.fax_number }}</p>
-    {% endif %}
-    <p>{{ o.street_address }} {% if o.mailing_address %}<em>Mailing: {{ o.mailing_address }}</em>{% endif %}</p>
-    <p> {{ o.city }}, {{ o.state }} {{ o.zipcode }}</p>
-    
-    <p>Manager: {{ o.manager }}</p>
-    <p>Work Phone: {{ o.manager.name.work_phone }}</p>
-    <p>Email: {{ o.manager.name.user.email }}</p>
-    {% if o.administrative_assistant %}
-        <p>Administrative Assistant: {{ o.administrative_assistant }}</p>
-    {% endif %}
-    {% if o.facility_image %}
-        <img src={{ o.facility_image.url }}>
-    {% endif %}
-    <hr>
-{% endfor %}
 {% endblock %}

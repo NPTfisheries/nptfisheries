@@ -1,0 +1,63 @@
+<!-- templates/dfrm_admin/department.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+{% comment %} <div class="page-header">
+    <div class="black-background">
+        <div class="container">
+            <h1>Department List</h1>
+        </div>
+    </div>
+</div> {% endcomment %}
+
+<img src="../../static/img/background.jpg" width="100%" height="600px">
+
+<div class="bg-dark">
+    <div class="container py-5">
+        <h1 class="text-center text-light">Department List</h1>
+    </div>
+</div>
+{% endblock header %}
+
+
+{% block content %}
+<div class="container p-5">
+    <div class="edit-content">
+        {% if perms.dfrm_admin.add_department %}
+            <a href="{% url 'department_new' %}" class="btn btn-primary">Add New Department</a>
+        {% endif %}
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Manager</th>
+                <th>Deputy Manager</th>
+                <th>Administrative Assistant</th>
+                <th>Facility</th>
+                <th>View</th>
+                {% if perms.dfrm_admin.change_department %}
+                <th>Edit</th>
+                {% endif %}
+            </tr>
+        </thead >
+        <tbody>
+            {% for d in department %}
+            <tr>
+                <td>{{ d.name }}</td>
+                <td>{{ d.manager }}</td>
+                <td>{{ d.deputy_manager }} </td>
+                <td>{{ d.administrative_assistant }} </td>
+                <td>{{ d.facility }} </td>
+                <td><a href="{% url 'department_detail' pk=d.pk %}" class="btn btn-success"><i class="bi bi-eye"></i></a></td>
+                {% if perms.dfrm_admin.change_department %}
+                <td><a href="{% url 'department_edit' pk=d.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
+                {% endif %}        
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

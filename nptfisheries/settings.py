@@ -30,8 +30,7 @@ SECRET_KEY=env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost'
-    #"192.168.7.199"
+ALLOWED_HOSTS = [
     ]
 
 
@@ -200,8 +199,8 @@ ACCOUNT_FORMS = {
     'signup': 'accounts.forms.CustomSignupForm'
 }
 
-GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal305'
-GEOS_LIBRARY_PATH = r'C:\OSGeo4W\bin\geos_c'
+GDAL_LIBRARY_PATH = env('GDAL_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = env('GEOS_LIBRARY_PATH')
 
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (46.5, -116.5),

@@ -1,41 +1,102 @@
-<!-- templates/locations/location_edit.html -->
+<!-- templates/locations/location.html -->
 {% extends "base.html" %}
 {% load static %}
+{% load leaflet_tags %}
+
+{% block head %}
+    {% leaflet_css %}
+    {% leaflet_js %}
+{% endblock head %}
 
 {% block header %}
-<div class="page-header">
-    <div class="black-background">
-        <div class="container">
-            <h1>Locations List</h1>
-        </div>
+<img src="../../static/img/background.jpg" width="100%" height="600px">
+
+<div class="bg-dark">
+    <div class="container py-5">
+        <h1 class="text-center text-light">Location List</h1>
     </div>
 </div>
 {% endblock header %}
 
-<hr>
 {% block content %}
+
+
+    <style>
+        .leaflet-container {
+            width: 100%;
+            height: 500px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    {% leaflet_map "main" callback="map_init_basic" %}
+
+    <script type="text/javascript">
+        function map_init_basic(map, options) {
+            map.setView([46.5, -116.5], 7);
+
+            var data_url = '{% url "api_point-list" %}'
+                // Download GeoJSON via Ajax
+            $.getJSON(data_url, function(data){
+                    // Add GeoJSON layer
+                L.geoJson(data,{
+                    onEachFeature: function(feature, layer){
+                        layer.bindPopup(feature.properties.name.name.toString());
+                    }
+                }).addTo(map);
+            });
+
+            var data_url = '{% url "api_linestring-list" %}';
+                // Download GeoJSON via Ajax
+            $.getJSON(data_url, function(data){
+                    // Add GeoJSON layer
+                L.geoJson(data,{
+                    onEachFeature: function(feature, layer){
+                        layer.bindPopup(feature.properties.name.name.toString());
+                    }
+                }).addTo(map);
+            });
+
+            var data_url = '{% url "api_polygon-list" %}';
+            // Download GeoJSON via Ajax
+            $.getJSON(data_url, function(data){
+                // Add GeoJSON layer
+                L.geoJson(data,{
+                    onEachFeature: function(feature, layer){
+                        layer.bindPopup(feature.properties.name.name.toString());
+                    }
+                }).addTo(map);
+            });
+        }
+    </script>
+
+<div class='container'>
     <div class="edit-content">
         {% if perms.locations.add_location %}
             <a href="{% url 'location_new' %}" class="btn btn-primary"><div class="button">Add New Location</div></a>
         {% endif %}
     </div>
 
-    <table style="width:100%">
-        <tr>
-            <th>Name</th>
-            <th>Geometry Type</th>
-            {% if perms.locations.change_location %}
-                <th>Edit</th>
-            {% endif %}
-        </tr>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Geometry Type</th>
+                {% if perms.locations.change_location %}
+                    <th>Edit</th>
+                {% endif %}
+            </tr>
+        </thead>
         {% for object in object_list %}
         <tr>
             <td>{{ object.name }}</td>
             <td> {{ object.geom_type }}</td>
             {% if perms.locations.change_location %}
-            <td><a href="{% url 'location_edit' pk=object.pk %}" class="btn btn-primary">Edit</a></td>
+            <td><a href="{% url 'location_edit' pk=object.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
             {% endif %}
         </tr>
         {% endfor %}
     </table>
+</div>
 {% endblock %}

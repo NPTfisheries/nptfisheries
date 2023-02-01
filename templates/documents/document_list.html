@@ -6,24 +6,28 @@
 <!--{% load crispy_forms_tags %}-->
 
 {% block header %}
-<div class="page-header">
+{% comment %} <div class="page-header">
     <div class="black-background">
         <div class="container">
             <h1>Documents</h1>
         </div>
     </div>
+</div> {% endcomment %}
+
+<img src="../static/img/hatcheryparr.jpg" width="100%" height="600px">
+
+<div class="bg-dark">
+    <div class="container py-5">
+        <h1 class="text-center text-light">Department Documents</h1>
+    </div>
 </div>
 {% endblock header %}
 
 {% block content %}
-	<div class="edit-content">
-	    {% if perms.documents.add_document %}
-	        <a href="{% url 'document_upload' %}" class="btn btn-primary"><div class="button">Add New Document</div></a>
-	    {% endif %}
-	</div>
 
+<div class="container">
 	<div class="well">
-			<h2 style="margin-top: 0">Filter Available Documents</h2>
+			<h2 style="margin-top: 0">Search Documents</h2>
 			</br>
 
 	<form method="get">		
@@ -56,7 +60,7 @@
 				</div>
 			</div>
 		</br>
-			<button type="submit" class="btn btn-success"><i class="bi bi-search"></i> Search</button>
+			<button type="submit" class="btn btn-success"><i class="bi bi-search"></i> Filter</button>
 		</br>
 			<ul>
 				<li>Use citation to search for authors</li>
@@ -68,5 +72,6 @@
 	</div>
 
 	{% render_table table %}
+</div>
 
 {% endblock %}
