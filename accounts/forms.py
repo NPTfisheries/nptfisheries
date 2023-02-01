@@ -19,5 +19,12 @@ class UserProfileForm(forms.ModelForm):
         fields = ('organization', 'work_phone', 'mobile_phone', 'email_updates', 'city', 'state', 'bio', 'profile_picture')
 
         widgets = {
-            'bio': forms.Textarea(attrs={'class': 'form-control'})
+            'organization': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Document Title'}),
+            'work_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'mobile_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'email_updates': forms.CheckboxInput(attrs={'class': 'form-check form'}),
+            'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Keywords'}),
+            'state': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Citation'}),
+            'bio': forms.Textarea(attrs={'class': 'form-control'}),
+            'profile_picture': forms.FileInput(attrs={'class':'form-control'}),
         }

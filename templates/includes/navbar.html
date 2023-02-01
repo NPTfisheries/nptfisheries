@@ -13,7 +13,7 @@
             <a class="nav-link" href="{% url 'home' %}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'division' %}">Divisions</a>
+            <a class="nav-link" href="{% url 'division' %}">Department</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'project' %}">Projects</a>
@@ -35,8 +35,25 @@
                     {{ request.user.get_full_name }}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="{% url 'profile' pk=user.pk %}">User Profile</a></li>
+                  <li><a class="dropdown-item" href="{% url 'profile' pk=user.pk %}">Edit Profile</a></li>
                   <li><a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a></li>
+
+                  {% if perms.dfrm_admin.view_employee %}
+                  <li><hr class="dropdown-divider"><b>&nbsp View Content</b></li>                 
+                  <li><a class="dropdown-item" href="{% url 'employee_list' %}">Employees</a></li>
+                  {% endif %}
+                  
+                  {% if perms.dfrm_admin.view_project %}
+                  <li><a class="dropdown-item" href="{% url 'project_list' %}">Projects</a></li>
+                  {% endif %}
+                  
+                  {% if perms.dfrm_admin.view_division %}
+                  <li><a class="dropdown-item" href="{% url 'division_list' %}">Divisions</a></li>
+                  {% endif %}
+
+                  {% if perms.dfrm_admin.view_department %}
+                  <li><a class="dropdown-item" href="{% url 'department_list' %}">Departments</a></li>
+                  {% endif %}
 
                   {% if perms.documents.add_document %}
                   <li><hr class="dropdown-divider"><b>&nbsp Add Content</b></li>
@@ -47,19 +64,11 @@
                   <li><a class="dropdown-item" href="{% url 'news_post' %}">Add Post</a></li>
                   {% endif %}
 
-                  {% if perms.dfrm_admin.change_department %}
-                  <li><hr class="dropdown-divider"><b>&nbsp Edit Content</b></li>
-                  <li><a class="dropdown-item" href="{% url 'department_list' %}">Departments</a></li>
-                  <li><a class="dropdown-item" href="{% url 'division_list' %}">Divisions</a></li>
-                  <li><a class="dropdown-item" href="{% url 'project_list' %}">Projects</a></li>
-                  <li><a class="dropdown-item" href="{% url 'employee_list' %}">Employees</a></li>
-                  {% endif %}
-
                   {% if request.user.is_staff %}
+                  <li><hr class="dropdown-divider"><b>&nbsp Admin Only</b></li>
                   <li><a class="dropdown-item" href="{% url 'facility_list' %}">Facilities</a></li>
                   <li><a class="dropdown-item" href="{% url 'location' %}">Locations</a></li>
                   {% endif %}
-
                 </ul>
               </li>
             <li class="nav-item">

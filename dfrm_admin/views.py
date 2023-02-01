@@ -61,8 +61,9 @@ def department_edit(request, pk):
 
 # All Division Views
 def division(request):
+    department = Department.objects.get(pk=1)
     divisions = Division.objects.all().order_by('name')
-    return render(request, 'dfrm_admin/division.html', {'divisions': divisions})
+    return render(request, 'dfrm_admin/division.html', {"department":department, 'divisions': divisions})
 
 def division_detail(request, pk):
     divisions = get_object_or_404(Division, pk=pk)
@@ -254,7 +255,7 @@ def employee_new(request):
         if form.is_valid():
             f = form.save(commit=False)
             f.save()
-            return redirect('employee')
+            return redirect('employee_list')
     else:
         form = EmployeeForm()
     return render(request, 'dfrm_admin/employee_edit.html', {'form':form})
@@ -267,7 +268,7 @@ def employee_edit(request, pk):
         if form.is_valid():
             d = form.save(commit=False)
             d.save()
-            return redirect('employee')
+            return redirect('employee_list')
     else:
         form = EmployeeForm(instance=employee)
     return render(request, 'dfrm_admin/employee_edit.html', {'form': form})

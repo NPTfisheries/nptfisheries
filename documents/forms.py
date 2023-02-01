@@ -9,7 +9,7 @@ class DocumentForm(forms.ModelForm):
 
     class Meta:
         model = Document
-        fields = ('title', 'employee_authors', 'publish_date', 'document_type', 'keywords', 'citation', 'file', 'uploaded_by')
+        fields = ('title', 'employee_authors', 'publish_date', 'document_type', 'keywords', 'citation', 'file')
         #exclude = ('uploaded_by',)
 
         widgets = {

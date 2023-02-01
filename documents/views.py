@@ -38,7 +38,7 @@ def DocumentUpload(request):
 		form = DocumentForm(request.POST, request.FILES)
 		if form.is_valid():
 			doc = form.save(commit=False)
-			##doc.uploaded_by = request.name
+			#doc.uploaded_by = request.employee.name
 			doc.save()
 			form.save_m2m()
 			return redirect('document_list')

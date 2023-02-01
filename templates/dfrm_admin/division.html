@@ -11,38 +11,87 @@
     </div>
 </div> {% endcomment %}
 
-<img src="../static/img/rattlesnakegrade.jpg" width="100%" height="600px">
+<img src="{{ department.department_image1.url }}" width="100%" height="600px">
 
 <div class="bg-dark">
     <div class="container py-5">
-        <h1 class="text-center text-light">Divisions</h1>
+        <h1 class="text-center text-light">{{ department.name }}</h1>
     </div>
 </div>
 
 {% endblock header %}
 
-<hr>
 {% block content %}
- 
-<div class="container">
-  {% for d in divisions %}
-  <div class="card text-light bg-dark border-dark my-3">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img src="{{ d.division_image1.url }}" class="img-fluid rounded-start" alt="...">
+<section class="py-5 container">
+  <div class="row py-lg-5">
+      <div class="col-lg-8 mx-auto">
+          <p class='lead text-muted'>
+            {{ department.description|safe }}
+          </p>
       </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <a class="stretched-link" href="{% url 'division_detail' pk=d.pk %}"><h3 class="card-title" style="color: #ABE7FC;">{{ d.name }}</h3></a>
-          <p class="card-text">{{ d.description|safe|slice:500 }}</p>
+  </div>
+</section>
+
+<div class="bg-dark"> 
+  <div class="container">
+      <div class= "row">
+          <div class="col-4 mx-auto">
+              <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
+                  <img src="{{ department.manager.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+                  <div class="card-body">
+                      <a class="stretched-link" href="{% url 'profile' pk=department.manager.name.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ department.manager }}</h4></a>
+                      <h5 class="text-muted">{{ department.manager.title }}</h5>
+                  </div>
+              </div>
+          </div>
+
+          {% if department.deputy_manager %}
+          <div class="col-4 mx-auto">
+              <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
+                  <img src="{{ department.deputy_manager.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+                  <div class="card-body">
+                      <a class="stretched-link" href="{% url 'profile' pk=department.deputy_manager.name.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ department.deputy_manager }}</h4></a>
+                      <h5 class="text-muted">{{ department.deputy_manager.title }}</h5>
+                  </div>
+              </div>
+          </div>
+          {% endif %}
+
+          {% if department.administrative_assistant %}    
+          <div class="col-4 mx-auto">
+              <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
+                  <img src="{{ department.administrative_assistant.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+                  <div class="card-body">
+                      <a class="stretched-link" href="{% url 'profile' pk=department.administrative_assistant.name.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ department.administrative_assistant }}</h4></a>
+                      <h5 class="text-muted">{{ department.administrative_assistant.title }}</h5>
+                  </div>
+              </div>
+          </div>
+          {% endif %}
+
+      </div>
+  </div>
+</div>
+
+<div class="container text-center py-5">
+    <h2 class="text-center">Department Divisions</h2>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for d in divisions %}
+      <div class="col">
+        <div class="card text-light bg-dark border-dark h-100">
+          <img src="{{ d.division_image1.url }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <a class="stretched-link" href="{% url 'division_detail' pk=d.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ d.name }}</h4></a>
+          </div>
+          <p class="card-text">{{ d.description|safe|slice:200 }}</p>
+          <div class="card-footer">
+            <small class="text-muted">Director: {{ d.director }}</small>
+          </div>
         </div>
       </div>
-      <div class="card-footer">
-        <small class="text-muted">Director: {{ d.director }}</small>
-    </div>
-    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
 </div>
 
 {% endblock %}
