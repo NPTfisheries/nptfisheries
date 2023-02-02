@@ -25,7 +25,7 @@ class Geometry(models.Model):
 
 class Location(models.Model):
     name = models.CharField('Location Name', max_length = 50)
-    geom_type = models.ForeignKey(Geometry, on_delete=models.CASCADE, related_name="geometries")
+    geom_type = models.ForeignKey(Geometry, on_delete=models.CASCADE, related_name="geometries", verbose_name="Geometry Type")
     #user information
     # description
     # created date

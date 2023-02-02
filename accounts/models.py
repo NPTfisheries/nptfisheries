@@ -27,16 +27,19 @@ class UserProfile(models.Model):
     #     ("Other", "Other")
     # )
 
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, help_text = "User name", related_name='user_profiles')
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, help_text = "User name", related_name='user_profiles', verbose_name="User Name")
     #location = models.CharField(max_length = 50, null = True, blank = True, help_text="City, State")
-    organization = models.CharField(max_length = 50)
-    work_phone = PhoneField(null=True, blank=True)
-    mobile_phone = PhoneField(null=True, blank=True)
-    email_updates = models.BooleanField(default=False)
+    organization = models.CharField("Affiliation", max_length = 50)
+    work_phone = PhoneField("Work Phone", null=True, blank=True)
+    mobile_phone = PhoneField("Mobile Phone", null=True, blank=True)
+    email_updates = models.BooleanField("Email Updates (check for yes)", default=False)
     city = models.CharField("City", null = True, blank = True, max_length=50)
     state = models.CharField("State", null = True, blank = True, max_length=50)
-    bio = RichTextField(null = True)   
-    profile_picture = models.ImageField(upload_to='images/profile/', default='images/profile/P7160105_fix.JPG') 
+    bio = RichTextField(null = True, verbose_name="Biography")   
+    profile_picture = models.ImageField("Profile Picture", upload_to='images/profile/', default='images/profile/P7160105_fix.JPG') 
+
+    class Meta:
+        ordering = ['user__first_name', 'user__last_name']
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
