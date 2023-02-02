@@ -11,9 +11,9 @@ class EmployeeForm(forms.ModelForm):
         fields = ('name', 'position_class', 'title', 'start_date', 'end_date', 'active')
 
         widgets = {
-            'name': forms.Select(attrs={'class': 'form-select'}),
-            'position_class': forms.Select(attrs={'class': 'form-select'}),
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'name': forms.Select(attrs={'class': 'form-select', 'placeholder':'Employee Name', 'size':5}),
+            'position_class': forms.Select(attrs={'class': 'form-select', 'placeholder':'Position Class', 'size':5}),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Position Title'}),
             'start_date': DateInput(attrs={'class': 'form-control'}),
             'end_date': DateInput(attrs={'class': 'form-control'}),
             'active': forms.CheckboxInput(attrs={'class': 'form-check form'}),
@@ -26,15 +26,15 @@ class FacilityForm(forms.ModelForm):
         #fields = '__all__'
 
         widgets = {
-            'name': forms.Select(attrs={'class': 'form-select'}),
+            'name': forms.Select(attrs={'class': 'form-select', 'placeholder':'Facility Name', 'size':5}),
             'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
-            'street_address': forms.TextInput(attrs={'class': 'form-control'}),
-            'mailing_address': forms.TextInput(attrs={'class': 'form-control'}),
-            'city': forms.TextInput(attrs={'class': 'form-control'}),
-            'state': forms.TextInput(attrs={'class': 'form-control'}),
-            'zipcode': forms.TextInput(attrs={'class': 'form-control'}),
-            'manager': forms.TextInput(attrs={'class': 'form-control'}),
-            'administrative_assistant': forms.TextInput(attrs={'class': 'form-control'}),
+            'street_address': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'123 Address St.'}),
+            'mailing_address': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'PO Box 1000'}),
+            'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'City'}),
+            'state': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'State'}),
+            'zipcode': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Zip Code'}),
+            'manager': forms.Select(attrs={'class': 'form-control', 'size':5}),
+            'administrative_assistant': forms.Select(attrs={'class': 'form-control', 'size':5}),
             'facility_image': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
@@ -46,10 +46,10 @@ class DepartmentForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
-            'manager': forms.Select(attrs={'class': 'form-select'}),
-            'deputy_manager': forms.Select(attrs={'class': 'form-select'}),
-            'administrative_assistant': forms.Select(attrs={'class': 'form-select'}),
-            'facility': forms.Select(attrs={'class': 'form-select'}),
+            'manager': forms.Select(attrs={'class': 'form-select', 'size':5}),
+            'deputy_manager': forms.Select(attrs={'class': 'form-select', 'size':5}),
+            'administrative_assistant': forms.Select(attrs={'class': 'form-select', 'size':5}),
+            'facility': forms.Select(attrs={'class': 'form-select', 'size':5}),
             'department_image1': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
@@ -59,13 +59,13 @@ class DivisionForm(forms.ModelForm):
         fields = ('department','name', 'description', 'director', 'deputy_director', 'administrative_assistant', 'facility', 'division_image1')
 
         widgets = {
-            'department': forms.Select(attrs={'class': 'form-select'}),
+            'department': forms.Select(attrs={'class': 'form-select', 'size':5}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
-            'director': forms.Select(attrs={'class': 'form-select'}),
-            'deputy_director': forms.Select(attrs={'class': 'form-select'}),
-            'administrative_assistant': forms.Select(attrs={'class': 'form-select'}),
-            'facility': forms.Select(attrs={'class': 'form-select'}),
+            'director': forms.Select(attrs={'class': 'form-select', 'size':5}),
+            'deputy_director': forms.Select(attrs={'class': 'form-select', 'size':5}),
+            'administrative_assistant': forms.Select(attrs={'class': 'form-select', 'size':5}),
+            'facility': forms.Select(attrs={'class': 'form-select', 'size':5}),
             'division_image1': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
@@ -75,14 +75,14 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = ('name', 'description', 'project_leader', 'created', 'active', 'project_image1')
 
-        project_leader = forms.ModelMultipleChoiceField(
-            queryset=Employee.objects.all(),
-            help_text="Remove highlighted rows to null field.")
+        # project_leader = forms.ModelMultipleChoiceField(
+        #     queryset=Employee.objects.all().order_by('name__user__last_name'),
+        #     help_text="Remove highlighted rows to null field.")
 
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
-            'project_leader': forms.SelectMultiple(attrs={'class':'form-select', 'size':10}),
+            'project_leader': forms.SelectMultiple(attrs={'class':'form-select', 'size':5}),
             'created': DateInput(attrs={'class': 'form-control'}),
             'active': forms.CheckboxInput(attrs={'class': 'form-check form'}),
             'project_image1': forms.FileInput(attrs={'class': 'form-control'}),

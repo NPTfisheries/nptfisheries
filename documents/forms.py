@@ -9,7 +9,7 @@ class DocumentForm(forms.ModelForm):
 
     class Meta:
         model = Document
-        fields = ('title', 'employee_authors', 'publish_date', 'document_type', 'keywords', 'citation', 'file')
+        fields = ('title', 'employee_authors', 'publish_date', 'document_type', 'keywords', 'citation', 'file', 'uploaded_by')
         #exclude = ('uploaded_by',)
 
         widgets = {
@@ -17,8 +17,8 @@ class DocumentForm(forms.ModelForm):
             'employee_authors': forms.SelectMultiple(attrs={'class': 'form-select', 'size':10}),
             'publish_date': DateInput(attrs={'class': 'form-control'}),
             'document_type': forms.Select(attrs={'class': 'form-select', 'size':5}),
-            'keywords': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Keywords'}),
-            'citation': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Citation'}),
+            'keywords': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Search Words'}),
+            'citation': forms.Textarea(attrs={'class': 'form-control', 'placeholder':'Full Reference', 'rows':5}),
             'file': forms.FileInput(attrs={'class':'form-control'}),
             'uploaded_by': forms.Select(attrs={'class': 'form-select', 'size':5}),
         }

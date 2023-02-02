@@ -11,7 +11,7 @@ from dfrm_admin.models import Employee
 class Post(models.Model):
 	author = models.ForeignKey(Employee, on_delete=models.CASCADE)
 	title = models.CharField(max_length=255)
-	header_image = models.ImageField(null=True, blank=True, upload_to='images/blog/')
+	header_image = models.ImageField(upload_to='images/blog/')
 	body = RichTextField(blank=True, null=True)
 	snippet = RichTextField(max_length=255)#, default="Click link above to read blog post...")
 	post_date = models.DateField(auto_now_add=True)

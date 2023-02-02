@@ -57,7 +57,7 @@ class NewsEdit(PermissionRequiredMixin, UserPassesTestMixin, UpdateView):
 	template_name = 'news/news_edit.html'
 	permission_required = ('news.change_post')
 	#fields = '__all__'
-
+	
 	def test_func(self):
 		obj = self.get_object()
 		return obj.uploaded_by.name.user == self.request.user

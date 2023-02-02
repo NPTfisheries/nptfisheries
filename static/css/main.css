@@ -172,6 +172,24 @@ h1.title{
 
 
 /* Page Headers */
+
+.header-container {
+    margin-top: 77px;
+    height: 500px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.header-image {
+    min-width: 100%; 
+    min-height: 500px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    left: 50%;
+}
+
+
 /*.page-header {
     padding: 3rem 0;
     display: flex;
@@ -180,20 +198,20 @@ h1.title{
 }
 */
 
-.page-header {
+/* .page-header {
     margin-top: 76px;
   /* The image used */
-  background-image: url('../img/Clearwater_River_Home_Page.jpg');
+  /* background-image: url('../img/Clearwater_River_Home_Page.jpg'); */
   /* Set a specific height */
-    height: 300px;
+    /* height: 300px; */
   /* Create the parallax scrolling effect */
-  background-attachment: fixed;
+  /* background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
+} */
 
-.black-background {
+/* .black-background {
     background-image: url(../img/half-08-background.png);
     background-size: 100%;
     background-repeat: no-repeat;
@@ -206,17 +224,17 @@ h1.title{
     background-repeat: no-repeat;
     top: 295px;
     border-top: 0;
-}
+} */
 
 
-.black-background h1 {
+/* .black-background h1 {
     color: white;
     font-weight: 700;
     padding-top: 10px;
     margin-top:0;
     margin-bottom:0;
     padding-bottom:0;
-}
+} */ */
 
 
 /* Division */

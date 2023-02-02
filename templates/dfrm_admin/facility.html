@@ -9,22 +9,15 @@
 {% endblock head %}
 
 {% block header %}
-{% comment %} <div class="page-header">
-    <div class="black-background">
-        <div class="container">
-            <h1>Facilities</h1>
-        </div>
-    </div>
-</div> {% endcomment %}
-
-<img src="../static/img/Clearwater_River_Home_Page.jpg" width="100%" height="600px">
-
-<div class="bg-dark">
-    <div class="container py-5">
-        <h1 class="text-center text-light">Department Facilities</h1>
-    </div>
+<div class="header-container">
+  <img class="header-image" src="../static/img/Clearwater_River_Home_Page.jpg">
 </div>
 
+<div class="bg-dark">
+  <div class="container py-5">
+      <h1 class="text-center text-light">Department Facilities</h1>
+  </div>
+</div>
 {% endblock header %}
 
 {% block content %}
@@ -70,7 +63,7 @@
             <p class="card-text">{{ f.street_address }}</p>
             <p class="card-text">{{ f.city }}, {{ f.state }} {{ f.zipcode }}</p>
           <div class="card-footer">
-            <small class="text-muted">Manager: {{ f.manager }}</small>
+            <small class="text-muted">Office Manager: {{ f.manager }}</small>
           </div>
         </div>
       </div>
