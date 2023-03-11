@@ -13,14 +13,17 @@
             <a class="nav-link" href="{% url 'home' %}">Home</a>
           </li>
 
+
+
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Fish Information
             </a>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-              <li><a class="nav-link" href="{% url 'status' %}">Snake Basin Fish Status</a></li>
-              {% comment %} <li><a class="nav-link" href="{% url 'status' %}">Weir Returns</a></li>
-              <li><a class="nav-link" href="{% url 'status' %}">Harvest Information</a></li> {% endcomment %}
+              <li><a class="nav-link" href="{% url 'data:esu_status' %}">Status of Anadromous Snake River Fish</a></li>
+              <li><a class="nav-link" href="{% url 'data:window_counts' %}">Lower Granite Window Counts</a></li>
+              <li><a class="nav-link" href="{% url 'data:weir_counts' %}">Current Weir Returns</a></li>
+              <li><a class="nav-link" href="{% url 'data:harvest_counts' %}">Current Harvest Information</a></li>
             </ul>
           </li>
 

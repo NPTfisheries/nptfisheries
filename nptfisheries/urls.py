@@ -29,4 +29,5 @@ urlpatterns = [
     path("news/", include("news.urls")),
     path("docs/", include("documents.urls")),
     path("locs/", include('locations.urls')),
+    path("data/", include('data.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,70 @@
+<!-- templates/data/weir_counts.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+
+<div class="header-container">
+<img class="header-image" src="../../static/img/background.jpg">
+</div>
+
+<div class="bg-dark">
+    <div class="container py-5">
+        <h1 class="text-center text-light">Annual Weir Counts</h1>
+    </div>
+</div>
+
+{% endblock header %}
+
+{% block content %}
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<div class="container" style="height: 1000px;">
+        <div class="h-100" id="weirCount"></div>
+</div>
+
+<script>
+    function drawPlot() {
+        var data = {{ data|safe }}
+        var trace = {
+            y: data.map(function(d) { return d.Trap; }),
+            x: data.map(function(d) { return d.TotalCount; }),
+            type: 'bar',
+            orientation: 'h',
+            marker: {
+                {% comment %} color: 'rgba(55,128,191,0.6)', {% endcomment %}
+                width: 1
+              }
+        };
+
+        var layout = {
+            title: "Sp/su Chinook Salmon 2022 Weir Returns",
+            xaxis: {
+                title: "Counts"
+            },
+            yaxis: {
+                automargin: true,
+                showticklabels: true,
+                type: 'category',
+            },
+            annotations: [
+            {
+                xref: 'paper',
+                yref: 'paper',
+                x: 1,
+                xanchor: 'right',
+                y: -.2,
+                yanchor: 'top',
+                text: 'Data received from FINS website',
+                showarrow: false
+              }
+            ]
+        };
+
+        Plotly.newPlot('weirCount', [trace], layout);
+    }
+    drawPlot();
+</script>
+
+{% endblock content %}
