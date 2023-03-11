@@ -1,0 +1,375 @@
+<!-- templates/data/esu_status.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+
+<div class="header-container">
+<img class="header-image" src="../../static/img/background.jpg">
+</div>
+
+<div class="bg-dark">
+    <div class="container py-5">
+        <h1 class="text-center text-light">Status of Anadromous Snake River Fish </h1>
+    </div>
+</div>
+
+{% endblock header %}
+
+{% block content %}
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<div class="container p-5">
+    <div id="adultChinookesc" style="height:500px;"></div>
+    <div class="row">
+        <div class="col-6">
+            <div id="adultWildesc" style="height:500px;"></div>
+        </div>
+        <div class="col-6">
+            <div id="adultHatesc" style="height:500px;"></div>
+        </div>
+    </div>
+    <div id="wildFrac" style="height:500px;"></div>
+</div>
+
+
+<script>
+function drawPlot() {
+    var data = {{ chn_data|safe }}
+    var trace = {
+        x: data.map(function(d) { return d.RunYear; }),
+        y: data.map(function(d) { return d.Total_Adults; }),
+        type: 'bar',
+        marker: {
+            color: 'grey',
+            opacity: 1,
+            line: {
+              color: 'black',
+              width: 1.5
+            }
+          }
+    };
+
+    var layout = {
+        title: "Adult Chinook Escapement at Lower Granite Dam",
+        xaxis: {
+            title: "Return Year",
+            range: [1962, 2022]
+        },
+        yaxis: {
+            title: "Escapement",
+            range: [0, 350000]
+        },
+        annotations: [
+        {
+            x: 1970,
+            y: 325000,
+            text: 'Broad Sense Recovery',
+            font: {
+                size: 12,
+                color: 'green'
+              },
+            bordercolor: 'green',
+            borderwidth: 2,
+            borderpad: 4,
+            bgcolor:'white',
+            opacity:1,
+            showarrow: false
+          }
+        ],
+        shapes: [
+        {
+            type: 'line',
+            x0: 0,
+            y0: 325000,
+            x1: 2022,
+            y1: 325000,
+            yref: 'y',
+            line: {
+                color: 'green',
+                width: 2,
+            }
+        }
+        ]
+    };
+
+    Plotly.newPlot('adultChinookesc', [trace], layout);
+    }
+
+    drawPlot();
+</script>
+
+
+<script>
+    function drawPlot() {
+        var data = {{ chn_data|safe }}
+        var trace = {
+            x: data.map(function(d) { return d.RunYear; }),
+            y: data.map(function(d) { return d.Count_WildAdults; }),
+            type: 'bar',
+            marker: {
+                color: 'grey',
+                opacity: 1,
+                line: {
+                  color: 'black',
+                  width: 1.5
+                }
+              }
+        };
+    
+        var layout = {
+            title: "Wild Escapement",
+            xaxis: {
+                title: "Return Year",
+                range: [1962, 2022]
+            },
+            yaxis: {
+                title: "Escapement",
+                range: [0, 250000]
+            },
+            annotations: [
+            {
+                x: 1980,
+                y: 235000,
+                text: 'Healthy and Harvestable',
+                font: {
+                    size: 12,
+                    color: 'green'
+                  },
+                bordercolor: 'green',
+                borderwidth: 2,
+                borderpad: 4,
+                bgcolor:'white',
+                opacity:1,
+                showarrow: false
+              },
+            {
+                x: 1980,
+                y: 43000,
+                text: 'ESA Delisting',
+                font: {
+                    size: 12,
+                    color: 'blue'
+                  },
+                bordercolor: 'blue',
+                borderwidth: 2,
+                borderpad: 4,
+                bgcolor:'white',
+                opacity:1,
+                showarrow: false
+              },
+            {
+                x: 1980,
+                y: 1850,
+                text: 'Critical',
+                yanchor: 'bottom',
+                font: {
+                    size: 12,
+                    color: 'red'
+                  },
+                bordercolor: 'red',
+                borderwidth: 2,
+                borderpad: 4,
+                bgcolor:'white',
+                opacity:1,
+                showarrow: false
+              },
+            ],
+            shapes: [
+            {
+                type: 'line',
+                x0: 0,
+                y0: 235000,
+                x1: 2022,
+                y1: 235000,
+                yref: 'y',
+                line: {
+                    color: 'green',
+                    width: 2,
+                }
+            },
+            {
+                type: 'line',
+                x0: 0,
+                y0: 43000,
+                x1: 2022,
+                y1: 43000,
+                yref: 'y',
+                line: {
+                    color: 'blue',
+                    width: 2,
+                }
+            },
+            {
+                type: 'line',
+                x0: 0,
+                y0: 1850,
+                x1: 2022,
+                y1: 1850,
+                yref: 'y',
+                line: {
+                    color: 'red',
+                    width: 2,
+                }
+            }
+            ]
+        };
+    
+        Plotly.newPlot('adultWildesc', [trace], layout);
+        }
+    
+        drawPlot();
+    </script>
+
+    <script>
+        function drawPlot() {
+            var data = {{ chn_data|safe }}
+            var trace = {
+                x: data.map(function(d) { return d.RunYear; }),
+                y: data.map(function(d) { return d.Count_HatcheryAdults; }),
+                type: 'bar',
+                marker: {
+                    color: 'grey',
+                    opacity: 1,
+                    line: {
+                      color: 'black',
+                      width: 1.5
+                    }
+                  }
+            };
+        
+            var layout = {
+                title: "Hatchery Escapement",
+                xaxis: {
+                    title: "Return Year",
+                    range: [1962, 2022]
+                },
+                yaxis: {
+                    title: "Escapement",
+                    range: [0, 250000]
+                },
+                annotations: [
+                {
+                    x: 1980,
+                    y: 90000,
+                    text: 'Mitigation Index',
+                    font: {
+                        size: 12,
+                        color: 'green'
+                      },
+                    bordercolor: 'green',
+                    borderwidth: 2,
+                    borderpad: 4,
+                    bgcolor:'white',
+                    opacity:1,
+                    showarrow: false
+                  },
+                {
+                    x: 1980,
+                    y: 11638,
+                    text: 'Broodstock Requirement',
+                    font: {
+                        size: 12,
+                        color: 'red'
+                      },
+                    bordercolor: 'red',
+                    borderwidth: 2,
+                    borderpad: 4,
+                    bgcolor:'white',
+                    opacity:1,
+                    showarrow: false
+                  },
+                {
+                    xref: 'paper',
+                    yref: 'paper',
+                    x: 1,
+                    xanchor: 'right',
+                    y: -.2,
+                    yanchor: 'top',
+                    text: 'Data received from Idaho Department of Fish and Game',
+                    showarrow: false
+                  }
+                ],
+                shapes: [
+                {
+                    type: 'line',
+                    x0: 0,
+                    y0: 90000,
+                    x1: 2022,
+                    y1: 90000,
+                    yref: 'y',
+                    line: {
+                        color: 'green',
+                        width: 2,
+                    }
+                },
+                {
+                    type: 'line',
+                    x0: 0,
+                    y0: 11638,
+                    x1: 2022,
+                    y1: 11638,
+                    yref: 'y',
+                    line: {
+                        color: 'red',
+                        width: 2,
+                    }
+                }
+                ]
+            };
+        
+            Plotly.newPlot('adultHatesc', [trace], layout);
+            }
+        
+            drawPlot();
+        </script>
+
+        <script>
+            function drawPlot() {
+                var data = {{ chn_data|safe }}
+                var trace = {
+                    x: data.map(function(d) { return d.RunYear; }),
+                    y: data.map(function(d) { return d.wfrac; }),
+                    mode: 'lines+markers',
+                    marker: {
+                        color: 'black',
+                        opacity: 1,
+                        line: {
+                          color: 'black',
+                          width: 1.5
+                        }
+                      },
+                    line: {
+                        color: 'grey',
+                        opacity: 1,
+                    },
+                };
+            
+                var layout = {
+                    title: "Percent Wild",
+                    xaxis: {
+                        title: "Return Year",
+                        range: [1962, 2022]
+                    },
+                    yaxis: {
+                        title: "Escapement",
+                        range: [0, 100]
+                    }
+                };
+            
+                Plotly.newPlot('wildFrac', [trace], layout);
+                }
+            
+                drawPlot();
+            </script>
+
+{% comment %} {%for instance in chn_data %}
+    <ul>
+        {% for key, value in instance.items %}
+            <li>{{ key }}: {{ value }} </li>
+        {% endfor %}
+    </ul>
+{% endfor %} {% endcomment %}
+
+{% endblock content %}

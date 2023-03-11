@@ -1,4 +1,4 @@
-<!-- templates/dfrm_admin/status.html -->
+<!-- templates/dfrm_admin/window_counts.html -->
 {% extends "base.html" %}
 {% load static %}
 
@@ -10,7 +10,7 @@
 
 <div class="bg-dark">
     <div class="container py-5">
-        <h1 class="text-center text-light">Snake Basin Fish Status</h1>
+        <h1 class="text-center text-light">Lower Granite Window Counts</h1>
     </div>
 </div>
 
@@ -21,14 +21,14 @@
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <div class="container p-5">
-<div id="adultChinook"></div>
-<div id="wildSteelhead"></div>
+    <div id="adultChinook"></div>
+    <div id="wildSteelhead"></div>
 </div>
+
 
 <script>
 function drawPlot() {
     var data = {{ data|safe }}
-
     var trace = {
         x: data.map(function(d) { return d.Year; }),
         y: data.map(function(d) { return d.Chinook; }),
@@ -66,9 +66,9 @@ function drawPlot() {
             y1: 15000,
             yref: 'y',
             line: {
-            color: 'red',
-            width: 2,
-            dash: 'dash'
+                color: 'red',
+                width: 2,
+                dash: 'dash'
             }
         }
         ]
@@ -77,7 +77,7 @@ function drawPlot() {
     Plotly.newPlot('adultChinook', [trace], layout);
     }
 
-drawPlot();
+    drawPlot();
 </script>
 
 <script>
@@ -135,12 +135,11 @@ drawPlot();
     drawPlot();
     </script>
 
-<div class="conatiner p-5">
+{% comment %} <div class="conatiner p-5">
 <h2 class="text-center"><u>Lower Granite Fish Counts</u></h2><br>    
  <table class="table table-striped">
     <thead>
         <tr>
-            {% comment %} <th>Project</th> {% endcomment %}
             <th>Year</th>
             <th>Chinook</th>
             <th>Jack Chinook</th>
@@ -158,7 +157,6 @@ drawPlot();
     </thead>
     {% for i in data %}
       <tr>
-          {% comment %} <td>{{ i.Project }}</td> {% endcomment %}
           <td>{{ i.Year }}</td>
           <td>{{ i.Chinook }}</td>
           <td>{{ i.JackChinook }}</td>
@@ -175,9 +173,6 @@ drawPlot();
       </tr>
     {% endfor %}
 </table>
-</div>
-{% comment %} <h1>List of countries</h1>
-{% for i in response %}
-<strong>{{i.Country}} ,</strong>
-{% endfor %} {% endcomment %}
+</div> {% endcomment %}
+
 {% endblock content %}

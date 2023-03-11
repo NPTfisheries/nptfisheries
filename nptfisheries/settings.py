@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'news',
     'documents',
     'locations',
+    'data'
 
 ]
 

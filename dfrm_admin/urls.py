@@ -68,7 +68,7 @@ project_polygons = views.ProjectViewSet.as_view({
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('status', views.status, name = 'status'),
+
 
     path('department/list/', views.department_list, name = 'department_list'),
     path('department/<int:pk>/', views.department_detail, name='department_detail'),

@@ -11,32 +11,8 @@ from news.models import Post
 #from accounts.models import UserProfile
 from .forms import DepartmentForm, EmployeeForm, FacilityForm, DivisionForm, ProjectForm, SubprojectFormSet, TaskFormSet
 import random
-import requests
-import pandas as pd
-import json
-from io import StringIO
 
 # Create your views here.
-
-def status(request):
-    # response=requests.get('https://api.covid19api.com/countries').json()
-    url = 'https://www.cbr.washington.edu/dart/cs/php/rpt/adult_annual.php?sc=1&outputFormat=csv&proj=LWG&startdate=1%2F1&enddate=12%2F31&run='
-    response=requests.get(url)
-    content = response.content
-    parsed = content.decode()
-    df = StringIO(parsed)
-    data = pd.read_csv(df, skipfooter=13)
-    data.columns = data.columns.str.replace(' ','')
-    # return render(request, 'dfrm_admin/status.html', {'data':data})
-    #data = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})
-    json_df = data.reset_index().to_json(orient='records')
-    json_data = []
-    json_data = json.loads(json_df)
-    context = {'data': json_data}
-    #df_object = df.to_html()
-    return render(request, 'dfrm_admin/status.html', context)
-
-
 
 def home(request):
     department = Department.objects.all().order_by('name')
