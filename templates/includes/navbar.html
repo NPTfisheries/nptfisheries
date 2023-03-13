@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="myNavbar">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <img src="/static/img/NPTlogos2.png" style="width:100px">
@@ -12,18 +12,23 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'home' %}">Home</a>
           </li>
-
-
-
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Fish Information
+                Snake Basin Returns
             </a>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-              <li><a class="nav-link" href="{% url 'data:esu_status' %}">Status of Anadromous Snake River Fish</a></li>
-              <li><a class="nav-link" href="{% url 'data:window_counts' %}">Lower Granite Window Counts</a></li>
-              <li><a class="nav-link" href="{% url 'data:weir_counts' %}">Current Weir Returns</a></li>
-              <li><a class="nav-link" href="{% url 'data:harvest_counts' %}">Current Harvest Information</a></li>
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="#">Sp/sum Chinook Salmon</a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <li><a class="dropdown-item" href="{% url 'data:esu_status' %}">ESU and Population Status</a></li>
+                  <li><a class="dropdown-item" href="{% url 'data:window_counts' %}">Current Returns</a></li>
+                  <li><a class="dropdown-item" href="{% url 'data:weir_counts' %}">Current Weir Returns</a></li>
+                  <li><a class="dropdown-item" href="{% url 'data:harvest_counts' %}">Current Harvest Information</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="#">Summer Steelhead</a>
+              </li>
             </ul>
           </li>
 
@@ -91,7 +96,7 @@
                   {% endif %}
 
                   {% if perms.news.add_post %}
-                  <li><a class="dropdown-item" href="{% url 'news_post' %}">Add Post</a></li>
+                  <li><a class="dropdown-item" href="{% url 'news_post' %}">Add News Post</a></li>
                   {% endif %}
 
                   {% if request.user.is_staff %}

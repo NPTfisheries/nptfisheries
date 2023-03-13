@@ -42,12 +42,13 @@ def esu_status(request):
     return render(request, "data/esu_status.html", context)
 
 def window_counts(request):
-    url = 'https://www.cbr.washington.edu/dart/cs/php/rpt/adult_annual.php?sc=1&outputFormat=csv&proj=LWG&startdate=1%2F1&enddate=12%2F31&run='
+    url = 'https://www.cbr.washington.edu/dart/cs/php/rpt/adult_daily.php?sc=1&outputFormat=csv&year=2022&proj=LWG&span=no&startdate=1%2F1&enddate=12%2F31&run=&syear=2023&eyear=2022'
     response=requests.get(url)
     content = response.content
     parsed = content.decode()
     df = StringIO(parsed)
-    data = pd.read_csv(df, skipfooter=14)
+    full = pd.read_csv(df)
+    data = full.drop(range(305,327))
     data.columns = data.columns.str.replace(' ','')
     json_df = data.reset_index().to_json(orient='records')
     json_data = []
