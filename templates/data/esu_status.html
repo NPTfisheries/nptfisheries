@@ -10,7 +10,7 @@
 
 <div class="bg-dark">
     <div class="container py-5">
-        <h1 class="text-center text-light">Status of Anadromous Snake River Fish </h1>
+        <h1 class="text-center text-light">Sp/su Chinook Salmon</h1>
     </div>
 </div>
 
@@ -21,7 +21,14 @@
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <div class="container p-5">
-    <div id="adultChinookesc" style="height:500px;"></div>
+    <div class = "row">
+        <div class="col-7">
+            <div id="adultChinookesc" style="height:500px;"></div>
+        </div>
+        <div class="col-5">
+            <div id="wildFrac" style="height:500px;"></div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-6">
             <div id="adultWildesc" style="height:500px;"></div>
@@ -30,7 +37,6 @@
             <div id="adultHatesc" style="height:500px;"></div>
         </div>
     </div>
-    <div id="wildFrac" style="height:500px;"></div>
 </div>
 
 
@@ -353,7 +359,7 @@ function drawPlot() {
                         range: [1962, 2022]
                     },
                     yaxis: {
-                        title: "Escapement",
+                        title: "Percent",
                         range: [0, 100]
                     }
                 };

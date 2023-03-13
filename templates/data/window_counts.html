@@ -22,7 +22,6 @@
 
 <div class="container p-5">
     <div id="adultChinook"></div>
-    <div id="wildSteelhead"></div>
 </div>
 
 
@@ -30,16 +29,15 @@
 function drawPlot() {
     var data = {{ data|safe }}
     var trace = {
-        x: data.map(function(d) { return d.Year; }),
-        y: data.map(function(d) { return d.Chinook; }),
+        x: data.map(function(d) { return d.Date; }),
+        y: data.map(function(d) { return d.Chin; }),
         type: 'scatter'
     };
 
     var layout = {
         title: "Chinook Counts at Lower Granite Dam",
         xaxis: {
-            title: "Return Year",
-            range: [1975, 2022]
+            title: "Date",
         },
         yaxis: {
             title: "Adult Counts",
@@ -80,99 +78,10 @@ function drawPlot() {
     drawPlot();
 </script>
 
-<script>
-    function drawPlot() {
-        var data = {{ data|safe }}
-    
-        var trace = {
-            x: data.map(function(d) { return d.Year; }),
-            y: data.map(function(d) { return d.WildSteelhead; }),
-            type: 'scatter'
-        };
-    
-        var layout = {
-            title: "Steelhead Counts at Lower Granite Dam",
-            xaxis: {
-                title: "Return Year",
-                range: [1975, 2022]
-            },
-            yaxis: {
-                title: "Wild Counts",
-                range: [0, 200000]
-            },
-            annotations: [
-            {
-                xref: 'paper',
-                yref: 'paper',
-                x: 1,
-                xanchor: 'right',
-                y: -.2,
-                yanchor: 'top',
-                text: 'Data received real-time from DART website',
-                showarrow: false
-              }
-            ],
-            shapes: [
-            {
-                type: 'line',
-                x0: 0,
-                y0: 15000,
-                x1: 2022,
-                y1: 15000,
-                yref: 'y',
-                line: {
-                color: 'red',
-                width: 2,
-                dash: 'dash'
-                }
-            }
-            ]
-        };
-    
-        Plotly.newPlot('wildSteelhead', [trace], layout);
-        }
-    
-    drawPlot();
-    </script>
-
-{% comment %} <div class="conatiner p-5">
-<h2 class="text-center"><u>Lower Granite Fish Counts</u></h2><br>    
- <table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Year</th>
-            <th>Chinook</th>
-            <th>Jack Chinook</th>
-            <th>Steelhead</th>
-            <th>Wild Steelhead</th>
-            <th>Sockeye</th>
-            <th>Coho</th>
-            <th>Jack Coho</th>
-            <th>Shad</th>
-            <th>Lamprey</th>
-            <th>Bull Trout</th>
-            <th>Chum</th>
-            <th>Pink</th>
-        </tr>
-    </thead>
-    {% for i in data %}
-      <tr>
-          <td>{{ i.Year }}</td>
-          <td>{{ i.Chinook }}</td>
-          <td>{{ i.JackChinook }}</td>
-          <td>{{ i.Steelhead }}</td>
-          <td>{{ i.WildSteelhead }}</td>
-          <td>{{ i.Sockeye }}</td>
-          <td>{{ i.Coho }}</td>
-          <td>{{ i.JackCoho }}</td>
-          <td>{{ i.Shad }}</td>
-          <td>{{ i.Lamprey }}</td>
-          <td>{{ i.BullTrout }}</td>
-          <td>{{ i.Chum }}</td>
-          <td>{{ i.Pink }}</td>
-      </tr>
+{% for instance in data %}
+    {% for key, value in instance.items %}
+    {{key}}: {{value}}
     {% endfor %}
-</table>
-</div> {% endcomment %}
+{% endfor %}
 
 {% endblock content %}
