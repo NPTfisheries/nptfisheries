@@ -10,7 +10,7 @@
 
 <div class="bg-dark">
     <div class="container py-5">
-        <h1 class="text-center text-light">Lower Granite Window Counts</h1>
+        <h1 class="text-center text-light">2022 Sp/su Chinook Salmon Season</h1>
     </div>
 </div>
 
@@ -20,68 +20,122 @@
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-<div class="container p-5">
-    <div id="adultChinook"></div>
+<div class="container p-5 text-center">
+    <h3>Lower Grante Window Counts</h3>
+    <div class="h-100" id="windowDiv"></div>
 </div>
 
+<div class="container p-5 mt-5 text-center" style="height: 1000px;">
+    <h3>Hatchery Weir Counts</h3>
+    <div class="h-100" id="weirCount"></div>
+</div>
+
+<div class="conatiner p-5 text-center">   
+    <h3>Tribal Harvest</h3>
+    <table class="table table-striped">
+       <thead>
+           <tr>
+               <th>Location</th>
+               <th>Clipped Chinook Caught</th>
+               <th>Clipped Chinook Kept</th>
+               <th>Unclipped Chinook Caught</th>
+               <th>Unclipped Chinook Kept</th>
+               <th>Jacks</th>
+           </tr>
+       </thead>
+       {% for i in harvest_data %}
+         <tr>
+             <td>{{ i.LocationLabel }}</td>
+             <td>{{ i.ClippedChinookCaught }}</td>
+             <td>{{ i.ClippedChinookKept }}</td>
+             <td>{{ i.UnclippedChinookCaught }}</td>
+             <td>{{ i.UnclippedChinookKept }}</td>
+             <td>{{ i.Jacks }}</td>
+         </tr>
+       {% endfor %}
+   </table>
+   </div>
 
 <script>
-function drawPlot() {
-    var data = {{ data|safe }}
-    var trace = {
-        x: data.map(function(d) { return d.Date; }),
-        y: data.map(function(d) { return d.Chin; }),
-        type: 'scatter'
-    };
+    function drawPlot() {
+        unparsedDates = {{dates|safe}}
 
-    var layout = {
-        title: "Chinook Counts at Lower Granite Dam",
-        xaxis: {
-            title: "Date",
-        },
-        yaxis: {
-            title: "Adult Counts",
-            range: [0, 200000]
-        },
-        annotations: [
-        {
-            xref: 'paper',
-            yref: 'paper',
-            x: 1,
-            xanchor: 'right',
-            y: -.2,
-            yanchor: 'top',
-            text: 'Data received real-time from DART website',
-            showarrow: false
-          }
-        ],
-        shapes: [
-        {
-            type: 'line',
-            x0: 0,
-            y0: 15000,
-            x1: 2022,
-            y1: 15000,
-            yref: 'y',
-            line: {
-                color: 'red',
-                width: 2,
-                dash: 'dash'
-            }
-        }
-        ]
-    };
+        parsedDates = unparsedDates.map(dateString => new Date(dateString) )
+        
+        var trace1 = {
+          x: parsedDates,
+          y: {{values|safe}},
+          type: 'scatter',
+        };
+        
+        var data = [trace1];
 
-    Plotly.newPlot('adultChinook', [trace], layout);
+        var layout = {
+            xaxis: {
+                title: "Date"
+            },
+            yaxis: {
+                title: "Counts"
+            },
+            annotations: [
+            {
+                xref: 'paper',
+                yref: 'paper',
+                x: 1,
+                xanchor: 'right',
+                y: -.2,
+                yanchor: 'top',
+                text: 'Data received from DART website',
+                showarrow: false
+              }
+            ]
+        };
+
+        Plotly.newPlot('windowDiv', data, layout)
     }
-
     drawPlot();
 </script>
 
-{% for instance in data %}
-    {% for key, value in instance.items %}
-    {{key}}: {{value}}
-    {% endfor %}
-{% endfor %}
+<script>
+    function drawPlot() {
+        var data = {{ trap_data|safe }}
+        var trace = {
+            y: data.map(function(d) { return d.Trap; }),
+            x: data.map(function(d) { return d.TotalCount; }),
+            type: 'bar',
+            orientation: 'h',
+            marker: {
+                {% comment %} color: 'rgba(55,128,191,0.6)', {% endcomment %}
+                width: 1
+              }
+        };
+
+        var layout = {
+            xaxis: {
+                title: "Counts"
+            },
+            yaxis: {
+                automargin: true,
+                showticklabels: true,
+                type: 'category',
+            },
+            annotations: [
+            {
+                xref: 'paper',
+                yref: 'paper',
+                x: 1,
+                xanchor: 'right',
+                y: -.2,
+                yanchor: 'top',
+                text: 'Data received from FINS website',
+                showarrow: false
+              }
+            ]
+        };
+
+        Plotly.newPlot('weirCount', [trace], layout);
+    }
+    drawPlot();
+</script>
 
 {% endblock content %}

@@ -42,6 +42,7 @@ def esu_status(request):
     return render(request, "data/esu_status.html", context)
 
 def window_counts(request):
+    # get DART window counts
     url = 'https://www.cbr.washington.edu/dart/cs/php/rpt/adult_daily.php?sc=1&outputFormat=csv&year=2022&proj=LWG&span=no&startdate=1%2F1&enddate=12%2F31&run=&syear=2023&eyear=2022'
     response=requests.get(url)
     content = response.content
@@ -49,11 +50,38 @@ def window_counts(request):
     df = StringIO(parsed)
     full = pd.read_csv(df)
     data = full.drop(range(305,327))
-    data.columns = data.columns.str.replace(' ','')
-    json_df = data.reset_index().to_json(orient='records')
-    json_data = []
-    json_data = json.loads(json_df)
-    context = {'data': json_data}
+    data['Chin'] = data['Chin'].fillna(0)
+    dates = list(data["Date"])
+    values = [float(i) for i in list(data["Chin"])]
+    json_data = data.to_json()
+
+    # login to CDMS
+    env = environ.Env()
+    environ.Env.read_env()
+    username = env('CREDENTIALS')
+    password = env('CREDENTIALS')
+    host = 'https://npt-cdms.nezperce.org/services/api/v1/'
+    login = 'account/login'
+    creds = {'username':username, 'password':password}
+    s = requests.Session()
+    auth = s.post(url = host+login, data = creds)
+
+    # get trap counts
+    spp = 'Chinook'
+    url = 'npt/gettrapcounts'
+    payload = {'Species':spp, 'CalendarYear':2022}
+    print(payload)
+    params = urllib.parse.urlencode(payload, quote_via=urllib.parse.quote)
+    print(params)
+    req = s.get(url = host+url, params=params)
+    trap_data = req.json()
+
+    # get harvest data
+    url = 'npt/getharvestests'
+    req = s.get(url = host+url)
+    harvest_data = req.json()
+
+    context = {'data': json_data, 'dates':dates, 'values':values, 'trap_data': trap_data, 'harvest_data':harvest_data}
     return render(request, 'data/window_counts.html', context)
 
 def weir_counts(request):
