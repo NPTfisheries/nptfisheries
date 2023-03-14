@@ -18,16 +18,30 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
               <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="#">Sp/sum Chinook Salmon</a>
-                <ul class="dropdown-menu dropdown-menu-dark">
-                  <li><a class="dropdown-item" href="{% url 'data:esu_status' %}">ESU and Population Status</a></li>
-                  <li><a class="dropdown-item" href="{% url 'data:window_counts' %}">Current Returns</a></li>
-                  <li><a class="dropdown-item" href="{% url 'data:weir_counts' %}">Current Weir Returns</a></li>
-                  <li><a class="dropdown-item" href="{% url 'data:harvest_counts' %}">Current Harvest Information</a></li>
-                </ul>
+                <a class="dropdown-item dropdown-toggle" href="#">Chinook Salmon</a>
+                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                    <li class="dropdown-submenu">
+                      <a class="dropdown-item dropdown-toggle" href="#">Spring/summer Chinook Salmon</a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                          <li><a class="dropdown-item" href="{% url 'data:esu_status' %}">ESU and Population Status</a></li>
+                          <li><a class="dropdown-item" href="{% url 'data:window_counts' %}">Current Season</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                      <a class="dropdown-item dropdown-toggle" href="#">Fall Chinook Salmon</a>
+                    </li>
+                  </ul>
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="#">Coho Salmon</a>
               </li>
               <li class="dropdown-submenu">
                 <a class="dropdown-item dropdown-toggle" href="#">Summer Steelhead</a>
+              </li>
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="#">Lamprey</a>
+              </li>
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="#">Sturgeon</a>
               </li>
             </ul>
           </li>
