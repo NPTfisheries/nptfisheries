@@ -16,17 +16,17 @@ class PostForm(forms.ModelForm):
             'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder':'Main body of the blog.', 'rows':5}),
         }
 
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
+# class CommentForm(forms.ModelForm):
+#     class Meta:
+#         model = Comment
         
 
-        fields = ['content','parent']
+#         fields = ['content','parent']
         
-        labels = {
-            'content': _(''),
-        }
+#         labels = {
+#             'content': _(''),
+#         }
         
-        widgets = {
-            'content' : forms.TextInput(),
-        }
+#         widgets = {
+#             'content' : forms.TextInput(),
+#         }
