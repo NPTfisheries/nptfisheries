@@ -20,7 +20,6 @@
 {% endblock header %}
 
 {% block content %}
-
 <div class="container py-5">
 	<div class="edit-content">
 		{% if post.author.name.user == request.user %}
@@ -30,51 +29,11 @@
 			<a href="{% url 'news_delete' pk=post.pk %}" class="btn btn-primary">Delete Post</a>
 		{% endif %}
 	</div>
-
-		<h1 class="border-bottom my-5"> {{ post.title }}</h1>
-
+		<h1 class="border-bottom my-3"> {{ post.title }}</h1>
 		<p> <strong>Primary Author: </strong>{{ post.author }} </p>
 		<p> <strong>Post Date: </strong> {{post.post_date}} </p>
 		<hr>
 		<p> {{ post.body|safe }} </p>
-		<hr>
-
-		<div class="container">
-			<h2> Comments </h2>
-			{% if user.is_authenticated %}
-			<form action="" method="POST" id="main_form" class="comment_form">
-				<div>
-					<label for="comment">Comment here:</label>
-						{{ comment_form.content }} {% csrf_token %} 
-						<input type="submit" value="Post">
-				</div>
-			</form>
-			{% else %} <p><em>Please register and login to comment.</em></p> 
-			{% endif %}
-		</br>
-			{% for comment in comments %}
-				{% if comment.is_parent %}
-				<div class="container">
-					<p>{{ comment.content }}<br><b><em>--{{ comment.author.username }}</em></b></p> 
-					{% if user.is_authenticated %}
-					<div class="container">
-						<form action="" method="POST" id="main_form" class="comment_form">
-							<label for = "comment">Reply here:</label>
-							<input type="text" name="content"> <input type="hidden" value="{{ comment.pk }}" name="parent"> {% csrf_token %} <input type="submit" value="Post">
-						</form>
-					</div>
-					{% endif %}
-				</br>
-				{% endif %} 
-
-				{% for replies in comment.children %}
-					<div class="container" style="padding-left: 2rem;">
-						<p>{{ replies.content }}<br><b><em>--{{ replies.author.username }}</em></b></p>
-					</div>
-				{% endfor %}
-				</div>
-			{% endfor %}
-		</div>
 </div>
 {% endblock %}
 
