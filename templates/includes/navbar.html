@@ -14,22 +14,10 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Current Returns and Forecasts
+                In-season Management
             </a>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-              <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="#">Spring/Summer Chinook</a>
-                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                    <li class="dropdown-submenu">
-                      <a class="dropdown-item" href="#">LGR Dam Counts</a>
-                    </li>
-                    <li class="dropdown-submenu">
-                      <a class="dropdown-item" href="#">Weir Counts</a>
-                      <li class="dropdown-submenu">
-                        <a class="dropdown-item" href="#">Harvest Estimates</a>                 
-                    </li>
-                  </ul>
-              </li>
+              <li><a class="dropdown-item" href="{% url 'data:spsm_inseason' %}">Spring/Summer Chinook</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
@@ -37,25 +25,9 @@
                 Historical Returns
             </a>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-              <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="#">Spring/Summer Chinook</a>
-                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                    <li class="dropdown-submenu">
-                      <a class="dropdown-item" href="#">Total Returns</a>
-                    </li>
-                    <li class="dropdown-submenu">
-                      <a class="dropdown-item" href="#">Wild Fraction</a>
-                    </li>
-                    <li class="dropdown-submenu">
-                      <a class="dropdown-item" href="#">Wild Returns</a>
-                    </li>
-                    <li class="dropdown-submenu">
-                      <a class="dropdown-item" href="#">Hatchery Returns</a>
-                    </li>
-                  </ul>
-                  </li>
-                </ul>
-                </li>
+              <li><a class="dropdown-item" href="{% url 'data:spsm_status' %}">Spring/Summer Chinook</a></li>
+            </ul>
+          </li>
 
           <li class="nav-item">
             <a class="nav-link" href="{% url 'news_list' %}">News</a>
