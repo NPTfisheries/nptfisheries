@@ -9,7 +9,7 @@ import environ
 
 # Create your views here.
 
-def esu_status(request):
+def spsm_status(request):
     env = environ.Env()
     environ.Env.read_env()
     username = env('CREDENTIALS')
@@ -39,9 +39,9 @@ def esu_status(request):
     sth_json = df_sth_sub.to_json(orient='records')
 
     context = {'chn_data':chn_json, 'sth_data':sth_json}
-    return render(request, "data/esu_status.html", context)
+    return render(request, "data/spsm_status.html", context)
 
-def window_counts(request):
+def spsm_inseason(request):
     # get DART window counts
     url = 'https://www.cbr.washington.edu/dart/cs/php/rpt/adult_daily.php?sc=1&outputFormat=csv&year=2022&proj=LWG&span=no&startdate=1%2F1&enddate=12%2F31&run=&syear=2023&eyear=2022'
     response=requests.get(url)
@@ -82,43 +82,4 @@ def window_counts(request):
     harvest_data = req.json()
 
     context = {'data': json_data, 'dates':dates, 'values':values, 'trap_data': trap_data, 'harvest_data':harvest_data}
-    return render(request, 'data/window_counts.html', context)
-
-def weir_counts(request):
-    env = environ.Env()
-    environ.Env.read_env()
-    username = env('CREDENTIALS')
-    password = env('CREDENTIALS')
-    host = 'https://npt-cdms.nezperce.org/services/api/v1/'
-    login = 'account/login'
-    creds = {'username':username, 'password':password}
-    s = requests.Session()
-    auth = s.post(url = host+login, data = creds)
-
-    spp = 'Chinook'
-    url = 'npt/gettrapcounts'
-    payload = {'Species':spp, 'CalendarYear':2022}
-    print(payload)
-    params = urllib.parse.urlencode(payload, quote_via=urllib.parse.quote)
-    print(params)
-    req = s.get(url = host+url, params=params)
-    data = req.json()
-    context = {'data':data}
-    return render(request, "data/weir_counts.html", context)
-
-def harvest_counts(request):
-    env = environ.Env()
-    environ.Env.read_env()
-    username = env('CREDENTIALS')
-    password = env('CREDENTIALS')
-    host = 'https://npt-cdms.nezperce.org/services/api/v1/'
-    login = 'account/login'
-    creds = {'username':username, 'password':password}
-    s = requests.Session()
-    auth = s.post(url = host+login, data = creds)
-
-    url = 'npt/getharvestests'
-    req = s.get(url = host+url)
-    data = req.json()
-    context = {'data':data}
-    return render(request, 'data/harvest_counts.html', context)
+    return render(request, 'data/spsm_inseason.html', context)

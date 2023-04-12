@@ -6,8 +6,6 @@ from . import views
 app_name = 'data'
 
 urlpatterns = [
-    path('window_counts/', views.window_counts, name = 'spsm_inseason'),
-    path('esu_status/', views.esu_status, name = 'spsm_status'),
-    path('weir_counts/', views.weir_counts, name = 'weir_counts'),
-    path('harvest_counts/', views.harvest_counts, name='harvest_counts'),
+    path('inseason/', views.spsm_inseason, name = 'spsm_inseason'),
+    path('status/', views.spsm_status, name = 'spsm_status'),
 ]
