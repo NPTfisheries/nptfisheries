@@ -1,6 +1,6 @@
 from django import forms
 from django.db.migrations.state import get_related_models_tuples
-from .models import Post, Comment
+from .models import Post
 from django.utils.translation import gettext_lazy as _
 
 class PostForm(forms.ModelForm):
