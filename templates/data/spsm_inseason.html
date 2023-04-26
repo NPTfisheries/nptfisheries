@@ -10,7 +10,7 @@
 
 <div class="bg-dark">
     <div class="container py-5">
-        <h1 class="text-center text-light">2022 Sp/su Chinook Salmon Season</h1>
+        <h1 class="text-center text-light">{{ year }} Sp/su Chinook Salmon Season</h1>
     </div>
 </div>
 
@@ -22,38 +22,68 @@
 
 <div class="container p-5 text-center">
     <h3>Lower Grante Window Counts</h3>
-    <div class="h-100" id="windowDiv"></div>
+    {% if values %}
+        <div class="h-100" id="windowDiv"></div>
+    {% else %}
+        <p>Chinook have not been observed passing Lower Granite Dam.</p> 
+    {% endif %}
 </div>
 
-<div class="container p-5 mt-5 text-center" style="height: 1000px;">
-    <h3>Hatchery Weir Counts</h3>
-    <div class="h-100" id="weirCount"></div>
-</div>
+{% if trap_data %}
+    <div class="container p-5 mt-5 text-center" style="height: 700px;">
+        <h3>Hatchery Trap/Weir Counts</h3>
+            <div class="h-100" id="weirCount"></div>
+    </div>
+{% else %}
+    <div class="container p-5 mt-5 text-center">
+        <p>Chinook have not returned to Snake River Basin traps yet.</p> 
+    </div>
+{% endif %}
+
+{% if trap_rapid %}
+    <div class="container p-5 mt-5 text-center" style="height: 700px;">
+        <h3>Rapid River and South Fork Salmon River Trap Counts</h3>
+            <div class="h-100" id="rapidCount"></div>
+    </div>
+{% else %}
+    <div class="container p-5 mt-5 text-center">
+        <p>Chinook have not returned to the Rapid River trap yet.</p> 
+    </div>
+{% endif %}
+
 
 <div class="conatiner p-5 text-center">   
     <h3>Tribal Harvest</h3>
-    <table class="table table-striped">
-       <thead>
-           <tr>
-               <th>Location</th>
-               <th>Clipped Chinook Caught</th>
-               <th>Clipped Chinook Kept</th>
-               <th>Unclipped Chinook Caught</th>
-               <th>Unclipped Chinook Kept</th>
-               <th>Jacks</th>
-           </tr>
-       </thead>
-       {% for i in harvest_data %}
-         <tr>
-             <td>{{ i.LocationLabel }}</td>
-             <td>{{ i.ClippedChinookCaught }}</td>
-             <td>{{ i.ClippedChinookKept }}</td>
-             <td>{{ i.UnclippedChinookCaught }}</td>
-             <td>{{ i.UnclippedChinookKept }}</td>
-             <td>{{ i.Jacks }}</td>
-         </tr>
-       {% endfor %}
-   </table>
+    {% if harvest_data %}
+        <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>StatYear</th>
+                <th>Management Week</th>
+                <th>Clipped Chinook Caught</th>
+                <th>Clipped Chinook Kept</th>
+                <th>Unclipped Chinook Caught</th>
+                <th>Unclipped Chinook Kept</th>
+                <th>Jacks</th>
+            </tr>
+        </thead>
+        {% for i in harvest_data %}
+            <tr>
+                <td>{{ i.LocationLabel }}</td>
+                <td>{{ i.StatYear }}</td>
+                <td>{{ i.ManagementWeek}}</td>
+                <td>{{ i.ClippedChinookCaught }}</td>
+                <td>{{ i.ClippedChinookKept }}</td>
+                <td>{{ i.UnclippedChinookCaught }}</td>
+                <td>{{ i.UnclippedChinookKept }}</td>
+                <td>{{ i.Jacks }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <p>Chinook harvested from Snake River Basin fisheries by Nez Perce Tribal member have not been reported.</p> 
+    {% endif %}
    </div>
 
 <script>
@@ -99,6 +129,7 @@
 <script>
     function drawPlot() {
         var data = {{ trap_data|safe }}
+
         var trace = {
             y: data.map(function(d) { return d.Trap; }),
             x: data.map(function(d) { return d.TotalCount; }),
@@ -107,10 +138,15 @@
             marker: {
                 {% comment %} color: 'rgba(55,128,191,0.6)', {% endcomment %}
                 width: 1
-              }
+              },
+              transforms: [{
+                type: 'groupby',
+                groups: data.map(function(d) { return d.Origin; }),
+            }]
         };
 
         var layout = {
+            barmode: 'stack',
             xaxis: {
                 title: "Counts"
             },
@@ -134,6 +170,53 @@
         };
 
         Plotly.newPlot('weirCount', [trace], layout);
+    }
+    drawPlot();
+</script>
+
+<script>
+    function drawPlot() {
+        var data = {{ trap_rapid|safe }}
+
+        var trace = {
+            x: data.map(function(d) { return d.TrapDates; }),
+            y: data.map(function(d) { return d.TotalCount; }),
+            type: 'bar',
+            marker: {
+                {% comment %} color: 'rgba(55,128,191,0.6)', {% endcomment %}
+                width: 1
+              },
+              transforms: [{
+                type: 'groupby',
+                groups: data.map(function(d) { return d.Trap; }),
+            }]
+        };
+
+        var layout = {
+            yaxis: {
+                title: "Counts"
+            },
+            xaxis: {
+                title: "Trap Week",
+                automargin: true,
+                showticklabels: true,
+                type: 'category',
+            },
+            annotations: [
+            {
+                xref: 'paper',
+                yref: 'paper',
+                x: 1,
+                xanchor: 'right',
+                y: -.2,
+                yanchor: 'top',
+                text: 'Data received from FINS website',
+                showarrow: false
+              }
+            ]
+        };
+
+        Plotly.newPlot('rapidCount', [trace], layout);
     }
     drawPlot();
 </script>

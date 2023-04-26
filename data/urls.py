@@ -7,5 +7,5 @@ app_name = 'data'
 
 urlpatterns = [
     path('inseason/', views.spsm_inseason, name = 'spsm_inseason'),
-    path('status/', views.spsm_status, name = 'spsm_status'),
+    #path('status/', views.spsm_status, name = 'spsm_status'),
 ]
