@@ -79,28 +79,26 @@ def spsm_inseason(request):
     params = urllib.parse.urlencode(payload, quote_via=urllib.parse.quote)
     print(params)
     req = s.get(url = host+url, params=params)
-    
     data_dict= json.loads(req.text)
-    df = pd.DataFrame(data_dict)
-    df['WeekStart'] = pd.to_datetime(df['WeekStart'])
-    #df['WeekStart'] = df['WeekStart'].dt.date.astype(str)
-    df['WeekStart'] = df['WeekStart'].dt.strftime('%m/%d').astype(str)
     
-    df['WeekEnd'] = pd.to_datetime(df['WeekEnd'])
-    #df['WeekEnd'] = df['WeekEnd'].dt.date.astype(str)
-    df['WeekEnd'] = df['WeekEnd'].dt.strftime('%m/%d').astype(str)
-    df['TrapDates'] = df['WeekStart'] + ' - ' + df['WeekEnd']
+    if data_dict is not None:
+        df = pd.DataFrame(data_dict)
+        df['WeekStart'] = pd.to_datetime(df['WeekStart'])
+        df['WeekStart'] = df['WeekStart'].dt.strftime('%m/%d').astype(str)
     
-    group_name = ('Rapid River Fish Trap', 'South Fork Salmon River')
-    rapid_df = df.loc[df['Trap'].isin(group_name)]
-    trap_rapid = rapid_df.to_dict(orient='records')
+        df['WeekEnd'] = pd.to_datetime(df['WeekEnd'])
+        df['WeekEnd'] = df['WeekEnd'].dt.strftime('%m/%d').astype(str)
+        df['TrapDates'] = df['WeekStart'] + ' - ' + df['WeekEnd']
         
-    # data = req.json()
-    # trap_rapid = [trap for trap in data if trap['Trap'] == group_name]
+        group_name = ('Rapid River Fish Trap', 'South Fork Salmon River')
+        rapid_df = df.loc[df['Trap'].isin(group_name)]
+        trap_rapid = rapid_df.to_dict(orient='records')
 
-    summary = df.groupby(['Facility', 'Trap', 'Species', 'Run', 'Origin']).agg({'TotalCount': 'sum'}).reset_index()
-    #summary = df.groupby(['Facility', 'Trap', 'Species', 'Run', 'Origin']).TotalCount.sum().reset_index()
-    trap_data = summary.to_dict(orient='records')
+        summary = df.groupby(['Facility', 'Trap', 'Species', 'Run', 'Origin']).agg({'TotalCount': 'sum'}).reset_index()
+        trap_data = summary.to_dict(orient='records')
+    else:
+        trap_rapid = []
+        trap_data = []
     
     # get harvest data
     url = 'npt/getharvestests'
