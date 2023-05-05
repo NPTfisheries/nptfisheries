@@ -14,22 +14,23 @@ class CustomUser(AbstractUser):
 
 class UserProfile(models.Model):
 
-    # EMPLOYER = (
-    #     ("NPT","Nez Perce Tribe"),
-    #     ("IDFG","Idaho Department of Fish and Game"),
-    #     ("WDFW", "Washington Department of Fish and Wildlife"),
-    #     ("ODFW", "Oregon Department of Fish and Wildlife"),
-    #     ("USFWS", "U.S. Fish and Wildlife Service"),
-    #     ("USFS", "U.S. Forest Service"),
-    #     ("USACE", 'U.S. Army Core of Engineers'),
-    #     ("NOAA", "National Oceanic Atmospheric Administration"),
-    #     ("BPA", "Bonneville Power Administration"),
-    #     ("Other", "Other")
-    # )
+    AFFILIATION = (
+        ("NPT","Nez Perce Tribe"),
+        ("IDFG","Idaho Department of Fish and Game"),
+        ("WDFW", "Washington Department of Fish and Wildlife"),
+        ("ODFW", "Oregon Department of Fish and Wildlife"),
+        ("USFWS", "U.S. Fish and Wildlife Service"),
+        ("USFS", "U.S. Forest Service"),
+        ("USACE", 'U.S. Army Core of Engineers'),
+        ("NOAA", "National Oceanic Atmospheric Administration"),
+        ("BPA", "Bonneville Power Administration"),
+        ("NPCC", "Northwest Power and Conservation Council"),
+        ("Other", "Other")
+    )
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, help_text = "User name", related_name='user_profiles', verbose_name="User Name")
     #location = models.CharField(max_length = 50, null = True, blank = True, help_text="City, State")
-    organization = models.CharField("Affiliation", max_length = 50)
+    affiliation = models.CharField("Affiliation", choices=AFFILIATION, max_length = 50, default = 'NPT')
     work_phone = PhoneField("Work Phone", null=True, blank=True)
     mobile_phone = PhoneField("Mobile Phone", null=True, blank=True)
     email_updates = models.BooleanField("Email Updates (check for yes)", default=False)

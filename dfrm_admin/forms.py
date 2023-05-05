@@ -8,12 +8,13 @@ class DateInput(forms.DateInput):
 class EmployeeForm(forms.ModelForm):
     class Meta:
         model = Employee
-        fields = ('name', 'position_class', 'title', 'start_date', 'end_date', 'active')
+        fields = ('name', 'position_class', 'title', 'facility', 'start_date', 'end_date', 'active')
 
         widgets = {
             'name': forms.Select(attrs={'class': 'form-select', 'placeholder':'Employee Name', 'size':5}),
             'position_class': forms.Select(attrs={'class': 'form-select', 'placeholder':'Position Class', 'size':5}),
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Position Title'}),
+            'facility': forms.Select(attrs={'class': 'form-control'}),
             'start_date': DateInput(attrs={'class': 'form-control'}),
             'end_date': DateInput(attrs={'class': 'form-control'}),
             'active': forms.CheckboxInput(attrs={'class': 'form-check form'}),

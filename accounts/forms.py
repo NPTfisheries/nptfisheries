@@ -16,10 +16,10 @@ class CustomSignupForm(SignupForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('organization', 'work_phone', 'mobile_phone', 'email_updates', 'city', 'state', 'bio', 'profile_picture')
+        fields = ('affiliation', 'work_phone', 'mobile_phone', 'email_updates', 'city', 'state', 'bio', 'profile_picture')
 
         widgets = {
-            'organization': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Nez Perce Tribe'}),
+            'affiliation': forms.Select(attrs={'class': 'form-control', 'placeholder':'Nez Perce Tribe'}),
             'work_number': forms.TextInput(attrs={'class': 'form-control'}),
             'mobile_number': forms.TextInput(attrs={'class': 'form-control'}),
             'email_updates': forms.CheckboxInput(attrs={'class': 'form-check form'}),

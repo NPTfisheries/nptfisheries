@@ -209,7 +209,12 @@ def facility(request):
 
 def facility_detail(request, pk):
     facility = get_object_or_404(Facility, pk=pk)
-    return render(request, 'dfrm_admin/facility_detail.html', {'facility':facility})
+    employees = Employee.objects.filter(facility=facility).exclude(id = facility.manager.id)
+    if facility.administrative_assistant:
+        employees = employees.exclude(id = facility.administrative_assistant.id)
+
+    employees = employees.order_by('name')
+    return render(request, 'dfrm_admin/facility_detail.html', {'facility':facility, 'employees':employees})
 
 @permission_required('dfrm_admin.view_facility', raise_exception=True)
 def facility_list(request):

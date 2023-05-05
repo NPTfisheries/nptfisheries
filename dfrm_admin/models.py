@@ -14,47 +14,10 @@ class PositionClass(models.Model):
     def __str__(self):
         return self.position_class
 
-class Employee(models.Model):
-
-    # POSITION_CLASS = (
-    #     (9,"Administrative Specialist I"),
-    #     (11,"Administrative Specialist II"),
-    #     (13,"Administrative Specialist III"),
-    #     (15,"Executive Assistant I"),
-    #     (9,"Technician I"),
-    #     (11,"Technician II" ),
-    #     (13,"Technician III"),
-    #     (15,"Technician IV"),
-    #     (17,"Professional I" ),
-    #     (19,"Professional II"),
-    #     (20,"Professional III"),
-    #     (21,"Professional IV"),
-    #     (22,"Professional V"),
-    #     (23,"Manager I"),
-    #     (24,"Manager II"),
-    #     (26,"Manager III"),
-    #     (28,"Manager IV"),
-    #     (30,"Manager V")
-    # )
-
-    name = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name = 'employees', verbose_name="Name")
-    position_class = models.ForeignKey(PositionClass, on_delete=models.CASCADE, verbose_name="Position Class")
-    title = models.CharField("Position Title", max_length = 50)
-    start_date = models.DateTimeField("Start Date")
-    end_date = models.DateTimeField("End Date", null = True, blank =True)
-    active = models.BooleanField("Employeed (check for yes)", default=True)
-
-    class Meta:
-        ordering = ['name__user__first_name', 'name__user__last_name']
-
-    def __str__(self):
-        return self.name.user.first_name + ' ' + self.name.user.last_name
-
 class Facility(models.Model):
-    manager = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name = 'fac_manager', verbose_name="Facility Manager")
-    administrative_assistant = models.ForeignKey(Employee, null = True, blank = True, on_delete=models.CASCADE, related_name = 'fac_assist', verbose_name="Administrative Assistant")
+    manager = models.ForeignKey('Employee', on_delete=models.CASCADE, related_name = 'fac_manager', verbose_name="Facility Manager")
+    administrative_assistant = models.ForeignKey('Employee', null = True, blank = True, on_delete=models.CASCADE, related_name = 'fac_assist', verbose_name="Administrative Assistant")
     name = models.ForeignKey(Location, on_delete=models.CASCADE, verbose_name = "Facility Name")
-    #name = models.CharField("Facility name", max_length=100)
     phone_number = PhoneField("Phone Number")
     fax_number = PhoneField("Fax Number", null=True, blank=True)
     street_address = models.CharField("Street Address", max_length=100)
@@ -81,6 +44,21 @@ class Facility(models.Model):
         verbose_name_plural = 'Facilities'
         ordering = ['name__name']
 
+class Employee(models.Model):
+
+    name = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name = 'employees', verbose_name="Name")
+    position_class = models.ForeignKey(PositionClass, on_delete=models.CASCADE, verbose_name="Position Class")
+    title = models.CharField("Position Title", max_length = 50)
+    facility = models.ForeignKey(Facility, on_delete=models.CASCADE, related_name = 'fac_employees', verbose_name = 'Duty Station', default = 1)
+    start_date = models.DateTimeField("Start Date")
+    end_date = models.DateTimeField("End Date", null = True, blank =True)
+    active = models.BooleanField("Employeed (check for yes)", default=True)
+
+    class Meta:
+        ordering = ['name__user__first_name', 'name__user__last_name']
+
+    def __str__(self):
+        return self.name.user.first_name + ' ' + self.name.user.last_name
 
 class Department(models.Model):
     manager = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name = 'dept_manager', verbose_name = "Department Manager")

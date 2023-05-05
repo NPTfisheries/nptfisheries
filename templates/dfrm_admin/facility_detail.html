@@ -21,8 +21,14 @@
 </div>
 
 <div class="bg-dark">
-    <div class="container py-5">
-        <h1 class="text-center text-light">{{ facility.name }}</h1>
+    <div class="container py-5 text-center text-light">
+        <h1>{{ facility.name }}</h1>
+        <h4>Phone Number: {{ facility.phone_number }} </h4>
+        {% if facility.fax_number %}
+            <h4>Fax Number: {{ facility.fax_number }} </h4>
+        {% endif %}
+        <h4> {{ facility.street_address }} </h4>
+        <h4> {{ facility.city }}, {{ facility.state }} {{ facility.zipcode }} </h4>
     </div>
 </div>
 
@@ -58,51 +64,49 @@
     }
 </script>
 
-{% comment %} <div class="edit-content">
-    {% if perms.dfrm_admin.change_facility %}
-        <a href="{% url 'facility_edit' pk=facility.pk %}" class="btn btn-primary"><div class="button">Edit Facility Content</div></a>
-    {% endif %}
-</div> {% endcomment %}
-
-<div class="bg-dark">
-    <div class="container p-5 text-center text-light">
-        <h4>Phone Number: {{ facility.phone_number }} </h4>
-        {% if facility.fax_number %}
-            <h4>Fax Number: {{ facility.fax_number }} </h4>
-        {% endif %}
-        <h4> {{ facility.street_address }} </h4>
-        <h4> {{ facility.city }}, {{ facility.state }} {{ facility.zipcode }} </h4>
-    </div>
-</div>
-
-<div class="bg-light"> 
-    <div class="container p-5">
-        <div class= "row">
-            <div class="col-4 mx-auto">
-                <div class="card text-dark bg-light border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
-                    <h4>Office </br> Manager</h4>
-                    <img src="{{ facility.manager.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
-                    <div class="card-body">
-                        <a class="stretched-link" href="{% url 'profile' pk=facility.manager.name.pk %}"><h4 class="card-title">{{ facility.manager }}</h4></a>
-                        <h5 class="text-muted">{{ facility.manager.title }}</h5>
-                    </div>
+<div class="bg-dark text-center py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card text-light bg-dark border-dark">
+                <h4>Office Manager</h4>
+                <img src="{{ facility.manager.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
+                <div class="card-body">
+                    <a class="stretched-link" href="{% url 'profile' pk=facility.manager.name.pk %}"><h4 class="card-title text-light">{{ facility.manager }}</h4></a>
+                    <h5 class="text-muted">{{ facility.manager.title }}</h5>
                 </div>
-            </div> 
-            
+            </div>
+        </div>
+
+        <div class="col-md-4">      
             {% if facility.administrative_assistant %}
-            <div class="col-4 mx-auto">
-                <div class="card text-dark bg-light border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
+                <div class="card text-light bg-dark border-dark">
                     <h4>Office Administration</h4>
-                    <img src="{{ facility.administrative_assistant.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+                    <img src="{{ facility.administrative_assistant.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
                     <div class="card-body">
-                        <a class="stretched-link" href="{% url 'profile' pk=facility.administrative_assistant.name.pk %}"><h4 class="card-title">{{ facility.administrative_assistant }}</h4></a>
+                        <a class="stretched-link" href="{% url 'profile' pk=facility.administrative_assistant.name.pk %}"><h4 class="card-title text-light">{{ facility.administrative_assistant }}</h4></a>
                         <h5 class="text-muted">{{ facility.administrative_assistant.title }}</h5>
                     </div>
                 </div>
-            </div>
             {% endif %}
-
         </div>
+    </div>
+
+    {% comment %} <div class="row row-cols-1 row-cols-md-3"> card-img-top {% endcomment %}
+    <div class="row justify-content-center">
+        {% for i in employees %}
+            {% if forloop.counter0|divisibleby:3 %}
+                </div><div class="row justify-content-center">
+            {% endif %}
+        <div class="col-md-4">
+            <div class="card text-light bg-dark border-dark">
+                <img src="{{ i.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
+                <div class="card-body">
+                    <a class="stretched-link" href="{% url 'profile' pk=i.name.pk %}"><h4 class="card-title text-light">{{ i.name }}</h4></a>
+                    <h5 class="text-muted">{{ i.title }}</h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 
