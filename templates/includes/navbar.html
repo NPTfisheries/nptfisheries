@@ -68,7 +68,7 @@
                     {{ request.user.get_full_name }}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="{% url 'profile' pk=user.pk %}">Edit Profile</a></li>
+                  <li><a class="dropdown-item" href="{% url 'profile' pk=user.pk %}">Account Profile</a></li>
                   <li><a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a></li>
 
                   {% if perms.dfrm_admin.view_employee %}
