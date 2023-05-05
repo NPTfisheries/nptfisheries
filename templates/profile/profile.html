@@ -24,30 +24,75 @@
                     {% if profile.employees %}
                         <h3>Department of Fisheries Resources Management</h3>
                         <p><strong>Title:</strong> {{ profile.employees.title }}</p>
+                        <p><strong>Office:</strong> {{ profile.employees.facility }}</p>
                         <p><strong>Email:</strong> <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a></p>
                         {% if profile.work_phone %}<p><strong>Work Phone:</strong> {{ profile.work_phone }}</p>{% endif %}
                         {% if profile.mobile_phone %}<p><strong>Mobile Phone:</strong> {{ profile.mobile_phone }}</p>{% endif %}
                     {% else %}
                         {% if profile.organization %}<p><strong>Organization:</strong> {{ profile.organization }}</p>{% endif %}
                     {% endif %}
-                    {% if profile.city and profile.state %}<p><strong>Residence:</strong> {{ profile.city }}, {{ profile.state }}</p>{% endif %}
+                    {% if profile.city and profile.state %}<p><strong>Place of Residence:</strong> {{ profile.city }}, {{ profile.state }}</p>{% endif %}
                 </div>
             </div>
             <div class="d-flex flex-row">
                 {% if profile.bio %}<p>{{ profile.bio|safe }}</p>{% endif %}
             </div>
-        <h4 class="border-bottom mb-4">Projects</h4>
-            <div class="container">
-                <ul>
-                    <li>TBD</li>
-                </ul>
-            </div>
-        <h4 class="border-bottom mb-4">Publications</h4>
-            <div class="container">
-                <ul>
-                    <li>TBD</li>
-                </ul>
-            </div>
+
+            {% if project %}
+                <h4 class="border-bottom mb-4">Project Lead</h4>
+                    <div class="container">
+                        <ul>
+                            {% for i in project %}
+                                <li>{{ i.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+            {% endif %}
+
+            {% if subproject %}
+            <h4 class="border-bottom mb-4">Leads</h4>
+                <div class="container">
+                    <ul>
+                        {% for i in subproject %}
+                            <li>{{ i.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% if task %}
+            <h4 class="border-bottom mb-4">Supervises</h4>
+                <div class="container">
+                    <ul>
+                        {% for i in task %}
+                            <li>{{ i.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% if staff %}
+            <h4 class="border-bottom mb-4"> Tasks</h4>
+                <div class="container">
+                    <ul>
+                        {% for i in staff %}
+                            <li>{{ i.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% if author %}
+            <h4 class="border-bottom mb-4">Publications</h4>
+                <div class="container">
+                    <ul>
+                        {% for i in author %}
+                            <li>{{ i.citation }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
         </div>
     </div>
 </div>
