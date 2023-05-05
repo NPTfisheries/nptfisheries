@@ -35,8 +35,8 @@
 <div class="bg-dark text-center py-5"> 
     <div class="row justify-content-center">
           <div class="col-md-4 mx-auto">
-              <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
-                  <img src="{{ department.manager.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+              <div class="card text-light bg-dark border-dark">
+                  <img src="{{ department.manager.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
                   <div class="card-body">
                       <a class="stretched-link" href="{% url 'profile' pk=department.manager.name.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ department.manager }}</h4></a>
                       <h5 class="text-muted">{{ department.manager.title }}</h5>
@@ -46,8 +46,8 @@
 
           {% if department.deputy_manager %}
           <div class="col-md-4 mx-auto">
-              <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
-                  <img src="{{ department.deputy_manager.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+              <div class="card text-light bg-dark border-dark">
+                  <img src="{{ department.deputy_manager.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
                   <div class="card-body">
                       <a class="stretched-link" href="{% url 'profile' pk=department.deputy_manager.name.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ department.deputy_manager }}</h4></a>
                       <h5 class="text-muted">{{ department.deputy_manager.title }}</h5>
@@ -58,8 +58,8 @@
 
           {% if department.administrative_assistant %}    
           <div class="col-md-4 mx-auto">
-              <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
-                  <img src="{{ department.administrative_assistant.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+              <div class="card text-light bg-dark border-dark">
+                  <img src="{{ department.administrative_assistant.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
                   <div class="card-body">
                       <a class="stretched-link" href="{% url 'profile' pk=department.administrative_assistant.name.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ department.administrative_assistant }}</h4></a>
                       <h5 class="text-muted">{{ department.administrative_assistant.title }}</h5>
@@ -79,7 +79,7 @@
                 <div class="card text-light bg-dark border-dark">
                     <img src="{{ i.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
                     <div class="card-body">
-                        <a class="stretched-link" href="{% url 'profile' pk=i.name.pk %}"><h4 class="card-title text-light">{{ i.name }}</h4></a>
+                        <a class="stretched-link" href="{% url 'profile' pk=i.name.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ i.name }}</h4></a>
                         <h5 class="text-muted">{{ i.title }}</h5>
                     </div>
                 </div>

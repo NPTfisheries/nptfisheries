@@ -39,8 +39,8 @@
 <div class="bg-dark text-center py-5"> 
     <div class="row justify-content-center">
         <div class="col-md-4 mx-auto">
-            <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
-                <img src="{{ divisions.director.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+            <div class="card text-light bg-dark border-dark">
+                <img src="{{ divisions.director.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
                 <div class="card-body">
                     <a class="stretched-link" href="{% url 'profile' pk=divisions.director.name.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ divisions.director }}</h4></a>
                     <h5 class="text-muted">{{ divisions.director.title }}</h5>
@@ -50,8 +50,8 @@
 
         {% if divisions.deputy_director %}
         <div class="col-md-4 mx-auto">
-            <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
-                <img src="{{ divisions.deputy_director.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+            <div class="card text-light bg-dark border-dark">
+                <img src="{{ divisions.deputy_director.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
                 <div class="card-body">
                     <a class="stretched-link" href="{% url 'profile' pk=divisions.deputy_director.name.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ divisions.deputy_director }}</h4></a>
                     <h5 class="text-muted">{{ divisions.deputy_director.title }}</h5>
@@ -62,8 +62,8 @@
 
         {% if divisions.administrative_assistant %}    
         <div class="col-md-4 mx-auto">
-            <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
-                <img src="{{ divisions.administrative_assistant.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
+            <div class="card text-light bg-dark border-dark">
+                <img src="{{ divisions.administrative_assistant.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
                 <div class="card-body">
                     <a class="stretched-link" href="{% url 'profile' pk=divisions.administrative_assistant.name.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ divisions.administrative_assistant }}</h4></a>
                     <h5 class="text-muted">{{ divisions.administrative_assistant.title }}</h5>
@@ -81,7 +81,7 @@
                 <div class="card text-light bg-dark border-dark">
                     <img src="{{ i.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
                     <div class="card-body">
-                        <a class="stretched-link" href="{% url 'profile' pk=i.name.pk %}"><h4 class="card-title text-light">{{ i.name }}</h4></a>
+                        <a class="stretched-link" href="{% url 'profile' pk=i.name.pk %}"><h4 class="card-title" style="color: #ABE7FC;">{{ i.name }}</h4></a>
                         <h5 class="text-muted">{{ i.title }}</h5>
                     </div>
                 </div>
