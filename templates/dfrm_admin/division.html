@@ -32,10 +32,9 @@
   </div>
 </section>
 
-<div class="bg-dark"> 
-  <div class="container">
-      <div class= "row">
-          <div class="col-4 mx-auto">
+<div class="bg-dark text-center py-5"> 
+    <div class="row justify-content-center">
+          <div class="col-md-4 mx-auto">
               <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
                   <img src="{{ department.manager.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
                   <div class="card-body">
@@ -46,7 +45,7 @@
           </div>
 
           {% if department.deputy_manager %}
-          <div class="col-4 mx-auto">
+          <div class="col-md-4 mx-auto">
               <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
                   <img src="{{ department.deputy_manager.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
                   <div class="card-body">
@@ -58,7 +57,7 @@
           {% endif %}
 
           {% if department.administrative_assistant %}    
-          <div class="col-4 mx-auto">
+          <div class="col-md-4 mx-auto">
               <div class="card text-light bg-dark border-dark mx-auto text-center border-0 mb-3 mx-2 my-3" style="width: 200px;">
                   <img src="{{ department.administrative_assistant.name.profile_picture.url }}" class="card-img-top rounded-circle" alt="..." width="200px" height="200px">
                   <div class="card-body">
@@ -69,8 +68,24 @@
           </div>
           {% endif %}
 
-      </div>
-  </div>
+    </div>
+
+    <div class="row justify-content-center">
+        {% for i in department.managers.all %}
+            {% if forloop.counter0|divisibleby:3 %}
+                </div><div class="row justify-content-center">
+            {% endif %}
+            <div class="col-md-4 g-5">
+                <div class="card text-light bg-dark border-dark">
+                    <img src="{{ i.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
+                    <div class="card-body">
+                        <a class="stretched-link" href="{% url 'profile' pk=i.name.pk %}"><h4 class="card-title text-light">{{ i.name }}</h4></a>
+                        <h5 class="text-muted">{{ i.title }}</h5>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
 <div class="container text-center py-5">

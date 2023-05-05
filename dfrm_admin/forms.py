@@ -42,7 +42,7 @@ class FacilityForm(forms.ModelForm):
 class DepartmentForm(forms.ModelForm):
     class Meta:
         model = Department
-        fields = ('name', 'description', 'manager', 'deputy_manager', 'administrative_assistant', 'facility', 'department_image1')
+        fields = ('name', 'description', 'manager', 'deputy_manager', 'administrative_assistant', 'managers', 'facility', 'department_image1')
 
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -50,6 +50,7 @@ class DepartmentForm(forms.ModelForm):
             'manager': forms.Select(attrs={'class': 'form-select', 'size':5}),
             'deputy_manager': forms.Select(attrs={'class': 'form-select', 'size':5}),
             'administrative_assistant': forms.Select(attrs={'class': 'form-select', 'size':5}),
+            'managers': forms.SelectMultiple(attrs={'class':'form-select', 'size':5}),
             'facility': forms.Select(attrs={'class': 'form-select', 'size':5}),
             'department_image1': forms.FileInput(attrs={'class': 'form-control'}),
         }
@@ -57,7 +58,7 @@ class DepartmentForm(forms.ModelForm):
 class DivisionForm(forms.ModelForm):
     class Meta:
         model = Division
-        fields = ('department','name', 'description', 'director', 'deputy_director', 'administrative_assistant', 'facility', 'division_image1')
+        fields = ('department','name', 'description', 'director', 'deputy_director', 'administrative_assistant', 'managers', 'facility', 'division_image1')
 
         widgets = {
             'department': forms.Select(attrs={'class': 'form-select', 'size':5}),
@@ -66,6 +67,7 @@ class DivisionForm(forms.ModelForm):
             'director': forms.Select(attrs={'class': 'form-select', 'size':5}),
             'deputy_director': forms.Select(attrs={'class': 'form-select', 'size':5}),
             'administrative_assistant': forms.Select(attrs={'class': 'form-select', 'size':5}),
+            'managers': forms.SelectMultiple(attrs={'class':'form-select', 'size':5}),
             'facility': forms.Select(attrs={'class': 'form-select', 'size':5}),
             'division_image1': forms.FileInput(attrs={'class': 'form-control'}),
         }

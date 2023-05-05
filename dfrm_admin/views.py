@@ -41,6 +41,7 @@ def department_new(request):
         if form.is_valid():
             d = form.save(commit=False)
             d.save()
+            form.save_m2m()
             return redirect('home')
     else:
         form = DepartmentForm()
@@ -54,6 +55,7 @@ def department_edit(request, pk):
         if form.is_valid():
             d = form.save(commit=False)
             d.save()
+            form.save_m2m()
             return redirect('home')
     else:
         form = DepartmentForm(instance=department)
@@ -82,6 +84,7 @@ def division_new(request):
         if form.is_valid():
             d = form.save(commit=False)
             d.save()
+            form.save_m2m()
             return redirect('division_detail', pk=d.pk)
     else:
         form = DivisionForm()
@@ -95,6 +98,7 @@ def division_edit(request, pk):
         if form.is_valid():
             d = form.save(commit=False)
             d.save()
+            form.save_m2m()
             return redirect('division_detail', pk=d.pk)
     else:
         form = DivisionForm(instance=division)
