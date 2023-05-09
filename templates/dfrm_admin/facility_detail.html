@@ -65,16 +65,17 @@
 </script>
 
 <div class="bg-dark text-center py-5">
+  <h1 class='text-light'>Staff</h1>
     <div class="row justify-content-center">
         {% if facility.administrative_assistant %}
         <div class="col-md-4">
           <div class="card text-light bg-dark border-dark">
-            <h4>Office Manager</h4>
             <img src="{{ facility.manager.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
             <div class="card-body">
               <a class="stretched-link" href="{% url 'profile' pk=facility.manager.name.pk %}">
                 <h4 class="card-title text-light">{{ facility.manager }}</h4>
               </a>
+              <h5 class="text-muted">Office Manager</h5>
               <h5 class="text-muted">{{ facility.manager.title }}</h5>
             </div>
           </div>
@@ -82,12 +83,12 @@
       
         <div class="col-md-4">
           <div class="card text-light bg-dark border-dark">
-            <h4>Office Administration</h4>
             <img src="{{ facility.administrative_assistant.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
             <div class="card-body">
               <a class="stretched-link" href="{% url 'profile' pk=facility.administrative_assistant.name.pk %}">
                 <h4 class="card-title text-light">{{ facility.administrative_assistant }}</h4>
               </a>
+              <h5 class="text-muted">Office Administration</h5>
               <h5 class="text-muted">{{ facility.administrative_assistant.title }}</h5>
             </div>
           </div>
@@ -95,12 +96,12 @@
         {% else %}
         <div class="col mx-auto">
           <div class="card text-light bg-dark border-dark">
-            <h4>Office Manager</h4>
             <img src="{{ facility.manager.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
             <div class="card-body">
               <a class="stretched-link" href="{% url 'profile' pk=facility.manager.name.pk %}">
                 <h4 class="card-title text-light">{{ facility.manager }}</h4>
               </a>
+              <h5 class="text-muted">Office Manager</h5>
               <h5 class="text-muted">{{ facility.manager.title }}</h5>
             </div>
           </div>
@@ -108,6 +109,7 @@
         {% endif %}
       </div>
 
+  <div class="container p-5">
     {% comment %} <div class="row row-cols-1 row-cols-md-3"> card-img-top {% endcomment %}
     <div class="row justify-content-center">
         {% for i in employees %}
@@ -115,7 +117,7 @@
                 </div><div class="row justify-content-center">
             {% endif %}
         <div class="col-md-4 g-5">
-            <div class="card text-light bg-dark border-dark">
+            <div class="card text-light bg-dark p-3">
                 <img src="{{ i.name.profile_picture.url }}" class="d-block mx-auto rounded-circle" alt="..." width="200px" height="200px">
                 <div class="card-body">
                     <a class="stretched-link" href="{% url 'profile' pk=i.name.pk %}"><h4 class="card-title text-light">{{ i.name }}</h4></a>
@@ -125,6 +127,7 @@
         </div>
         {% endfor %}
     </div>
+  </div>
 </div>
 
 {% endblock %}
